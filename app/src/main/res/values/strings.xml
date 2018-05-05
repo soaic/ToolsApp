@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">ToolsApp</string>
+
+    <string name="loading">加载中&#8230;</string>
+
+    <string name="menu_music">音乐</string>
+    <string name="menu_video">视频</string>
+    <string name="menu_news">新闻</string>
+    <string name="menu_picture">图片</string>
+    <string name="menu_more">更多</string>
+
+    <string name="more_location">位置查询</string>
+    <string name="more_fm">电台</string>
+    <string name="more_novel">小说</string>
+    <string name="more_express">快递查询</string>
+    <string name="more_weather">天气查询</string>
+
 </resources>

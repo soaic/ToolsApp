@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/moreLocation"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/more_location"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
+
+    <TextView
+        android:id="@+id/moreFm"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/more_fm"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
+
+    <TextView
+        android:id="@+id/moreNovel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/more_novel"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
+
+    <TextView
+        android:id="@+id/moreExpress"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/more_express"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
+
+    <TextView
+        android:id="@+id/moreWeather"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/more_weather"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
+
+</LinearLayout>
