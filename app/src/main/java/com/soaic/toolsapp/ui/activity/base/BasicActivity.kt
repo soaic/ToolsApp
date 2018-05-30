@@ -7,9 +7,7 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
-import android.view.MotionEvent
-import com.soaic.libcommont.utils.KeyboardUtils
-import com.soaic.libcommont.utils.ToastUtils
+import com.soaic.libcommont.utils.ToastUtil
 import com.soaic.toolsapp.R
 
 
@@ -84,21 +82,21 @@ abstract class BasicActivity : AppCompatActivity() {
     }
 
     fun showToast(str: String) {
-        ToastUtils.showShortToast(this, str)
+        ToastUtil.showShortToast(this, str)
     }
 
     fun showToast(@StringRes rid: Int) {
-        ToastUtils.showShortToast(this, rid)
+        ToastUtil.showShortToast(this, rid)
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        if (ev.action == MotionEvent.ACTION_UP) {
-            //点击空白处隐藏软键盘
-            val v = currentFocus
-            if (KeyboardUtils.isShouldHideKeyboard(v, ev)) {
-                KeyboardUtils.hideSoftInput(this)
-            }
-        }
-        return super.dispatchTouchEvent(ev)
-    }
+//    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+//        if (ev.action == MotionEvent.ACTION_UP) {
+//            //点击空白处隐藏软键盘
+//            val v = currentFocus
+//            if (KeyBoardUtils.isShouldHideKeyboard(v, ev)) {
+//                KeyBoardUtils.hideSoftInput(this)
+//            }
+//        }
+//        return super.dispatchTouchEvent(ev)
+//    }
 }

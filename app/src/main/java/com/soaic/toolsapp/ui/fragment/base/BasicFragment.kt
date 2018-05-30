@@ -1,8 +1,6 @@
 package com.soaic.toolsapp.ui.fragment.base
 
 import android.app.Dialog
-import android.content.Context
-import com.soaic.libcommont.utils.ToastUtils
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -12,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import com.soaic.libcommont.utils.ToastUtil
 import com.soaic.toolsapp.R
 
 
@@ -110,11 +109,11 @@ abstract class BasicFragment : Fragment() {
     }
 
     fun showToast(str: String) {
-        ToastUtils.showShortToast(context, str)
+        ToastUtil.showShortToast(context, str)
     }
 
     fun showToast(@IdRes rid: Int) {
-        ToastUtils.showShortToast(context, rid)
+        ToastUtil.showShortToast(context, rid)
     }
 
     /**

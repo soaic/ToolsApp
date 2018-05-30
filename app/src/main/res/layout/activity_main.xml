@@ -9,7 +9,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/navigation"/>
 
@@ -28,7 +28,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconTint="@color/selector_item_icon_tint"
         app:itemTextColor="@color/selector_item_icon_tint"
-        app:menu="@menu/my_navigation_items" />
+        app:menu="@menu/my_navigation_items"
+        android:background="@color/white"/>
 
 
 </android.support.constraint.ConstraintLayout>
