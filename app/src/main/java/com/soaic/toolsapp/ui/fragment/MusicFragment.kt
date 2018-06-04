@@ -53,7 +53,7 @@ class MusicFragment: BasicFragment() {
     }
 
     override fun initEvents() {
-        musicAdapter.setOnItemClickListener { view, holder, position -> showToast(mData[position].name) }
+        musicAdapter.setOnItemClickListener { _, _, position -> showToast(mData[position].name) }
 
 
     }

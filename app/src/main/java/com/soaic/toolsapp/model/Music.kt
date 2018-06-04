@@ -1,6 +1,8 @@
 package com.soaic.toolsapp.model
 
-class Music {
+import java.io.Serializable
+
+class Music: Serializable{
     var id: String = ""
     var name: String = ""
     var singer: String = ""
