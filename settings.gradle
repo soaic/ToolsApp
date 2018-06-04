@@ -1,1 +1,1 @@
-include ':app', ':libcommont'
+include ':app', ':libcommon'

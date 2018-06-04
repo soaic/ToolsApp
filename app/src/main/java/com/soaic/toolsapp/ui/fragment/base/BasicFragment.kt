@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import com.soaic.libcommont.utils.ToastUtil
+import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
 
 
@@ -109,11 +109,11 @@ abstract class BasicFragment : Fragment() {
     }
 
     fun showToast(str: String) {
-        ToastUtil.showShortToast(context, str)
+        ToastUtils.showShortToast(context, str)
     }
 
     fun showToast(@IdRes rid: Int) {
-        ToastUtil.showShortToast(context, rid)
+        ToastUtils.showShortToast(context, rid)
     }
 
     /**

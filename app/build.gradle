@@ -20,6 +20,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    signingConfigs {
+        debug {
+            storeFile file("../key/key.jks")
+            storePassword "942672"
+            keyAlias "key0"
+            keyPassword "942672"
+        }
+        release {
+            storeFile file("../key/key.jks")
+            storePassword "942672"
+            keyAlias "key0"
+            keyPassword "942672"
+        }
+    }
 }
 
 dependencies {
@@ -31,5 +46,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    api project(path: ':libcommont')
+    api project(path: ':libcommon')
 }

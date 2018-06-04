@@ -1,7 +1,10 @@
 package com.soaic.toolsapp.ui.fragment
 
+import android.Manifest
 import android.os.Bundle
 import android.widget.TextView
+import com.soaic.libcommon.utils.LocationUtil
+import com.soaic.libcommon.utils.PermissionsUtils
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
@@ -37,7 +40,31 @@ class MoreFragment: BasicFragment() {
     override fun initEvents() {
         moreLocation.setOnClickListener { view ->
             view as TextView
-            showToast(view.text as String)
+            PermissionsUtils.getInstance().requestPermissions(activity, 1000,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_WIFI_STATE),
+                    object: PermissionsUtils.PermissionsResultAction{
+                        override fun doExecuteFail(requestCode: Int) {
+                            showToast(requestCode.toString())
+                        }
+
+                        override fun doExecuteSuccess(requestCode: Int) {
+                            LocationUtil.getInstance().startLocation(activity, object: LocationUtil.OnLocationListener{
+                                override fun onLocation(location: MutableMap<String, Any>?) {
+                                    showToast(location!!["address"].toString())
+                                }
+
+                                override fun onError(errStr: String?, errCode: Int) {
+                                    showToast(errStr!!)
+                                }
+
+                            })
+                        }
+
+                    })
+
         }
         moreFm.setOnClickListener { view ->
             view as TextView
@@ -65,4 +92,8 @@ class MoreFragment: BasicFragment() {
 
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        PermissionsUtils.getInstance().onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
 }

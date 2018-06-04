@@ -1,15 +1,13 @@
 package com.soaic.toolsapp.ui.fragment
 
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
-import com.soaic.libcommont.network.NetClient
-import com.soaic.libcommont.network.listener.OnResultListener
-import com.soaic.libcommont.recyclerview.adapter.BasicAdapter
-import com.soaic.libcommont.recyclerview.holder.BasicItemHolder
-import com.soaic.libcommont.utils.LogUtil
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.soaic.libcommon.network.NetClient
+import com.soaic.libcommon.network.listener.OnResultListener
+import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
+import com.soaic.libcommon.utils.LogUtils
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.model.Music
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
@@ -21,6 +19,7 @@ class MusicFragment: BasicFragment() {
     private lateinit var musicRvl: RecyclerView
     private var mData: MutableList<Music> = ArrayList()
     private lateinit var musicAdapter: MusicAdapter
+    private lateinit var refresh_layout: SmartRefreshLayout
 
     companion object {
         fun newInstance(): MusicFragment{
@@ -40,16 +39,21 @@ class MusicFragment: BasicFragment() {
         musicRvl.layoutManager = LinearLayoutManager(activity.applicationContext)
         musicAdapter = MusicAdapter(mData)
         musicRvl.adapter = musicAdapter
-        musicRvl.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-
+        musicRvl.addItemDecoration(ListDividerItemDecoration())
+        refresh_layout = findViewById(R.id.refresh_layout)
+        refresh_layout.setDragRate(0.5f)
+        refresh_layout.setHeaderMaxDragRate(5f)
+        refresh_layout.setReboundDuration(800)
+        refresh_layout.setOnRefreshListener {
+            it.finishRefresh(2000)
+        }
+        refresh_layout.setOnLoadMoreListener {
+            it.finishLoadMore(2000)
+        }
     }
 
     override fun initEvents() {
-        musicAdapter.onItemClickListener = (object: BasicAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, holder: BasicItemHolder, position: Int) {
-                showToast(mData[position].name)
-            }
-        })
+        musicAdapter.setOnItemClickListener { view, holder, position -> showToast(mData[position].name) }
 
 
     }
@@ -60,9 +64,7 @@ class MusicFragment: BasicFragment() {
         }
         musicAdapter.notifyDataSetChanged()
 
-
-
-        requestMusicInfo()
+        //requestMusicInfo()
     }
 
     private fun requestMusicInfo(){
@@ -70,7 +72,7 @@ class MusicFragment: BasicFragment() {
                 .url("http://music.163.com/discover/toplist?id=3778678")
                 .build().get(String::class.java, object: OnResultListener<String>{
                     override fun onSuccess(t: String?) {
-                        LogUtil.d(t)
+                        LogUtils.d(t)
                     }
                     override fun onFailure(err: Throwable?) {
                         err!!.printStackTrace()

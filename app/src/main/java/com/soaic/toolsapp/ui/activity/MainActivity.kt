@@ -1,11 +1,12 @@
 package com.soaic.toolsapp.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import com.soaic.libcommont.utils.BottomNavigationViewHelper
+import com.soaic.libcommon.utils.BottomNavigationViewHelper
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.ui.fragment.*
@@ -60,5 +61,17 @@ class MainActivity : BasicActivity() {
         pages.add(PictureFragment.newInstance())
         pages.add(NewsFragment.newInstance())
         pages.add(MoreFragment.newInstance())
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(viewPager.currentItem < pages.size)
+            pages[viewPager.currentItem].onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(viewPager.currentItem < pages.size)
+            pages[viewPager.currentItem].onActivityResult(requestCode, resultCode, data)
     }
 }

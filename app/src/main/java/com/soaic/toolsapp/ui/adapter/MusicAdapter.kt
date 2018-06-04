@@ -3,8 +3,8 @@ package com.soaic.toolsapp.ui.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.soaic.libcommont.recyclerview.adapter.BasicAdapter
-import com.soaic.libcommont.recyclerview.holder.BasicItemHolder
+import com.soaic.libcommon.recyclerview.adapter.BasicAdapter
+import com.soaic.libcommon.recyclerview.holder.BasicItemHolder
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.model.Music
 
@@ -26,7 +26,6 @@ class MusicAdapter(var data: MutableList<Music>) : BasicAdapter() {
         nameView.text = data[position].name
         signerView.text = data[position].singer
         albumView.text = data[position].album
-
     }
 
 }

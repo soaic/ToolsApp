@@ -7,7 +7,7 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
-import com.soaic.libcommont.utils.ToastUtil
+import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
 
 
@@ -82,11 +82,11 @@ abstract class BasicActivity : AppCompatActivity() {
     }
 
     fun showToast(str: String) {
-        ToastUtil.showShortToast(this, str)
+        ToastUtils.showShortToast(this, str)
     }
 
     fun showToast(@StringRes rid: Int) {
-        ToastUtil.showShortToast(this, rid)
+        ToastUtils.showShortToast(this, rid)
     }
 
 //    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -99,4 +99,5 @@ abstract class BasicActivity : AppCompatActivity() {
 //        }
 //        return super.dispatchTouchEvent(ev)
 //    }
+
 }
