@@ -12,6 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper;
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -38,6 +39,20 @@ public class GlideUtil {
         if(file == null || imageView == null) return;
         String path = "file://"+ file.getAbsolutePath();
         Glide.with(imageView.getContext()).load(path).dontAnimate().into(imageView);
+    }
+
+    /**
+     * 设置圆角 90dp宽高一致时为圆形
+     * @param imageView
+     * @param path
+     * @param dp 圆角度数
+     */
+    public static void displayRound(ImageView imageView, String path, int dp) {
+        Glide.with(imageView.getContext()).load(path).dontAnimate()
+                .listener(new SGlideRequestListener(imageView,ImageView.ScaleType.FIT_XY,ImageView.ScaleType.CENTER_CROP))
+                .transform(new CenterCrop(imageView.getContext()), new GlideRoundTransform(imageView.getContext(), dp))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .crossFade().into(imageView);
     }
 
     public static void preload(Context context, String url) {
@@ -202,12 +217,12 @@ public class GlideUtil {
         }
     }
 
-    static class SSTGlideRequestListener implements RequestListener<String, GlideDrawable> {
+    static class SGlideRequestListener implements RequestListener<String, GlideDrawable> {
         private ImageView.ScaleType mPlaceScaleType;
         private ImageView.ScaleType mActualScaleType;
         private ImageView mImageView;
 
-        SSTGlideRequestListener(ImageView mImageView, ImageView.ScaleType placeScaleType, ImageView.ScaleType actualScaleType){
+        SGlideRequestListener(ImageView mImageView, ImageView.ScaleType placeScaleType, ImageView.ScaleType actualScaleType){
             this.mPlaceScaleType = placeScaleType;
             this.mActualScaleType = actualScaleType;
             this.mImageView = mImageView;
