@@ -2,6 +2,7 @@ package com.soaic.libcommon.glide;
 
 import android.content.Context;
 import android.os.Looper;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ public class GlideUtil {
         Glide.with(imageView.getContext()).load(path).dontAnimate().into(imageView);
     }
 
-    public static void display(ImageView imageView, @IdRes int rid){
+    public static void display(ImageView imageView, @DrawableRes int rid){
         if(imageView == null) return;
         String path = "android.resource://"+imageView.getContext().getPackageName()+"/drawable/"+rid;
         Glide.with(imageView.getContext()).load(path).dontAnimate().into(imageView);

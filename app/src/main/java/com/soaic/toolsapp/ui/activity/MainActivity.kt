@@ -7,12 +7,13 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import com.soaic.libcommon.utils.BottomNavigationViewHelper
+import com.soaic.libcommon.weiget.NoScrollViewPager
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.ui.fragment.*
 
 class MainActivity : BasicActivity() {
-    lateinit var viewPager:ViewPager
+    lateinit var viewPager: NoScrollViewPager
     lateinit var navigation:BottomNavigationView
     lateinit var pages:MutableList<Fragment>
 

@@ -12,6 +12,7 @@ import com.soaic.libcommon.network.interceptor.HeaderInterceptor;
 import com.soaic.libcommon.network.interceptor.HttpLoggingInterceptor;
 import com.soaic.libcommon.network.listener.OnResultListener;
 import com.soaic.libcommon.network.util.AppUtil;
+import com.soaic.libcommon.utils.LogUtils;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -31,9 +32,7 @@ import retrofit2.Retrofit;
 
 /**
  * 网络请求封装类
- * @author XiaoSai
- * @version V1.0
- * @since 2016/10/23.
+ * @author Soaic
  */
 public class NetClient{
     private String mBaseUrl= "";
@@ -236,14 +235,14 @@ public class NetClient{
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    handlerError(e ,onResultListener);
+                    handlerError(e, onResultListener);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable e) {
                 e.printStackTrace();
-                handlerError(e ,onResultListener);
+                handlerError(e, onResultListener);
             }
         });
     }
@@ -315,8 +314,8 @@ public class NetClient{
         
         public NetClient build(){
             if(TextUtils.isEmpty(baseUrl)&&!TextUtils.isEmpty(url)){
-                baseUrl = url.substring(0,url.lastIndexOf("/")+1);
-                url = url.substring(url.lastIndexOf("/")+1);
+                baseUrl = url.substring(0,url.lastIndexOf("/") + 1);
+                url = url.substring(url.lastIndexOf("/") + 1);
             }
             NetClient.getInstance().initData(this);
             return NetClient.getInstance();

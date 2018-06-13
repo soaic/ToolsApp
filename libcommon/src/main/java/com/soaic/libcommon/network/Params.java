@@ -29,7 +29,6 @@ public interface Params{
      * 查询资料 如登录 等请求操作
      * @param url 请求URL地址
      * @param param 请求参数
-     * @return rxJava对象
      */
     @GET()
     Call<ResponseBody> paramsGet(@Url String url, @QueryMap Map<String, String> param);
@@ -39,7 +38,6 @@ public interface Params{
      * 创建新资源文件 如注册 等请求操作
      * @param url 请求URL地址
      * @param param 请求参数
-     * @return 处理请求的rxJava事件源对象
      */
     @FormUrlEncoded  //不包含文件上传 对应FieldMap注解
     @POST()
@@ -52,7 +50,6 @@ public interface Params{
      * 创建新资源文件 如上传头像 等请求操作
      * @param url 请求URL地址
      * @param param 请求参数
-     * @return 处理请求的rxJava事件源对象
      */
     @Multipart  //文件上传注解 对应PartMap注解
     @POST()
@@ -61,7 +58,6 @@ public interface Params{
     /**
      * 资源修改 如修改个人资料 等请求操作
      * @param url 请求URL地址
-     * @return 处理请求的rxJava事件源对象
      */
     @FormUrlEncoded
     @PUT
@@ -70,7 +66,6 @@ public interface Params{
     /**
      * 资源修改 如修改个人资料 等请求操作
      * @param url 请求URL地址
-     * @return 处理请求的rxJava事件源对象
      */
     @Multipart
     @PUT
@@ -79,7 +74,6 @@ public interface Params{
     /**
      * 资源删除 如退出登录 等请求操作
      * @param url 请求URL地址
-     * @return 处理请求的rxJava事件源对象
      */
     @FormUrlEncoded
     @DELETE
