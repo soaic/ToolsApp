@@ -7,6 +7,7 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.Nullable
 import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
+import com.soaic.libcommon.utils.AppUtils
 import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
 

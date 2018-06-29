@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class LogUtils {
+public class Logger {
     private static int LOG_MAX_LENGTH = 2000;
     public static final boolean DEBUG = true;
     private final static String SIGN = "[Soaic]";
@@ -130,13 +130,12 @@ public class LogUtils {
         return sdf.format(now);
     }
     private static String getSDPath() {
-        File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+        boolean sdCardExist = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
         if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();// 获取跟目录
+            return Environment.getExternalStorageDirectory().getAbsolutePath();
+        }else{
+            return "";
         }
-        return sdDir.toString();
     }
 
 }

@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ToolsApp</string>
+
+    <string name="loading">Loading&#8230;</string>
+
+    <string name="menu_music">Music</string>
+    <string name="menu_video">Video</string>
+    <string name="menu_news">News</string>
+    <string name="menu_picture">Picture</string>
+    <string name="menu_more">More</string>
+
+    <string name="more_location">Address Search</string>
+    <string name="more_fm">FM</string>
+    <string name="more_novel">Novel</string>
+    <string name="more_express">Post Search</string>
+    <string name="more_weather">Weather Search</string>
+
+</resources>

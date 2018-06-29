@@ -79,9 +79,19 @@
         android:layout_height="0.5dp"
         android:background="#cccccc"/>
 
-    <ImageView
-        android:id="@+id/testImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/moreCheck"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/color_2E2E2E"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:background="@drawable/item_selector"
+        android:text="@string/check_company_button_txt"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc"/>
 
 </LinearLayout>

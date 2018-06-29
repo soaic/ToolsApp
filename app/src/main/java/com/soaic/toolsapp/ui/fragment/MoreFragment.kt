@@ -8,6 +8,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.utils.*
 import com.soaic.toolsapp.R
+import com.soaic.toolsapp.ui.activity.MainActivity
+import com.soaic.toolsapp.ui.activity.TestActivity
+import com.soaic.toolsapp.ui.activity.check.CheckActivity
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
 class MoreFragment: BasicFragment() {
@@ -17,8 +20,8 @@ class MoreFragment: BasicFragment() {
     lateinit var moreNovel: TextView
     lateinit var moreExpress: TextView
     lateinit var moreWeather: TextView
+    lateinit var moreCheck: TextView
     lateinit var cameraUtils: CameraUtils
-    lateinit var testImage: ImageView
 
     companion object {
         fun newInstance(): MoreFragment{
@@ -32,12 +35,11 @@ class MoreFragment: BasicFragment() {
     override fun initVariables(savedInstanceState: Bundle?) {
         cameraUtils = CameraUtils(object: CameraUtils.CameraResult{
             override fun onCameraSuccess(filePath: String?) {
-                testImage.setImageURI(Uri.parse(filePath))
-                LogUtils.d(filePath)
+                Logger.d(filePath)
             }
 
             override fun onCameraFail(message: String?) {
-                LogUtils.d(message)
+                Logger.d(message)
             }
 
         },activity)
@@ -49,9 +51,7 @@ class MoreFragment: BasicFragment() {
         moreNovel = findViewById(R.id.moreNovel)
         moreExpress = findViewById(R.id.moreExpress)
         moreWeather = findViewById(R.id.moreWeather)
-        testImage = findViewById(R.id.testImage)
-
-        testImage.setImageResource(ConvertUtils.resStrToInt(activity,"R.mipmap.ic_launcher"))
+        moreCheck = findViewById(R.id.moreCheck)
     }
 
     override fun initEvents() {
@@ -87,18 +87,19 @@ class MoreFragment: BasicFragment() {
         }
         moreNovel.setOnClickListener {
             val url = "http://10.3.0.6:10000/sst-2.4.9.259_dev.apk"
-            val download = DownloadUtil(activity.applicationContext)
+            val download = DownloadUtil(activity!!.applicationContext)
             download.startDownload(url)
             download.queryProcess()
 
         }
-        moreExpress.setOnClickListener { view ->
-            view as TextView
-            showToast(view.text as String)
+        moreExpress.setOnClickListener {
+            startActivity(Intent(activity, TestActivity::class.java))
         }
-        moreWeather.setOnClickListener { view ->
-            view as TextView
-            showToast(view.text as String)
+        moreWeather.setOnClickListener {
+
+        }
+        moreCheck.setOnClickListener{
+            startActivity(Intent(activity, CheckActivity::class.java))
         }
     }
 

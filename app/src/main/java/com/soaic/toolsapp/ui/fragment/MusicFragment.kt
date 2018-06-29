@@ -7,7 +7,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.soaic.libcommon.network.NetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
-import com.soaic.libcommon.utils.LogUtils
+import com.soaic.libcommon.utils.Logger
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.model.Music
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
@@ -36,7 +36,7 @@ class MusicFragment: BasicFragment() {
 
     override fun initViews() {
         musicRvl = findViewById(R.id.music_rvl)
-        musicRvl.layoutManager = LinearLayoutManager(activity.applicationContext)
+        musicRvl.layoutManager = LinearLayoutManager(activity!!.applicationContext)
         musicAdapter = MusicAdapter(mData)
         musicRvl.adapter = musicAdapter
         musicRvl.addItemDecoration(ListDividerItemDecoration())
@@ -72,7 +72,7 @@ class MusicFragment: BasicFragment() {
                 .url("http://music.163.com/discover/toplist?id=3778678")
                 .build().get(String::class.java, object: OnResultListener<String>{
                     override fun onSuccess(t: String?) {
-                        LogUtils.d(t)
+                        Logger.d(t)
                     }
                     override fun onFailure(err: Throwable?) {
                         err!!.printStackTrace()

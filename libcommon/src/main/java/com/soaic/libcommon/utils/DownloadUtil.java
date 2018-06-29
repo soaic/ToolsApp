@@ -54,14 +54,14 @@ public class DownloadUtil {
                 String status = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS));
                 String totalSize = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
 
-                LogUtils.i("MainActivity", "bytesDownload:" + bytesDownload);
-                LogUtils.i("MainActivity", "description:" + description);
-                LogUtils.i("MainActivity", "id:" + id);
-                LogUtils.i("MainActivity", "localUri:" + localUri);
-                LogUtils.i("MainActivity", "mimeType:" + mimeType);
-                LogUtils.i("MainActivity", "title:" + title);
-                LogUtils.i("MainActivity", "status:" + status);
-                LogUtils.i("MainActivity", "totalSize:" + totalSize);
+                Logger.i("MainActivity", "bytesDownload:" + bytesDownload);
+                Logger.i("MainActivity", "description:" + description);
+                Logger.i("MainActivity", "id:" + id);
+                Logger.i("MainActivity", "localUri:" + localUri);
+                Logger.i("MainActivity", "mimeType:" + mimeType);
+                Logger.i("MainActivity", "title:" + title);
+                Logger.i("MainActivity", "status:" + status);
+                Logger.i("MainActivity", "totalSize:" + totalSize);
             }
         }
     }

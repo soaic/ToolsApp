@@ -10,8 +10,8 @@ import com.soaic.toolsapp.model.Music
 
 class MusicAdapter(var data: MutableList<Music>) : BasicAdapter() {
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): BasicItemHolder {
-        return BasicItemHolder(View.inflate(parent?.context, R.layout.item_music, null))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicItemHolder {
+        return BasicItemHolder(View.inflate(parent.context, R.layout.item_music, null))
     }
 
     override fun getItemCount(): Int {

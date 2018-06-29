@@ -47,7 +47,9 @@ class MainActivity : BasicActivity() {
                 R.id.action_more -> tab = 4
             }
             viewPager.currentItem = tab
-            false
+            true
+            //这里返回true，表示事件已经被处理。如果返回false，为了达到条目选中效果，还需要设置item.setChecked(true);
+            //不论点击了哪一个，都手动设置为选中状态true（该控件并没有默认实现), 如果不设置，只有第一个menu展示的时候是选中状态，其他的即便被点击选中了，图标和文字也不会做任何更改
         }
     }
 

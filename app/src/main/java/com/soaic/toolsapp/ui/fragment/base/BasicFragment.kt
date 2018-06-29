@@ -39,7 +39,7 @@ abstract class BasicFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // 避免多次从xml中加载布局文件
         if (mContentView == null) {
             if (contentView == 0) {

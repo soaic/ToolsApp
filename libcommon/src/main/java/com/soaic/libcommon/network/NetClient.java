@@ -12,7 +12,6 @@ import com.soaic.libcommon.network.interceptor.HeaderInterceptor;
 import com.soaic.libcommon.network.interceptor.HttpLoggingInterceptor;
 import com.soaic.libcommon.network.listener.OnResultListener;
 import com.soaic.libcommon.network.util.AppUtil;
-import com.soaic.libcommon.utils.LogUtils;
 
 import java.io.File;
 import java.util.LinkedHashMap;

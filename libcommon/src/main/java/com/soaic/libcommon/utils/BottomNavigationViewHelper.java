@@ -5,6 +5,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
@@ -31,4 +32,5 @@ public class BottomNavigationViewHelper {
             Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
     }
+
 }

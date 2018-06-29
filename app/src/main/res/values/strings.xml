@@ -14,5 +14,8 @@
     <string name="more_novel">小说</string>
     <string name="more_express">快递查询</string>
     <string name="more_weather">天气查询</string>
+    <string name="more_check">检查</string>
 
+    <string name="check_company_hint">请输入公司名</string>
+    <string name="check_company_button_txt">检测</string>
 </resources>
