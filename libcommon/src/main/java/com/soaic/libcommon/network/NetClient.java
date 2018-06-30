@@ -2,6 +2,7 @@ package com.soaic.libcommon.network;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -104,7 +106,8 @@ public class NetClient{
                 mRetrofit = new Retrofit.Builder()
                         .baseUrl(mBaseUrl)
                         .client(mClient)
-                        .build();    
+                        .build();
+
             }catch(Exception ignored){}
         }
     }

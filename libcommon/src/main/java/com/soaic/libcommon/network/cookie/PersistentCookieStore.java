@@ -82,11 +82,13 @@ public class PersistentCookieStore {
             }
         }
 
-        //讲cookies持久化到本地
-        SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
-        prefsWriter.putString(name, TextUtils.join(",", cookies.get(url.host()).keySet()));
-        prefsWriter.putString(COOKIE_NAME_PREFIX + name, encodeCookie(new SerializableOkHttpCookies(cookie)));
-        prefsWriter.apply();
+        //将cookies持久化到本地
+        if(cookies.size()>0) {
+            SharedPreferences.Editor prefsWriter = cookiePrefs.edit();
+            prefsWriter.putString(name, TextUtils.join(",", cookies.get(url.host()).keySet()));
+            prefsWriter.putString(COOKIE_NAME_PREFIX + name, encodeCookie(new SerializableOkHttpCookies(cookie)));
+            prefsWriter.apply();
+        }
     }
 
     public List<Cookie> get(HttpUrl url) {

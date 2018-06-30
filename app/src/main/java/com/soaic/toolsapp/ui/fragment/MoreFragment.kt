@@ -2,14 +2,10 @@ package com.soaic.toolsapp.ui.fragment
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.utils.*
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.activity.MainActivity
-import com.soaic.toolsapp.ui.activity.TestActivity
 import com.soaic.toolsapp.ui.activity.check.CheckActivity
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
@@ -86,14 +82,13 @@ class MoreFragment: BasicFragment() {
             cameraUtils.getPhoto2CameraCrop(FileUtils.getTempFilePath(activity))
         }
         moreNovel.setOnClickListener {
-            val url = "http://10.3.0.6:10000/sst-2.4.9.259_dev.apk"
+            val url = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
             val download = DownloadUtil(activity!!.applicationContext)
             download.startDownload(url)
             download.queryProcess()
 
         }
         moreExpress.setOnClickListener {
-            startActivity(Intent(activity, TestActivity::class.java))
         }
         moreWeather.setOnClickListener {
 

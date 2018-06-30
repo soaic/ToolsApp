@@ -1,6 +1,7 @@
 package com.soaic.libcommon.network.cookie;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class CookiesManager implements CookieJar{
     }
 
     @Override
-    public void saveFromResponse(HttpUrl url,List<Cookie> cookies) {
-        if (cookies != null && cookies.size() > 0) {
+    public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
+        if (cookies.size() > 0) {
             for (Cookie item : cookies) {
                 cookieStore.add(url, item);
             }

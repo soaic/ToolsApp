@@ -1,6 +1,7 @@
 package com.soaic.libcommon.recyclerview.adapter;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -11,7 +12,7 @@ public abstract class BasicAdapter extends RecyclerView.Adapter<BasicItemHolder>
     private OnItemLongClickListener onItemLongClickListener;
 
     @Override
-    public void onBindViewHolder(final BasicItemHolder holder, @SuppressLint("RecyclerView") final int position) {
+    public void onBindViewHolder(@NonNull final BasicItemHolder holder, @SuppressLint("RecyclerView") final int position) {
         if(onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

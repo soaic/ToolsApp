@@ -1,5 +1,8 @@
 package com.soaic.libcommon.network.interceptor;
 
+import android.os.Build;
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,10 +16,11 @@ import okhttp3.Response;
 
 public class HeaderInterceptor implements Interceptor {
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NonNull Chain chain) throws IOException {
         Request original = chain.request();
         Request.Builder request = original.newBuilder();
         //request.headers(Headers.of(Configure.getRetrofitHeader()));
+        request.addHeader("User-Agent", Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE);
         request.method(original.method(), original.body());
         return chain.proceed(request.build());
     }

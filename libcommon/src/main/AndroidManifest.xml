@@ -17,9 +17,9 @@
     <application>
 
         <!-- Glide -->
-        <meta-data
-            android:name="com.soaic.libcommon.glide.SGlideModule"
-            android:value="GlideModule" />
+        <!--<meta-data-->
+            <!--android:name="com.soaic.libcommon.glide.SGlideModule"-->
+            <!--android:value="GlideModule" />-->
 
         <!-- 高德地图 -->
         <service android:name="com.amap.api.location.APSService"/>

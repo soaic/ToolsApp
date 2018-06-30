@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 
+import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
+
 public class GlideUtil {
 
     public static void display(ImageView imageView, String path){

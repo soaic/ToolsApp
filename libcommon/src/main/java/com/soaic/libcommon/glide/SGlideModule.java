@@ -13,11 +13,14 @@ import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.soaic.libcommon.R;
+import com.soaic.libcommon.utils.Logger;
 
 /**
  * glide配置
  *
- * 在AndroidManifest.xml中添加 meta-data
+ * 4.0以下在AndroidManifest.xml中添加 meta-data
+ *
+ * 4.0以上用@GlideModule添加
  */
 @GlideModule
 public class SGlideModule extends AppGlideModule {
@@ -26,12 +29,12 @@ public class SGlideModule extends AppGlideModule {
         //解决设置TAG异常问题
         ViewTarget.setTagId(R.id.glide_tag_id);
         builder.setDefaultRequestOptions(
-                new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888).disallowHardwareConfig());
+                new RequestOptions().format(DecodeFormat.PREFER_RGB_565).disallowHardwareConfig());
         builder.setLogLevel(Log.DEBUG);
     }
 
     @Override
-    public void registerComponents(Context context, Glide glide, Registry registry) {
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
         //registry.append(Api.GifResult.class, InputStream.class, new SGlideModule.Factory());
     }
 }
