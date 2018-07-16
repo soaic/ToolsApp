@@ -60,15 +60,18 @@ public interface Params{
      * @param url 请求URL地址
      */
     @FormUrlEncoded
-    @PUT
+    @PUT()
     Call<ResponseBody> paramsPut(@Url String url, @FieldMap Map<String, String> param);
+
+    @PUT()
+    Call<ResponseBody> paramsPutJSON(@Url String url, @Body RequestBody body);
     
     /**
      * 资源修改 如修改个人资料 等请求操作
      * @param url 请求URL地址
      */
     @Multipart
-    @PUT
+    @PUT()
     Call<ResponseBody> paramsPutUpload(@Url String url, @PartMap Map<String, RequestBody> param);
 
     /**
@@ -76,7 +79,7 @@ public interface Params{
      * @param url 请求URL地址
      */
     @FormUrlEncoded
-    @DELETE
+    @DELETE()
     Call<ResponseBody> paramsDelete(@Url String url, @FieldMap Map<String, String> param);
     
     

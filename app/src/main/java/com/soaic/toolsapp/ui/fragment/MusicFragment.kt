@@ -1,6 +1,5 @@
 package com.soaic.toolsapp.ui.fragment
 
-import android.Manifest
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -8,10 +7,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.soaic.libcommon.network.NetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
-import com.soaic.libcommon.utils.PermissionsUtils
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.entity.MusicEntity
 import com.soaic.toolsapp.model.Music
+import com.soaic.toolsapp.ui.activity.music.MusicDetailActivity
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
@@ -59,7 +58,9 @@ class MusicFragment: BasicFragment() {
 
     override fun initEvents() {
         musicAdapter.setOnItemClickListener { _, _, position ->
-            playMusic(mData[position].song_id)
+            val bundle = Bundle()
+            bundle.putString("songId", mData[position].song_id)
+            startActivity(MusicDetailActivity::class.java, bundle)
         }
 
     }
@@ -70,7 +71,7 @@ class MusicFragment: BasicFragment() {
 
     private fun requestMusicInfo(){
         NetClient.Builder(context)
-                .url("http://tingapi.ting.baidu.com/v1/restserver/ting")
+                .url("https://tingapi.ting.baidu.com/v1/restserver/ting/")
                 .param("method","baidu.ting.billboard.billList")
                 .param("type","1")
                 .param("size", size.toString())
@@ -79,9 +80,9 @@ class MusicFragment: BasicFragment() {
                     override fun onSuccess(t: MusicEntity) {
                         if(offset == 0) {
                             mData.clear()
-                            refresh_layout.finishRefresh(2000)
+                            refresh_layout.finishRefresh(500)
                         } else {
-                            refresh_layout.finishLoadMore(2000)
+                            refresh_layout.finishLoadMore(500)
                         }
                         mData.addAll(t.song_list)
                         musicAdapter.notifyDataSetChanged()
@@ -94,29 +95,7 @@ class MusicFragment: BasicFragment() {
                 })
     }
 
-    private fun playMusic(songId: String){
-        NetClient.Builder(context)
-                .url("https://tingapi.ting.baidu.com/v1/restserver/ting")
-                .param("method","baidu.ting.song.play")
-                .param("songid",songId)
-                .build().get(MusicEntity::class.java, object: OnResultListener<MusicEntity>{
-                    override fun onSuccess(t: MusicEntity) {
-                        if(offset == 0) {
-                            mData.clear()
-                            refresh_layout.finishRefresh(2000)
-                        } else {
-                            refresh_layout.finishLoadMore(2000)
-                        }
-                        mData.addAll(t.song_list)
-                        musicAdapter.notifyDataSetChanged()
 
-                        offset += size
-                    }
-                    override fun onFailure(err: Throwable) {
-                        err.printStackTrace()
-                    }
-                })
-    }
 
     override fun onUserVisible() {
 

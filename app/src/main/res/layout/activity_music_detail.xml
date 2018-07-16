@@ -5,13 +5,40 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_launcher"
-        android:scaleType="fitXY"
-        tools:ignore="ContentDescription"/>
+    <TextView
+        android:id="@+id/musicDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.soaic.libcommon.weiget.SImageView
+        android:id="@+id/musicDetailPic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicDetailName"
+        android:layout_marginTop="10dp"
+        app:viewAspectRatio="1"/>
+
+    <com.soaic.toolsapp.weight.MusicPlayerView
+        android:id="@+id/musicDetailPlay"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:buttonColor="#FF0028"
+        app:layout_constraintBottom_toBottomOf="@+id/musicDetailPic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/musicDetailPic"
+        app:progressEmptyColor="#20FFFFFF"
+        app:progressLoadedColor="#00815E"
+        app:textColor="#80FFFFFF"
+        app:textSize="14sp" />
 
 
 </android.support.constraint.ConstraintLayout>

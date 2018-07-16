@@ -6,7 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.recyclerview.adapter.BasicAdapter
+import com.soaic.libcommon.recyclerview.adapter.BasicSlidingAdapter
 import com.soaic.libcommon.recyclerview.holder.BasicItemHolder
+import com.soaic.libcommon.recyclerview.weight.SlidingMenu
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.model.Music
 
@@ -30,6 +32,8 @@ class MusicAdapter(var data: MutableList<Music>) : BasicAdapter() {
         signerView.text = data[position].author
         albumView.text = data[position].album_title
         GlideUtil.display(picView, data[position].pic_small)
+
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.soaic.libcommon.glide;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.annotation.DrawableRes;
@@ -24,9 +25,25 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.EmptySignature;
 
+import org.reactivestreams.Subscriber;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.observers.DefaultObserver;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
@@ -65,6 +82,35 @@ public class GlideUtil {
                 .apply(options)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
+    }
+
+    /**
+     * 通过Url获取Bitmap(需在异步线程中调用)
+     * @param context
+     * @param path
+     * @return
+     */
+    public static Observable<Bitmap> getBitmapByUrl(final Context context, final String path) {
+        return Observable.create(new ObservableOnSubscribe<Bitmap>() {
+            @Override
+            public void subscribe(ObservableEmitter<Bitmap> emitter) {
+                try {
+                    Bitmap bitmap = Glide.with(context)
+                            .asBitmap()
+                            .load(path)
+                            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .get();
+                    emitter.onNext(bitmap);
+                    emitter.onComplete();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    emitter.onError(e);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    emitter.onError(e);
+                }
+            }
+        });
     }
 
     public static void preload(Context context, String url) {
