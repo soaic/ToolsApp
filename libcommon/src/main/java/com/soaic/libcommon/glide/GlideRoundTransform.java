@@ -1,6 +1,5 @@
 package com.soaic.libcommon.glide;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -26,7 +25,8 @@ public class GlideRoundTransform extends BitmapTransformation {
         radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
-    @Override protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+    @Override
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
         return roundCrop(pool, toTransform);
     }
 

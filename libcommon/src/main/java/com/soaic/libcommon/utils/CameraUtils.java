@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -57,9 +56,12 @@ public class CameraUtils {
      * 拍照
      */
     public void getPhoto2Camera(final String path) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtils.getInstance().requestPermissions(activity, 100,
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsUtils.PermissionsResultAction() {
+                    new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    new PermissionsUtils.PermissionsResultAction() {
                         @Override
                         public void doExecuteSuccess(int requestCode) {
                             Uri uri = FileUtils.getFileUri(activity, new File(path));
@@ -67,11 +69,11 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode) {
+                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
-        }else{
+        } else {
             Uri uri = FileUtils.getFileUri(activity, new File(path));
             activity.startActivityForResult(startTakePhoto(uri), REQUEST_TAKE_PHOTO_CODE);
         }
@@ -82,9 +84,12 @@ public class CameraUtils {
      * 拍照后截屏
      */
     public void getPhoto2CameraCrop(final String path) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtils.getInstance().requestPermissions(activity, 101,
-                    new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsUtils.PermissionsResultAction() {
+                    new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    new PermissionsUtils.PermissionsResultAction() {
                         @Override
                         public void doExecuteSuccess(int requestCode) {
                             Uri uri = FileUtils.getFileUri(activity, new File(path));
@@ -93,11 +98,11 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode) {
+                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
-        }else{
+        } else {
             Uri uri = FileUtils.getFileUri(activity, new File(path));
             Intent intent = startTakePhoto(uri);
             activity.startActivityForResult(intent, REQUEST_TAKE_PHOTO_CROP_CODE);
@@ -109,19 +114,21 @@ public class CameraUtils {
      * 获取系统相册
      */
     public void getPhoto2Album() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtils.getInstance().requestPermissions(activity, 102,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, new PermissionsUtils.PermissionsResultAction() {
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    new PermissionsUtils.PermissionsResultAction() {
                         @Override
                         public void doExecuteSuccess(int requestCode) {
                             activity.startActivityForResult(startTakePicture(), REQUEST_TAKE_PICTURE_CODE);
                         }
+
                         @Override
-                        public void doExecuteFail(int requestCode) {
+                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
-        }else{
+        } else {
             activity.startActivityForResult(startTakePicture(), REQUEST_TAKE_PICTURE_CODE);
         }
     }
@@ -130,20 +137,22 @@ public class CameraUtils {
      * 获取系统相册后裁剪
      */
     public void getPhoto2AlbumCrop() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsUtils.getInstance().requestPermissions(activity, 103,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionsUtils.PermissionsResultAction() {
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    new PermissionsUtils.PermissionsResultAction() {
                         @Override
                         public void doExecuteSuccess(int requestCode) {
                             activity.startActivityForResult(startTakePicture(), REQUEST_TAKE_PICTURE_CROP_CODE);
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode) {
+                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
-        }else{
+        } else {
             activity.startActivityForResult(startTakePicture(), REQUEST_TAKE_PICTURE_CROP_CODE);
         }
     }
@@ -185,8 +194,8 @@ public class CameraUtils {
         photoURI = Uri.fromFile(new File(FileUtils.getTempFilePath(activity)));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         intent.putExtra("return-data", false);
-        intent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("noFaceDetection",true); // no face detection
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
         return intent;
     }
 
@@ -198,7 +207,7 @@ public class CameraUtils {
                 case REQUEST_TAKE_PICTURE_CODE:
                     //获取系统返回的照片的Uri
                     photoURI = intent.getData();
-                    if(photoURI != null && "file".equals(photoURI.getScheme())){
+                    if (photoURI != null && "file".equals(photoURI.getScheme())) {
                         //解决小米手机获取URL失败
                         cameraResult.onCameraSuccess(photoURI.getEncodedPath());
                         return;
@@ -206,23 +215,23 @@ public class CameraUtils {
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
                     //从系统表中查询指定Uri对应的照片
                     Cursor cursor = activity.getContentResolver().query(photoURI, filePathColumn, null, null, null);
-                    if(cursor!=null&&cursor.moveToFirst()){
+                    if (cursor != null && cursor.moveToFirst()) {
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         String picturePath = cursor.getString(columnIndex);  //获取照片路径
                         cursor.close();
-                        if(!TextUtils.isEmpty(picturePath)){
+                        if (!TextUtils.isEmpty(picturePath)) {
                             cameraResult.onCameraSuccess(picturePath);
-                        }else{
+                        } else {
                             cameraResult.onCameraFail("文件没找到");
                         }
-                    }else{
+                    } else {
                         cameraResult.onCameraFail("文件没找到");
                     }
                     break;
                 //选择系统图库.裁剪
                 case REQUEST_TAKE_PICTURE_CROP_CODE:
                     photoURI = intent.getData();
-                    activity.startActivityForResult(takeCropPicture(photoURI,REQUEST_WIDTH,REQUEST_HEIGHT),REQUEST_TAKE_CROP_CODE);
+                    activity.startActivityForResult(takeCropPicture(photoURI, REQUEST_WIDTH, REQUEST_HEIGHT), REQUEST_TAKE_CROP_CODE);
                     break;
                 //调用相机
                 case REQUEST_TAKE_PHOTO_CODE:
@@ -231,7 +240,7 @@ public class CameraUtils {
                     break;
                 //调用相机,裁剪
                 case REQUEST_TAKE_PHOTO_CROP_CODE:
-                    activity.startActivityForResult(takeCropPicture(photoURI,REQUEST_WIDTH,REQUEST_HEIGHT),REQUEST_TAKE_CROP_CODE);
+                    activity.startActivityForResult(takeCropPicture(photoURI, REQUEST_WIDTH, REQUEST_HEIGHT), REQUEST_TAKE_CROP_CODE);
                     break;
                 //裁剪之后的回调
                 case REQUEST_TAKE_CROP_CODE:
@@ -246,30 +255,31 @@ public class CameraUtils {
 
     /**
      * 将TakePhoto 提供的Uri 解析出文件绝对路径
+     *
      * @param uri
      * @return
      */
-    private static String parseOwnUri(Context context, Uri uri){
-        if(uri==null) return null;
+    private static String parseOwnUri(Context context, Uri uri) {
+        if (uri == null) return null;
         String path;
-        if(TextUtils.equals(uri.getAuthority(), FileUtils.getFileProviderName(context))){
-            path = new File(uri.getPath().replace("external_cache_path/","")).getAbsolutePath();
-            if(context.getExternalCacheDir() !=null && !path.contains(context.getExternalCacheDir().getAbsolutePath())){
-                path = context.getExternalCacheDir().getAbsolutePath()+ path;
+        if (TextUtils.equals(uri.getAuthority(), FileUtils.getFileProviderName(context))) {
+            path = new File(uri.getPath().replace("external_cache_path/", "")).getAbsolutePath();
+            if (context.getExternalCacheDir() != null && !path.contains(context.getExternalCacheDir().getAbsolutePath())) {
+                path = context.getExternalCacheDir().getAbsolutePath() + path;
             }
-        }else {
+        } else {
             String[] filePathColumn = {MediaStore.MediaColumns.DATA};
             Cursor cursor = context.getContentResolver().query(uri, filePathColumn, null, null, null);
             //也可用下面的方法拿到cursor
             //Cursor cursor = this.context.managedQuery(uri, filePathColumn, null, null, null);
-            if(cursor!=null){
+            if (cursor != null) {
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 cursor.moveToFirst();
                 path = cursor.getString(columnIndex);
                 cursor.close();
-                return TextUtils.isEmpty(path)?uri.getPath():path;
-            }else{
+                return TextUtils.isEmpty(path) ? uri.getPath() : path;
+            } else {
                 path = uri.getPath();
             }
         }
@@ -278,14 +288,15 @@ public class CameraUtils {
 
 
     /**
-     * 解决小米手机上获取图片路径为null的情况  
+     * 解决小米手机上获取图片路径为null的情况
+     *
      * @param intent
      * @return
      */
     public Uri getUri(Intent intent) {
         Uri uri = intent.getData();
         String type = intent.getType();
-        if (uri!=null && uri.getScheme().equals("file") && (type.contains("image/"))) {
+        if (uri != null && uri.getScheme().equals("file") && (type.contains("image/"))) {
             String path = uri.getEncodedPath();
             if (path != null) {
                 path = Uri.decode(path);
@@ -294,7 +305,7 @@ public class CameraUtils {
                 buff.append("(").append(MediaStore.Images.ImageColumns.DATA).append("=")
                         .append("'" + path + "'").append(")");
                 Cursor cur = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        new String[] { MediaStore.Images.ImageColumns._ID },
+                        new String[]{MediaStore.Images.ImageColumns._ID},
                         buff.toString(), null, null);
                 int index = 0;
                 for (cur.moveToFirst(); !cur.isAfterLast(); cur.moveToNext()) {
@@ -315,16 +326,17 @@ public class CameraUtils {
         return uri;
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState){
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         photoURI = savedInstanceState.getParcelable("photoURI");
     }
 
-    public void onSaveInstanceState(Bundle outState){
+    public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable("photoURI", photoURI);
     }
 
-    public interface CameraResult{
-    	void onCameraSuccess(String filePath);
-    	void onCameraFail(String message);
-    } 
+    public interface CameraResult {
+        void onCameraSuccess(String filePath);
+
+        void onCameraFail(String message);
+    }
 }

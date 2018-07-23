@@ -25,52 +25,40 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.EmptySignature;
 
-import org.reactivestreams.Subscriber;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.observers.DefaultObserver;
-import io.reactivex.schedulers.Schedulers;
-
-import static com.bumptech.glide.request.RequestOptions.centerCropTransform;
 
 public class GlideUtil {
 
-    public static void display(ImageView imageView, String path){
-        if(imageView == null) return;
+    public static void display(ImageView imageView, String path) {
+        if (imageView == null) return;
         Glide.with(imageView.getContext()).load(path).into(imageView);
     }
 
-    public static void display(ImageView imageView, @DrawableRes int rid){
-        if(imageView == null) return;
-        String path = "android.resource://"+imageView.getContext().getPackageName()+"/drawable/"+rid;
+    public static void display(ImageView imageView, @DrawableRes int rid) {
+        if (imageView == null) return;
+        String path = "android.resource://" + imageView.getContext().getPackageName() + "/drawable/" + rid;
         Glide.with(imageView.getContext()).load(path).into(imageView);
     }
 
-    public static void display(ImageView imageView, File file){
-        if(file == null || imageView == null) return;
-        String path = "file://"+ file.getAbsolutePath();
+    public static void display(ImageView imageView, File file) {
+        if (file == null || imageView == null) return;
+        String path = "file://" + file.getAbsolutePath();
         Glide.with(imageView.getContext()).load(path).into(imageView);
     }
 
     /**
      * 设置圆角 90dp宽高一致时为圆形
+     *
      * @param imageView
      * @param path
-     * @param dp 圆角度数
+     * @param dp        圆角度数
      */
     public static void displayRound(ImageView imageView, String path, int dp) {
         RequestOptions options = new RequestOptions()
@@ -78,7 +66,7 @@ public class GlideUtil {
                 .transforms(new CenterCrop(), new GlideRoundTransform(dp));
 
         Glide.with(imageView.getContext()).load(path)
-                .listener(new SGlideRequestListener(imageView,ImageView.ScaleType.FIT_XY,ImageView.ScaleType.CENTER_CROP))
+                .listener(new SGlideRequestListener(imageView, ImageView.ScaleType.FIT_XY, ImageView.ScaleType.CENTER_CROP))
                 .apply(options)
                 .transition(new DrawableTransitionOptions().crossFade())
                 .into(imageView);
@@ -86,6 +74,7 @@ public class GlideUtil {
 
     /**
      * 通过Url获取Bitmap(需在异步线程中调用)
+     *
      * @param context
      * @param path
      * @return
@@ -132,6 +121,7 @@ public class GlideUtil {
 
     /**
      * 清除单个图片缓存
+     *
      * @param context
      * @param url
      * @return
@@ -149,7 +139,7 @@ public class GlideUtil {
      */
     public void clearDiskCache(final Context context) {
         try {
-            if(context == null) return;
+            if (context == null) return;
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 new Thread(new Runnable() {
                     @Override
@@ -192,7 +182,7 @@ public class GlideUtil {
      * @param file file
      * @return size
      */
-    private long getFolderSize(File file){
+    private long getFolderSize(File file) {
         long size = 0;
         try {
             File[] fileList = file.listFiles();
@@ -212,7 +202,7 @@ public class GlideUtil {
     /**
      * 删除指定目录下的文件，这里用于缓存的删除
      *
-     * @param filePath filePath
+     * @param filePath       filePath
      * @param deleteThisPath deleteThisPath
      */
     private boolean deleteFolderFile(String filePath, boolean deleteThisPath) {
@@ -246,6 +236,7 @@ public class GlideUtil {
     static class OriginalKey implements Key {
         private final String id;
         private final Key signature;
+
         private OriginalKey(String id, Key signature) {
             this.id = id;
             this.signature = signature;
@@ -286,7 +277,7 @@ public class GlideUtil {
         private ImageView.ScaleType mActualScaleType;
         private ImageView mImageView;
 
-        SGlideRequestListener(ImageView mImageView, ImageView.ScaleType placeScaleType, ImageView.ScaleType actualScaleType){
+        SGlideRequestListener(ImageView mImageView, ImageView.ScaleType placeScaleType, ImageView.ScaleType actualScaleType) {
             this.mPlaceScaleType = placeScaleType;
             this.mActualScaleType = actualScaleType;
             this.mImageView = mImageView;

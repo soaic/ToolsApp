@@ -10,7 +10,9 @@ import com.soaic.libcommon.R;
 
 
 public class SImageView extends AppCompatImageView {
+    //宽高比，以宽度为基准，高度乘上比率
     private float mAspectRatio = 0;
+
     public SImageView(Context context) {
         this(context,null);
     }
