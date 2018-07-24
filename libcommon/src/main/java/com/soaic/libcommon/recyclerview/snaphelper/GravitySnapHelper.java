@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
+ * Example:
+ *      GravitySnapHelper snapHelper = new GravitySnapHelper();
+ *      snapHelper.attachToRecyclerView(mRecyclerView);
  * https://github.com/rubensousa/RecyclerViewSnap
  */
 public class GravitySnapHelper extends LinearSnapHelper {

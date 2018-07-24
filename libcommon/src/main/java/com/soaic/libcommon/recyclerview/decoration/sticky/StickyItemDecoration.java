@@ -72,8 +72,10 @@ public class StickyItemDecoration extends RecyclerView.ItemDecoration{
      */
     private Paint mPaint;
 
-    public StickyItemDecoration() {
-        mStickyView = new ExampleStickyView();
+    public StickyItemDecoration(StickyView stickyView) {
+        mStickyView = stickyView;
+        if(mStickyView == null)
+            mStickyView = new ExampleStickyView();
         initPaint();
     }
 
