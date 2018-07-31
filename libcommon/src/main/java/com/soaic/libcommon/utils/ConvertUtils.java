@@ -28,7 +28,7 @@ public class ConvertUtils {
     }
 
     /**
-     * 字符串资源文件转int
+     * 字符串资源文件转int R.drawable.icon
      * @param context
      * @param resStr
      * @return

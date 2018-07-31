@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".ui.activity.check.CheckActivity" />
         <activity android:name=".ui.activity.music.MusicDetailActivity" />
+        <activity android:name=".ui.activity.born.BornActivity" />
+        <activity android:name=".ui.activity.location.LocationActivity" />
     </application>
 
 </manifest>

@@ -3,11 +3,16 @@ package com.soaic.toolsapp.ui.fragment
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.soaic.libcommon.utils.*
 import com.soaic.toolsapp.R
+import com.soaic.toolsapp.ui.activity.born.BornActivity
 import com.soaic.toolsapp.ui.activity.check.CheckActivity
+import com.soaic.toolsapp.ui.activity.location.LocationActivity
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
+import java.util.*
 
 class MoreFragment: BasicFragment() {
 
@@ -17,7 +22,9 @@ class MoreFragment: BasicFragment() {
     lateinit var moreExpress: TextView
     lateinit var moreWeather: TextView
     lateinit var moreCheck: TextView
+    lateinit var moreBorn: TextView
     lateinit var cameraUtils: CameraUtils
+    lateinit var moreContentFragment: FrameLayout
 
     companion object {
         fun newInstance(): MoreFragment{
@@ -48,54 +55,45 @@ class MoreFragment: BasicFragment() {
         moreExpress = findViewById(R.id.moreExpress)
         moreWeather = findViewById(R.id.moreWeather)
         moreCheck = findViewById(R.id.moreCheck)
+        moreBorn = findViewById(R.id.moreBorn)
+        moreContentFragment = findViewById(R.id.moreContentFragment)
+
     }
 
     override fun initEvents() {
         moreLocation.setOnClickListener {
-            PermissionsUtils.getInstance().requestPermissions(activity, 1000,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_WIFI_STATE),
-                    object: PermissionsUtils.PermissionsResultAction{
-                        override fun doExecuteFail(requestCode: Int) {
-                            showToast(requestCode.toString())
-                        }
-
-                        override fun doExecuteSuccess(requestCode: Int) {
-                            LocationUtil.getInstance().startLocation(activity, object: LocationUtil.OnLocationListener{
-                                override fun onLocation(location: MutableMap<String, Any>?) {
-                                    showToast(location!!["address"].toString())
-                                }
-
-                                override fun onError(errStr: String?, errCode: Int) {
-                                    showToast(errStr!!)
-                                }
-
-                            })
-                        }
-
-                    })
-
+            startActivity(LocationActivity::class.java)
         }
         moreFm.setOnClickListener {
             cameraUtils.getPhoto2CameraCrop(FileUtils.getTempFilePath(activity))
         }
         moreNovel.setOnClickListener {
-            val url = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
-            val download = DownloadUtil(activity!!.applicationContext)
-            download.startDownload(url)
-            download.queryProcess()
 
         }
         moreExpress.setOnClickListener {
+
         }
         moreWeather.setOnClickListener {
 
         }
         moreCheck.setOnClickListener{
-            startActivity(Intent(activity, CheckActivity::class.java))
+            startActivity(CheckActivity::class.java)
         }
+        moreBorn.setOnClickListener {
+            born()
+        }
+    }
+
+    private fun born() {
+        val calendarSelect = Calendar.getInstance()
+        calendarSelect.time = TimeUtils.string2Date("1990-01-01", "yyyy-MM-dd")
+        val calendarEnd  = Calendar.getInstance()
+        calendarEnd.time = Date()
+        PickerUtils.showTimeYMDPicker(activity, "请选择你的生日", calendarSelect,null, calendarEnd, { date ->
+            val bundle = Bundle()
+            bundle.putString("date", TimeUtils.date2String(date, "yyyyMMdd"))
+            startActivity(BornActivity::class.java, bundle)
+        })
     }
 
     override fun loadData() {
@@ -115,4 +113,11 @@ class MoreFragment: BasicFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         cameraUtils.onActivityResult(requestCode, resultCode, data)
     }
+
+    fun goNextFragment(fragment: BasicFragment, tag: String){
+        moreContentFragment.visibility = View.VISIBLE
+        childFragmentManager.beginTransaction().add(R.id.moreContentFragment, fragment, tag).addToBackStack(null).commitAllowingStateLoss()
+    }
+
+
 }

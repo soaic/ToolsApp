@@ -1,6 +1,7 @@
 package com.soaic.toolsapp.ui.fragment
 
 import android.os.Bundle
+import com.soaic.libcommon.utils.Logger
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
@@ -20,7 +21,6 @@ class NewsFragment: BasicFragment() {
     }
 
     override fun initViews() {
-
     }
 
     override fun initEvents() {

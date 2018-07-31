@@ -7,6 +7,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.soaic.libcommon.network.NetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
+import com.soaic.libcommon.utils.Logger
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.entity.MusicEntity
 import com.soaic.toolsapp.model.Music
@@ -66,7 +67,7 @@ class MusicFragment: BasicFragment() {
     }
 
     override fun loadData() {
-        refresh_layout.autoRefresh()
+        requestMusicInfo()
     }
 
     private fun requestMusicInfo(){

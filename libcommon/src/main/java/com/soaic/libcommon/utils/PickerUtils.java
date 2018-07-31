@@ -163,7 +163,7 @@ public class PickerUtils {
     /**
      * 时间选择年月日
      */
-    public static void showTimeYMDPicker(Activity activity, Calendar startDate, Calendar endDate, final OnTimePickerListener listener){
+    public static void showTimeYMDPicker(Activity activity, String title, Calendar selectDate , Calendar startDate, Calendar endDate, final OnTimePickerListener listener){
         //时间选择器
         TimePickerView pvTime = new TimePickerBuilder(activity, new OnTimeSelectListener() {
             @Override
@@ -172,6 +172,7 @@ public class PickerUtils {
             }
         }).setTitleText("")
                 .setCancelText(activity.getString(R.string.picker_cancel))
+                .setTitleText(title)
                 .setSubmitText(activity.getString(R.string.picker_submit))
                 .setSubCalSize(16)
                 .setLineSpacingMultiplier(2.5f)//设置两横线之间的间隔倍数
@@ -186,7 +187,7 @@ public class PickerUtils {
                 .setBackgroundId(0x66000000)
                 .setRangDate(startDate,endDate)
                 .setType(new boolean[]{ true, true, true, false, false, false }).build();
-        pvTime.setDate(startDate);//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.setDate(selectDate);//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }
 

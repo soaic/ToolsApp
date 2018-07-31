@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/bornAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/born_age"
+        android:textSize="16sp"
+        android:textColor="@color/textColor"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/born_tip"
+        android:textColor="@color/textGreyColor"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornYear"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_year"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornMonth"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_month"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornWeek"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_week"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornDay"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_day"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornHour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_hour"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+        <TextView
+            android:id="@+id/bornMinute"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/born_minute"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            android:layout_weight="1"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/lineColor"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lineColor"/>
+
+</LinearLayout>

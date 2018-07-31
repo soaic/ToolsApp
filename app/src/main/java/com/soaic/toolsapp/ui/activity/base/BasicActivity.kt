@@ -11,6 +11,9 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.soaic.libcommon.utils.AppUtils
 import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
+import com.soaic.libcommon.fragment.BackHandlerHelper
+
+
 
 
 abstract class BasicActivity : AppCompatActivity(), BGASwipeBackHelper.Delegate {
@@ -158,6 +161,5 @@ abstract class BasicActivity : AppCompatActivity(), BGASwipeBackHelper.Delegate 
         }
         mSwipeBackHelper.backward()
     }
-
 
 }

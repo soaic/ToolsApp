@@ -1,97 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/moreLocation"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/more_location"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <View
+        <TextView
+            android:id="@+id/moreLocation"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_location"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreFm"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_fm"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreNovel"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_novel"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreExpress"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_express"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreWeather"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_weather"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreCheck"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/check_company_button_txt"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/moreBorn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/item_selector"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="@string/more_born"
+            android:textColor="@color/color_2E2E2E" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#cccccc" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/moreContentFragment"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-    <TextView
-        android:id="@+id/moreFm"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/more_fm"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-    <TextView
-        android:id="@+id/moreNovel"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/more_novel"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-    <TextView
-        android:id="@+id/moreExpress"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/more_express"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-    <TextView
-        android:id="@+id/moreWeather"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/more_weather"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-    <TextView
-        android:id="@+id/moreCheck"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:textColor="@color/color_2E2E2E"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:background="@drawable/item_selector"
-        android:text="@string/check_company_button_txt"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="#cccccc"/>
-
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+</RelativeLayout>

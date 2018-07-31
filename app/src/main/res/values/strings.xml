@@ -15,7 +15,19 @@
     <string name="more_express">快递查询</string>
     <string name="more_weather">天气查询</string>
     <string name="more_check">检查</string>
+    <string name="more_born">生辰</string>
 
     <string name="check_company_hint">请输入公司名</string>
     <string name="check_company_button_txt">检测</string>
+
+    <string name="born_tip">在这个世界上, 你已经存在了</string>
+    <string name="born_age">你 %1$s 岁了</string>
+    <string name="born_year">%1$s\n年</string>
+    <string name="born_month">%1$s\n月</string>
+    <string name="born_week">%1$s\n周</string>
+    <string name="born_day">%1$s\n天</string>
+    <string name="born_hour">%1$s\n小时</string>
+    <string name="born_minute">%1$s\n分钟</string>
+
+    <string name="location_tip">你的当前位置：</string>
 </resources>

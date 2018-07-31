@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
+import com.soaic.libcommon.fragment.BackHandlerHelper
 import com.soaic.libcommon.utils.BottomNavigationViewHelper
 import com.soaic.libcommon.weiget.NoScrollViewPager
 import com.soaic.toolsapp.R
@@ -27,6 +27,7 @@ class MainActivity : BasicActivity() {
     override fun initViews() {
         initFragments()
         viewPager = findViewById(R.id.viewPager)
+        viewPager.setNoScroll(true)
         navigation = findViewById(R.id.navigation)
         viewPager.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int) = pages[position]
@@ -46,7 +47,7 @@ class MainActivity : BasicActivity() {
                 R.id.action_news -> tab = 3
                 R.id.action_more -> tab = 4
             }
-            viewPager.currentItem = tab
+            viewPager.setCurrentItem(tab, false)
             true
             //这里返回true，表示事件已经被处理。如果返回false，为了达到条目选中效果，还需要设置item.setChecked(true);
             //不论点击了哪一个，都手动设置为选中状态true（该控件并没有默认实现), 如果不设置，只有第一个menu展示的时候是选中状态，其他的即便被点击选中了，图标和文字也不会做任何更改
@@ -76,5 +77,11 @@ class MainActivity : BasicActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if(viewPager.currentItem < pages.size)
             pages[viewPager.currentItem].onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onBackPressed() {
+        if (!BackHandlerHelper.handleBackPress(this)) {
+            super.onBackPressed()
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.soaic.libcommon.utils;
 
 import android.annotation.SuppressLint;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,11 +10,22 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import static java.util.Locale.getDefault;
+
 /**
  * Created by DDY-03 on 2017/10/17.
  */
 
 public class TimeUtils {
+
+
+    public static final long SECOND = 1000L;
+    public static final long MINUTE = 60 * SECOND;
+    public static final long HOUR = 60 * MINUTE;
+    public static final long DAY = 24 * HOUR;
+    public static final long MONTH = 30 * DAY;
+    public static final long YEAR = 365 * MONTH;
+
 
     /**
      * 将时间字符串转为时间戳
@@ -25,7 +37,7 @@ public class TimeUtils {
      */
     public static long string2Millis(String time, String pattern) {
         try {
-            return new SimpleDateFormat(pattern, Locale.getDefault()).parse(time).getTime();
+            return new SimpleDateFormat(pattern, getDefault()).parse(time).getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -41,7 +53,7 @@ public class TimeUtils {
      * @return 时间字符串
      */
     public static String millis2String(long millis, String pattern) {
-        return new SimpleDateFormat(pattern, Locale.getDefault()).format(new Date(millis));
+        return new SimpleDateFormat(pattern, getDefault()).format(new Date(millis));
     }
 
     /**
@@ -53,7 +65,7 @@ public class TimeUtils {
      * @return 时间字符串
      */
     public static String date2String(Date data, String pattern) {
-        return new SimpleDateFormat(pattern, Locale.getDefault()).format(data);
+        return new SimpleDateFormat(pattern, getDefault()).format(data);
     }
 
 
@@ -66,7 +78,7 @@ public class TimeUtils {
      */
     public static Date string2Date(String data, String pattern) {
         try {
-            return new SimpleDateFormat(pattern, Locale.getDefault()).parse(data);
+            return new SimpleDateFormat(pattern, getDefault()).parse(data);
         } catch (Exception e) {
             e.printStackTrace();
             return new Date();
@@ -114,16 +126,16 @@ public class TimeUtils {
         if (calendarNow.get(Calendar.YEAR) == calendarMils.get(Calendar.YEAR)) {
             int diff = calendarMils.get(Calendar.DAY_OF_YEAR) - calendarNow.get(Calendar.DAY_OF_YEAR);
             if (diff == 0) {
-                return String.format(Locale.getDefault(), "%tR", new Date(millis));//12:00
+                return String.format(getDefault(), "%tR", new Date(millis));//12:00
             } else if (diff == -1) {
                 return "昨天";//%tR返回12:00
             } else if (diff < -1 && diff >= -6) {
-                return String.format(Locale.getDefault(), "%tA", new Date(millis)).replace("星期", "周");//%tA星期几
+                return String.format(getDefault(), "%tA", new Date(millis)).replace("星期", "周");//%tA星期几
             } else {
-                return String.format(Locale.getDefault(), "%tF", new Date(millis)).replace("-", "/");
+                return String.format(getDefault(), "%tF", new Date(millis)).replace("-", "/");
             }
         } else {
-            return String.format(Locale.getDefault(), "%tF", new Date(millis)).replace("-", "/");
+            return String.format(getDefault(), "%tF", new Date(millis)).replace("-", "/");
         }
     }
 
@@ -145,38 +157,59 @@ public class TimeUtils {
                 .get(Calendar.DAY_OF_MONTH);
     }
 
-    /**
-     * 获取两个时间相差的天数
-     *
-     * @param date1
-     * @param date2
-     * @return
-     */
-    public static int getDateBetween(Date date1, Date date2) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date1);
-        long time1 = cal.getTimeInMillis();
-        cal.setTime(date2);
-        long time2 = cal.getTimeInMillis();
-        long between_days = (time2 - time1) / (1000 * 3600 * 24);
-        return Integer.parseInt(String.valueOf(between_days));
+    public static long getDateBetweenYear(Date date1, Date date2) {
+        long days = getDateBetweenDay(date1, date2);
+        return days / 365;
     }
 
-    /**
-     * 获取两个时间相差的小时
-     *
-     * @param date1
-     * @param date2
-     * @return
-     */
-    public static int getDateBetweenHour(Date date1, Date date2) {
+    public static String getDateBetweenYearDecimal(Date date1, Date date2) {
+        long seconds = getDateBetweenSecond(date1, date2);
+        int yt = 365 * 24 * 60 * 60;
+        double year = NumberUtils.doublePlus(seconds / yt, (double) seconds % yt / yt);
+        return NumberUtils.keepDecimalDigit(year, 8);
+    }
+
+    public static long getDateBetweenMonth(Date date1, Date date2) {
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(date1);
+        c2.setTime(date2);
+        int result = c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
+        int month = (c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR)) * 12;
+        if (result <= 0 && c1.get(Calendar.DAY_OF_MONTH) - c2.get(Calendar.DAY_OF_MONTH) < 0) {
+            return Math.abs(month + result) - 1;
+        }
+        return Math.abs(month + result);
+    }
+
+    public static long getDateBetweenWeek(Date date1, Date date2) {
+        long seconds = getDateBetweenSecond(date1, date2);
+        return seconds / 60 / 60 / 24 / 7;
+    }
+
+    public static long getDateBetweenDay(Date date1, Date date2) {
+        long seconds = getDateBetweenSecond(date1, date2);
+        return seconds / 60 / 60 / 24;
+    }
+
+    public static long getDateBetweenHour(Date date1, Date date2) {
+        long seconds = getDateBetweenSecond(date1, date2);
+        return seconds / 60 / 60;
+    }
+
+    public static long getDateBetweenMinute(Date date1, Date date2) {
+        long seconds = getDateBetweenSecond(date1, date2);
+        return seconds / 60;
+    }
+
+    public static long getDateBetweenSecond(Date date1, Date date2) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
         long time1 = cal.getTimeInMillis();
         cal.setTime(date2);
         long time2 = cal.getTimeInMillis();
-        long between_days = (time2 - time1) / (1000 * 3600);
-        return Integer.parseInt(String.valueOf(between_days));
+        long between_seconds = Math.abs(time2 - time1) / SECOND;
+        return Long.parseLong(String.valueOf(between_seconds));
     }
 
     /**

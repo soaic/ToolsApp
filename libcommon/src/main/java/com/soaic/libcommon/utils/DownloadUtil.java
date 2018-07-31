@@ -16,6 +16,12 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FilenameFilter;
 
+/**
+ * val url = "http://issuecdn.baidupcs.com/issue/netdisk/apk/BaiduNetdisk_7.15.1.apk"
+ * val download = DownloadUtil(activity!!.applicationContext)
+ * download.startDownload(url)
+ * download.queryProcess()
+ */
 public class DownloadUtil {
 
     private long id;

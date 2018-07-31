@@ -10,11 +10,12 @@ import android.support.v4.app.Fragment
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import com.soaic.libcommon.fragment.BackHandledFragment
 import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
 
 
-abstract class BasicFragment : Fragment() {
+abstract class BasicFragment : BackHandledFragment() {
     private var mContentView: View? = null
     private var loadingDialog: Dialog? = null
 

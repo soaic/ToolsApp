@@ -2,6 +2,7 @@ package com.soaic.toolsapp.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import com.soaic.libcommon.utils.Logger
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
@@ -20,9 +21,7 @@ class PictureFragment: BasicFragment() {
 
     }
 
-    @SuppressLint("ResourceType")
     override fun initViews() {
-
     }
 
     override fun initEvents() {

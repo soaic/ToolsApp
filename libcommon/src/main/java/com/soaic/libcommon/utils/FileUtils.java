@@ -29,4 +29,54 @@ public class FileUtils {
     public static String getFileProviderName(Context context) {
         return context.getPackageName() + ".fileProvider";
     }
+
+    /**
+     * 获取文件大小
+     * @param file
+     * @return
+     */
+    public static int getFileSize(File file) {
+        return (int) (file.length() / 1024 / 1024);
+    }
+
+    /**
+     * 获取文件夹大小
+     * @param file
+     * @return
+     */
+    public static int getFolderSize(File file) {
+        long size = 0;
+        File[] fileList = file.listFiles();
+        if (fileList == null) {
+            return 0;
+        }
+        for (int i = 0; i < fileList.length; i++) {
+            if (fileList[i].isDirectory()) {
+                size = size + getFolderSize(fileList[i]);
+            } else {
+                size = size + fileList[i].length();
+            }
+        }
+        return (int) (size / 1024 / 1024);
+    }
+
+    /**
+     * 删除文件或文件夹
+     */
+    public static boolean deleteFileOrFolder(File file) {
+        if (file.isFile()) {
+            return file.delete();
+        }
+        if (file.isDirectory()) {
+            File[] childFile = file.listFiles();
+            if ((childFile == null) || (childFile.length == 0)) {
+                return file.delete();
+            }
+            for (File f : childFile) {
+                deleteFileOrFolder(f);
+            }
+            return file.delete();
+        }
+        return false;
+    }
 }
