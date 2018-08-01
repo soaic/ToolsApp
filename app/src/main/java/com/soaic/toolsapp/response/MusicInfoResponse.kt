@@ -1,9 +1,9 @@
-package com.soaic.toolsapp.entity
+package com.soaic.toolsapp.response
 
 import com.soaic.toolsapp.model.MusicBitrate
 import com.soaic.toolsapp.model.MusicInfo
 
-class MusicInfoEntity {
+class MusicInfoResponse {
 
     lateinit var songinfo: MusicInfo
     lateinit var bitrate: MusicBitrate

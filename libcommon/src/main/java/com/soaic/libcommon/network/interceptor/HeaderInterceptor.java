@@ -1,7 +1,8 @@
 package com.soaic.libcommon.network.interceptor;
 
-import android.os.Build;
 import android.support.annotation.NonNull;
+
+import com.soaic.libcommon.utils.Logger;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class HeaderInterceptor implements Interceptor {
         Request original = chain.request();
         Request.Builder request = original.newBuilder();
         //request.headers(Headers.of(Configure.getRetrofitHeader()));
-        request.addHeader("User-Agent", Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE);
+        //request.addHeader("User-Agent", Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE);
         request.method(original.method(), original.body());
         return chain.proceed(request.build());
     }

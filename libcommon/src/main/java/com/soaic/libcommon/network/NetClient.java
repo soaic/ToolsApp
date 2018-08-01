@@ -2,6 +2,7 @@ package com.soaic.libcommon.network;
 
 import android.accounts.NetworkErrorException;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
@@ -10,6 +11,7 @@ import com.soaic.libcommon.network.cookie.CookiesManager;
 import com.soaic.libcommon.network.https.OkHttpSSLSocketFactory;
 import com.soaic.libcommon.network.interceptor.HeaderInterceptor;
 import com.soaic.libcommon.network.interceptor.HttpLoggingInterceptor;
+import com.soaic.libcommon.network.interceptor.ServerErrorInterceptor;
 import com.soaic.libcommon.network.listener.OnResultListener;
 import com.soaic.libcommon.network.util.AppUtil;
 
@@ -45,6 +47,7 @@ public class NetClient {
     private HttpLoggingInterceptor interceptor;
     private OkHttpClient.Builder okHttpBuilder;
     private NetworkErrorException networkErrorException;
+    private long maxCacheSize = 10 * 1024 * 1024;
 
     private NetClient() {
         mGson = new Gson();
@@ -52,7 +55,6 @@ public class NetClient {
         //日志拦截配置
         interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         okHttpBuilder = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)       //设置连接超时10s
                 .readTimeout(10, TimeUnit.SECONDS)          //设置读取超时10s
@@ -97,7 +99,7 @@ public class NetClient {
                 //cookies管理
                 cookiesManager = new CookiesManager(builder.context);
                 mClient = okHttpBuilder
-                        .cache(new Cache(builder.context.getCacheDir(), 10 * 1024 * 1024))
+                        .cache(new Cache(builder.context.getCacheDir(), maxCacheSize))
                         .addInterceptor(new HeaderInterceptor())
                         .cookieJar(cookiesManager)
                         .build();
@@ -116,7 +118,7 @@ public class NetClient {
             return this;
         }
         if (mRetrofit != null) {
-            mCall = mRetrofit.create(Params.class).paramsGet(mBuilder.url, mBuilder.params);
+            mCall = mRetrofit.create(Params.class).paramsGet(mBuilder.url, mBuilder.headers, mBuilder.params);
             request(clazz, onResultListener);
         }
         return this;
@@ -133,12 +135,12 @@ public class NetClient {
                     RequestBody value = RequestBody.create(MediaType.parse("text/plain"), mBuilder.params.get(key));
                     mBuilder.bodyParams.put(key, value);
                 }
-                mCall = mRetrofit.create(Params.class).paramsPostUpload(mBuilder.url, mBuilder.bodyParams);
+                mCall = mRetrofit.create(Params.class).paramsPostUpload(mBuilder.url, mBuilder.headers, mBuilder.bodyParams);
             } else if (!TextUtils.isEmpty(mBuilder.bodyJson)) {
                 RequestBody body = RequestBody.create(MediaType.parse("application/json"), mBuilder.bodyJson);
-                mCall = mRetrofit.create(Params.class).paramsPostJSON(mBuilder.url, body);
+                mCall = mRetrofit.create(Params.class).paramsPostJSON(mBuilder.url, mBuilder.headers, body);
             } else {
-                mCall = mRetrofit.create(Params.class).paramsPost(mBuilder.url, mBuilder.params);
+                mCall = mRetrofit.create(Params.class).paramsPost(mBuilder.url, mBuilder.headers, mBuilder.params);
             }
             request(clazz, onResultListener);
         }
@@ -156,12 +158,12 @@ public class NetClient {
                     RequestBody value = RequestBody.create(MediaType.parse("text/plain"), mBuilder.params.get(key));
                     mBuilder.bodyParams.put(key, value);
                 }
-                mCall = mRetrofit.create(Params.class).paramsPutUpload(mBuilder.url, mBuilder.bodyParams);
+                mCall = mRetrofit.create(Params.class).paramsPutUpload(mBuilder.url, mBuilder.headers, mBuilder.bodyParams);
             } else if (!TextUtils.isEmpty(mBuilder.bodyJson)) {
                 RequestBody body = RequestBody.create(MediaType.parse("application/json"), mBuilder.bodyJson);
-                mCall = mRetrofit.create(Params.class).paramsPutJSON(mBuilder.url, body);
+                mCall = mRetrofit.create(Params.class).paramsPutJSON(mBuilder.url, mBuilder.headers, body);
             } else {
-                mCall = mRetrofit.create(Params.class).paramsPut(mBuilder.url, mBuilder.params);
+                mCall = mRetrofit.create(Params.class).paramsPut(mBuilder.url, mBuilder.headers, mBuilder.params);
             }
             request(clazz, onResultListener);
         }
@@ -174,7 +176,7 @@ public class NetClient {
             return this;
         }
         if (mRetrofit != null) {
-            mCall = mRetrofit.create(Params.class).paramsDelete(mBuilder.url, mBuilder.params);
+            mCall = mRetrofit.create(Params.class).paramsDelete(mBuilder.url, mBuilder.headers, mBuilder.params);
             request(clazz, onResultListener);
         }
         return this;
@@ -194,10 +196,16 @@ public class NetClient {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
+                    T result;
                     if (clazz.getName().equals("java.lang.String")) {
-                        onResultListener.onSuccess((T) response.body().string());
+                        result = (T) response.body().string();
                     } else {
-                        onResultListener.onSuccess(mGson.fromJson(response.body().string(), clazz));
+                        result = mGson.fromJson(response.body().string(), clazz);
+                    }
+                    if (mBuilder.serverErrorInterceptor != null && mBuilder.serverErrorInterceptor.isServerError(result)) {
+                        handlerError(mBuilder.serverErrorInterceptor.getServerError(), onResultListener);
+                    } else {
+                        handlerSuccess(result, onResultListener);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -217,10 +225,16 @@ public class NetClient {
         onResultListener.onFailure(err);
     }
 
+    private <T> void handlerSuccess(T t, OnResultListener<T> onResultListener) {
+        onResultListener.onSuccess(t);
+    }
+
     public static final class Builder {
         private String url = "";
         private LinkedHashMap<String, String> params = new LinkedHashMap<>(); //LinkedHashMap顺序排列
         private LinkedHashMap<String, RequestBody> bodyParams = new LinkedHashMap<>();
+        private LinkedHashMap<String, String> headers = new LinkedHashMap<>();
+        private ServerErrorInterceptor serverErrorInterceptor;
         private String bodyJson = "";
         private Context context;
 
@@ -251,6 +265,24 @@ public class NetClient {
             return this;
         }
 
+        public Builder header(String key, String value) {
+            if (key != null && value != null) {
+                headers.put(key, value);
+            }
+            return this;
+        }
+
+        public Builder headers(Map<String, String> maps) {
+            if (maps != null) {
+                for (String key : maps.keySet()) {
+                    if (key != null && maps.get(key) != null) {
+                        headers.put(key, maps.get(key));
+                    }
+                }
+            }
+            return this;
+        }
+
         public Builder paramsJSON(String json) {
             this.bodyJson = json;
             return this;
@@ -274,8 +306,16 @@ public class NetClient {
             return this;
         }
 
+        public Builder setServerErrorInterceptor(ServerErrorInterceptor serverErrorInterceptor) {
+            this.serverErrorInterceptor = serverErrorInterceptor;
+            return this;
+        }
+
         public NetClient build() {
             NetClient.getInstance().initData(this);
+            if (headers.size() <= 0) {
+                headers.put("User-Agent", Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE);
+            }
             return NetClient.getInstance();
         }
     }

@@ -1,7 +1,7 @@
-package com.soaic.toolsapp.entity
+package com.soaic.toolsapp.response
 
 import com.soaic.toolsapp.model.Music
 
-class MusicEntity {
+class MusicResponse {
     lateinit var song_list: List<Music>
 }

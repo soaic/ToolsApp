@@ -7,10 +7,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.soaic.libcommon.network.NetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
-import com.soaic.libcommon.utils.Logger
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.entity.MusicEntity
+import com.soaic.toolsapp.response.MusicResponse
 import com.soaic.toolsapp.model.Music
+import com.soaic.toolsapp.request.SServerErrorHandler
 import com.soaic.toolsapp.ui.activity.music.MusicDetailActivity
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
@@ -77,8 +77,9 @@ class MusicFragment: BasicFragment() {
                 .param("type","1")
                 .param("size", size.toString())
                 .param("offset",offset.toString())
-                .build().get(MusicEntity::class.java, object: OnResultListener<MusicEntity>{
-                    override fun onSuccess(t: MusicEntity) {
+                .setServerErrorInterceptor(SServerErrorHandler())
+                .build().get(MusicResponse::class.java, object: OnResultListener<MusicResponse>{
+                    override fun onSuccess(t: MusicResponse) {
                         if(offset == 0) {
                             mData.clear()
                             refresh_layout.finishRefresh(500)

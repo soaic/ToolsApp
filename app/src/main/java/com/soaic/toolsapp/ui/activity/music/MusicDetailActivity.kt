@@ -7,7 +7,7 @@ import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.network.NetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.entity.MusicInfoEntity
+import com.soaic.toolsapp.response.MusicInfoResponse
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.weight.MusicPlayerView
 
@@ -45,8 +45,8 @@ class MusicDetailActivity : BasicActivity(){
                 .url("https://tingapi.ting.baidu.com/v1/restserver/ting")
                 .param("method","baidu.ting.song.play")
                 .param("songid",songId)
-                .build().get(MusicInfoEntity::class.java, object: OnResultListener<MusicInfoEntity> {
-                    override fun onSuccess(t: MusicInfoEntity) {
+                .build().get(MusicInfoResponse::class.java, object: OnResultListener<MusicInfoResponse> {
+                    override fun onSuccess(t: MusicInfoResponse) {
                         hideProgressDialog()
                         musicDetailName.text = t.songinfo.title
                         GlideUtil.display(musicDetailPic, t.songinfo.pic_premium)
