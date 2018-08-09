@@ -3,6 +3,7 @@ package com.soaic.libcommon.utils;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,7 @@ public class PermissionsUtils {
 
     public void requestPermissions(Activity activity, int requestCode, String[] permissions) {
         List<String> deniedPermissions = findDeniedPermissions(activity, permissions);
-        if (deniedPermissions == null) {
-            if (resultAction != null) resultAction.doExecuteFail(requestCode, false);
-        } else if (deniedPermissions.size() > 0) {
+        if (deniedPermissions.size() > 0) {
             ActivityCompat.requestPermissions(activity, deniedPermissions.toArray(new String[]{}), requestCode);
         } else {
             if (resultAction != null) resultAction.doExecuteSuccess(requestCode);
@@ -57,13 +56,36 @@ public class PermissionsUtils {
         List<String> denyPermissions = new ArrayList<>();
         for (String value : permission) {
             if (ActivityCompat.checkSelfPermission(activity, value) != PackageManager.PERMISSION_GRANTED) {
-                if(!ActivityCompat.shouldShowRequestPermissionRationale(activity, value)){
-                    return null;
-                }
                 denyPermissions.add(value);
             }
         }
         return denyPermissions;
+    }
+
+    /**
+     * 判断是否勾选了不再提示系统权限请求
+     * 在请求权限前第一次调用一直是返回false, 在请求权限后没有勾选不在提示，调用一直返回true,勾选了则返回false
+     *
+     * @param activity
+     * @param permissions
+     * @return
+     */
+    public static boolean shouldShowRequestPermissionRationale(Activity activity, String... permissions) {
+        for (String permission : permissions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean shouldShowRequestPermissionRationale(Fragment fragment, String... permissions) {
+        for (String permission : permissions) {
+            if (fragment.shouldShowRequestPermissionRationale(permission)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -82,7 +104,7 @@ public class PermissionsUtils {
         }
 
         if (deniedPermissions.size() > 0) {
-            if (resultAction != null) resultAction.doExecuteFail(requestCode, true);
+            if (resultAction != null) resultAction.doExecuteFail(requestCode);
         } else {
             if (resultAction != null) resultAction.doExecuteSuccess(requestCode);
         }
@@ -95,6 +117,6 @@ public class PermissionsUtils {
 
         void doExecuteSuccess(int requestCode);
 
-        void doExecuteFail(int requestCode, boolean isShowPermissionsDialog);
+        void doExecuteFail(int requestCode);
     }
 }
