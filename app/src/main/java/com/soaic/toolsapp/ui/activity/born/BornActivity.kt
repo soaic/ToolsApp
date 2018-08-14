@@ -23,9 +23,9 @@ class BornActivity : BasicActivity() {
     private val timer = Timer()
     private val timerTask = object : TimerTask(){
         override fun run() {
-            handler.post({
+            handler.post {
                 initTimeData()
-            })
+            }
         }
     }
 

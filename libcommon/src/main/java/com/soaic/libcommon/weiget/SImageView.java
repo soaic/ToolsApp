@@ -8,7 +8,9 @@ import android.util.AttributeSet;
 
 import com.soaic.libcommon.R;
 
-
+/**
+ * 设置宽高比
+ */
 public class SImageView extends AppCompatImageView {
     //宽高比，以宽度为基准，高度乘上比率
     private float mAspectRatio = 0;

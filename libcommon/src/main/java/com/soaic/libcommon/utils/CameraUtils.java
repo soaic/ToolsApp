@@ -69,7 +69,7 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
+                        public void doExecuteFail(int requestCode) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
@@ -98,7 +98,7 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
+                        public void doExecuteFail(int requestCode) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
@@ -124,7 +124,7 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
+                        public void doExecuteFail(int requestCode) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });
@@ -148,7 +148,7 @@ public class CameraUtils {
                         }
 
                         @Override
-                        public void doExecuteFail(int requestCode, boolean isShowPermissionsDialog) {
+                        public void doExecuteFail(int requestCode) {
                             cameraResult.onCameraFail("获取权限失败");
                         }
                     });

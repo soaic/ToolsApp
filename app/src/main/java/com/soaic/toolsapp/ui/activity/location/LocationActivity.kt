@@ -66,11 +66,13 @@ class LocationActivity : BasicActivity(){
     }
 
     private fun initPermissions() {
-        PermissionsUtils.getInstance().requestPermissions(this, 1000,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_WIFI_STATE),
+
+        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE)
+
+        PermissionsUtils.getInstance().requestPermissions(this, 1000, permissions,
                 object: PermissionsUtils.PermissionsResultAction{
                     override fun doExecuteSuccess(requestCode: Int) {
                         LocationUtil.getInstance().startLocation(applicationContext, object: LocationUtil.OnLocationListener{
@@ -83,8 +85,8 @@ class LocationActivity : BasicActivity(){
                         })
                     }
 
-                    override fun doExecuteFail(requestCode: Int, isShowPermissionsDialog: Boolean) {
-                        if(isShowPermissionsDialog){
+                    override fun doExecuteFail(requestCode: Int) {
+                        if(!PermissionsUtils.shouldShowRequestPermissionRationale(getActivity(), *permissions)){
                             finish()
                         }else{
                             showPermissionsDeniedDialog()

@@ -123,7 +123,7 @@ abstract class BasicFragment : BackHandledFragment() {
      * @param id   控件的id
      * @param <VT> View类型
      * @return View
-    </VT> */
+     */
     protected fun <VT : View> findViewById(@IdRes id: Int): VT {
         return mContentView!!.findViewById(id)
     }

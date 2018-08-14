@@ -222,11 +222,15 @@ public class SNetClient {
     }
 
     private <T> void handlerError(Throwable err, OnResultListener<T> onResultListener) {
-        onResultListener.onFailure(err);
+        if(onResultListener != null) {
+            onResultListener.onFailure(err);
+        }
     }
 
     private <T> void handlerSuccess(T t, OnResultListener<T> onResultListener) {
-        onResultListener.onSuccess(t);
+        if(onResultListener != null) {
+            onResultListener.onSuccess(t);
+        }
     }
 
     public static Builder with(Context context){

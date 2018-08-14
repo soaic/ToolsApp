@@ -5,6 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
+/**
+ * 1、DrawableImage上下居中显示控制
+ */
 public class STextView extends AppCompatTextView {
     //TextView Drawable Image 上下居中显示, 默认置顶显示
     private boolean isDrawableAlignCenter = false;

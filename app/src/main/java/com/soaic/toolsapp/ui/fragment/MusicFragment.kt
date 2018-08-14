@@ -71,7 +71,7 @@ class MusicFragment: BasicFragment() {
     }
 
     private fun requestMusicInfo(){
-        SNetClient.Builder(context)
+        SNetClient.with(context)
                 .url("https://tingapi.ting.baidu.com/v1/restserver/ting/")
                 .param("method","baidu.ting.billboard.billList")
                 .param("type","1")

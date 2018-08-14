@@ -30,7 +30,6 @@ public class NetStatusUtil {
         }
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            // 当前网络是否已经连接
             if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
                 return networkInfo.getType();
             }
