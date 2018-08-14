@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.glide.GlideUtil
-import com.soaic.libcommon.network.NetClient
+import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.response.MusicInfoResponse
@@ -41,11 +41,12 @@ class MusicDetailActivity : BasicActivity(){
 
     private fun playMusic(songId: String){
         showProgressDialog()
-        NetClient.Builder(applicationContext)
+        SNetClient.with(applicationContext)
                 .url("https://tingapi.ting.baidu.com/v1/restserver/ting")
                 .param("method","baidu.ting.song.play")
                 .param("songid",songId)
-                .build().get(MusicInfoResponse::class.java, object: OnResultListener<MusicInfoResponse> {
+                .build()
+                .get(MusicInfoResponse::class.java, object: OnResultListener<MusicInfoResponse> {
                     override fun onSuccess(t: MusicInfoResponse) {
                         hideProgressDialog()
                         musicDetailName.text = t.songinfo.title

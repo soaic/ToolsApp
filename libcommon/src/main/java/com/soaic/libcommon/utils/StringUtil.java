@@ -1,4 +1,4 @@
-package com.soaic.libcommon.network.util;
+package com.soaic.libcommon.utils;
 
 /**
  * 字符串工具类

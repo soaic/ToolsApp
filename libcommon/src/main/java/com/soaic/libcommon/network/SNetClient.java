@@ -13,7 +13,7 @@ import com.soaic.libcommon.network.interceptor.HeaderInterceptor;
 import com.soaic.libcommon.network.interceptor.HttpLoggingInterceptor;
 import com.soaic.libcommon.network.interceptor.ServerErrorInterceptor;
 import com.soaic.libcommon.network.listener.OnResultListener;
-import com.soaic.libcommon.network.util.AppUtil;
+import com.soaic.libcommon.network.util.NetStatusUtil;
 
 import java.io.File;
 import java.util.LinkedHashMap;
@@ -36,7 +36,7 @@ import retrofit2.Retrofit;
  *
  * @author Soaic
  */
-public class NetClient {
+public class SNetClient {
     private String mBaseUrl = "https://soaic.com/";
     private Builder mBuilder;
     private Retrofit mRetrofit;
@@ -49,7 +49,15 @@ public class NetClient {
     private NetworkErrorException networkErrorException;
     private long maxCacheSize = 10 * 1024 * 1024;
 
-    private NetClient() {
+    private static SNetClient getInstance() {
+        return SingleLoader.INSTANCE;
+    }
+
+    private static class SingleLoader {
+        private final static SNetClient INSTANCE = new SNetClient();
+    }
+
+    private SNetClient() {
         mGson = new Gson();
         networkErrorException = new NetworkErrorException("can't connect network!");
         //日志拦截配置
@@ -67,23 +75,15 @@ public class NetClient {
     /**
      * 设置日志级别
      */
-    public void setLoggingLevel(HttpLoggingInterceptor.Level level) {
-        interceptor.setLevel(level);
+    public static void setLoggingLevel(HttpLoggingInterceptor.Level level) {
+        getInstance().interceptor.setLevel(level);
     }
 
     /**
      * 获取Cookies管理
      */
-    public CookiesManager getCookiesManager() {
-        return cookiesManager;
-    }
-
-    private static NetClient getInstance() {
-        return SingleLoader.INSTANCE;
-    }
-
-    private static class SingleLoader {
-        private final static NetClient INSTANCE = new NetClient();
+    public static CookiesManager getCookiesManager() {
+        return getInstance().cookiesManager;
     }
 
     private void initData(@NonNull Builder builder) {
@@ -112,8 +112,8 @@ public class NetClient {
         }
     }
 
-    public <T> NetClient get(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
-        if (!AppUtil.isNetworkAvailable(mBuilder.context)) {
+    public <T> SNetClient get(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
+        if (!NetStatusUtil.isAvailable(mBuilder.context)) {
             handlerError(networkErrorException, onResultListener);
             return this;
         }
@@ -124,8 +124,8 @@ public class NetClient {
         return this;
     }
 
-    public <T> NetClient post(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
-        if (!AppUtil.isNetworkAvailable(mBuilder.context)) {
+    public <T> SNetClient post(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
+        if (!NetStatusUtil.isAvailable(mBuilder.context)) {
             handlerError(networkErrorException, onResultListener);
             return this;
         }
@@ -147,8 +147,8 @@ public class NetClient {
         return this;
     }
 
-    public <T> NetClient put(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
-        if (!AppUtil.isNetworkAvailable(mBuilder.context)) {
+    public <T> SNetClient put(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
+        if (!NetStatusUtil.isAvailable(mBuilder.context)) {
             handlerError(networkErrorException, onResultListener);
             return this;
         }
@@ -170,8 +170,8 @@ public class NetClient {
         return this;
     }
 
-    public <T> NetClient delete(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
-        if (!AppUtil.isNetworkAvailable(mBuilder.context)) {
+    public <T> SNetClient delete(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
+        if (!NetStatusUtil.isAvailable(mBuilder.context)) {
             handlerError(networkErrorException, onResultListener);
             return this;
         }
@@ -182,9 +182,9 @@ public class NetClient {
         return this;
     }
 
-    public void cancelRequest() {
-        if (mCall != null && mCall.isExecuted()) {
-            mCall.cancel();
+    public static void cancelRequest() {
+        if (getInstance().mCall != null && getInstance().mCall.isExecuted()) {
+            getInstance().mCall.cancel();
         }
     }
 
@@ -229,6 +229,10 @@ public class NetClient {
         onResultListener.onSuccess(t);
     }
 
+    public static Builder with(Context context){
+        return new Builder(context);
+    }
+
     public static final class Builder {
         private String url = "";
         private LinkedHashMap<String, String> params = new LinkedHashMap<>(); //LinkedHashMap顺序排列
@@ -238,7 +242,7 @@ public class NetClient {
         private String bodyJson = "";
         private Context context;
 
-        public Builder(Context bdContext) {
+        private Builder(Context bdContext) {
             this.context = bdContext;
         }
 
@@ -311,12 +315,12 @@ public class NetClient {
             return this;
         }
 
-        public NetClient build() {
-            NetClient.getInstance().initData(this);
+        public SNetClient build() {
+            SNetClient.getInstance().initData(this);
             if (headers.size() <= 0) {
                 headers.put("User-Agent", Build.BRAND + "/" + Build.MODEL + "/" + Build.VERSION.RELEASE);
             }
-            return NetClient.getInstance();
+            return SNetClient.getInstance();
         }
     }
 }

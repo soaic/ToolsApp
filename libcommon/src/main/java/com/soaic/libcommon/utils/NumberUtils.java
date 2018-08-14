@@ -29,6 +29,12 @@ public class NumberUtils {
         return bigDecimal.doubleValue();
     }
 
+    /**
+     * 保留小数点后几位
+     * @param decimal 小数
+     * @param digit 位数
+     * @return
+     */
     public static String keepDecimalDigit(double decimal, int digit){
         StringBuilder pattern = new StringBuilder("#.");
         for(int i = 0; i < digit; i++){

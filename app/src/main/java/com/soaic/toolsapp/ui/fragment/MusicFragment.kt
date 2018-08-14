@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
-import com.soaic.libcommon.network.NetClient
+import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
 import com.soaic.toolsapp.R
@@ -71,7 +71,7 @@ class MusicFragment: BasicFragment() {
     }
 
     private fun requestMusicInfo(){
-        NetClient.Builder(context)
+        SNetClient.Builder(context)
                 .url("https://tingapi.ting.baidu.com/v1/restserver/ting/")
                 .param("method","baidu.ting.billboard.billList")
                 .param("type","1")
