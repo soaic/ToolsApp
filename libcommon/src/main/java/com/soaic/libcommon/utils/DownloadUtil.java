@@ -38,7 +38,7 @@ public class DownloadUtil {
         deleteOldUpdates();
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setVisibleInDownloadsUi(true);
         request.setDestinationInExternalFilesDir(mContext, Environment.DIRECTORY_DOWNLOADS, "update.apk");
         request.setTitle("下载更新...");

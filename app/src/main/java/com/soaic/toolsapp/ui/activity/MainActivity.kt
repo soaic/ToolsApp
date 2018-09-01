@@ -12,7 +12,7 @@ import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.ui.fragment.*
 
-class MainActivity : BasicActivity() {
+class  MainActivity : BasicActivity() {
     lateinit var viewPager: NoScrollViewPager
     lateinit var navigation:BottomNavigationView
     lateinit var pages:MutableList<Fragment>

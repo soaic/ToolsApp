@@ -77,6 +77,7 @@ class MusicFragment: BasicFragment() {
                 .param("type","1")
                 .param("size", size.toString())
                 .param("offset",offset.toString())
+                .retryCount(2)
                 .setServerErrorInterceptor(SServerErrorHandler())
                 .build().get(MusicResponse::class.java, object: OnResultListener<MusicResponse>{
                     override fun onSuccess(t: MusicResponse) {

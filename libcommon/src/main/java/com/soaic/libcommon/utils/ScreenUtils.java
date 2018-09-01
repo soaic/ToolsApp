@@ -232,4 +232,24 @@ public class ScreenUtils {
                 .getSystemService(Context.KEYGUARD_SERVICE);
         return km != null && km.inKeyguardRestrictedInputMode();
     }
+
+    /**
+     * 获取底部虚拟按键高度
+     */
+    public static int getNavigationBarHeight(Context context) {
+        try {
+            final Resources res = context.getResources();
+            int rid = res.getIdentifier("config_showNavigationBar", "bool", "android");
+            if (rid > 0) {
+                boolean flag = res.getBoolean(rid);
+                if (flag) {
+                    int resourceId = res.getIdentifier("navigation_bar_height", "dimen", "android");
+                    if (resourceId > 0) {
+                        return res.getDimensionPixelSize(resourceId);
+                    }
+                }
+            }
+        } catch (Throwable ignore) {}
+        return 0;
+    }
 }

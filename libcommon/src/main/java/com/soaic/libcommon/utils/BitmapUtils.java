@@ -2,7 +2,11 @@ package com.soaic.libcommon.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.media.ExifInterface;
 
 import java.io.File;
@@ -14,6 +18,7 @@ public class BitmapUtils {
 
     /**
      * 读取图片属性：旋转的角度
+     *
      * @param path 图片绝对路径
      * @return degree旋转的角度
      */
@@ -43,6 +48,7 @@ public class BitmapUtils {
 
     /**
      * 旋转Bitmap
+     *
      * @param angle
      * @param bitmap
      * @return
@@ -58,6 +64,7 @@ public class BitmapUtils {
 
     /**
      * 获取缩放比
+     *
      * @param w
      * @param h
      * @return
@@ -68,7 +75,7 @@ public class BitmapUtils {
         int imageWidth = 1280;
         // 缩放比
         int ratio = 1;
-        if(w <= 0 || h <= 0){
+        if (w <= 0 || h <= 0) {
             return 1;
         }
         // 缩放比,由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
@@ -85,18 +92,41 @@ public class BitmapUtils {
         return ratio;
     }
 
-    public static Bitmap getBitmapFromFile(String filePath){
+    /**
+     * 获取灰色图片
+     * @param bitmap
+     * @return
+     */
+    public static Bitmap getGrayBitMap(Bitmap bitmap) {
+        Bitmap grayImg = null;
+        try {
+            grayImg = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(grayImg);
+            Paint paint = new Paint();
+            ColorMatrix colorMatrix = new ColorMatrix();
+            colorMatrix.setSaturation(0f);
+            ColorMatrixColorFilter colorMatrixFilter = new ColorMatrixColorFilter(colorMatrix);
+            paint.setColorFilter(colorMatrixFilter);
+            canvas.drawBitmap(bitmap, 0f, 0f, paint);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return grayImg;
+    }
+
+
+    public static Bitmap getBitmapFromFile(String filePath) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         newOpts.inJustDecodeBounds = true;//只读边,不读内容
         newOpts.inPreferredConfig = Bitmap.Config.ARGB_8888;
         int photoDegree = readPictureDegree(filePath);
         BitmapFactory.decodeFile(filePath, newOpts);
-        if(photoDegree == 90 || photoDegree == 270){
+        if (photoDegree == 90 || photoDegree == 270) {
             newOpts.inSampleSize = getRatioSize(newOpts.outHeight, newOpts.outWidth);
-        }else{
+        } else {
             newOpts.inSampleSize = getRatioSize(newOpts.outWidth, newOpts.outHeight);
         }
-        if(newOpts.inSampleSize > 1)
+        if (newOpts.inSampleSize > 1)
             newOpts.inSampleSize += newOpts.inSampleSize % 2;
         newOpts.inJustDecodeBounds = false;//读取所有内容
         newOpts.inDither = false;
@@ -113,7 +143,7 @@ public class BitmapUtils {
             if (photoDegree != 0) {
                 bitmap = rotateBitmap(photoDegree, bitmap);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (fs != null) {
@@ -128,9 +158,9 @@ public class BitmapUtils {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static File saveBitmapToFile(Bitmap bitmap, File saveDir, String fileName){
-        if(saveDir == null) return null;
-        if(!saveDir.isDirectory()){
+    public static File saveBitmapToFile(Bitmap bitmap, File saveDir, String fileName) {
+        if (saveDir == null) return null;
+        if (!saveDir.isDirectory()) {
             saveDir.mkdir();
         }
         File file = new File(saveDir + fileName);
@@ -143,7 +173,7 @@ public class BitmapUtils {
             e.printStackTrace();
             return null;
         } finally {
-            if(outputStream != null){
+            if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException e) {

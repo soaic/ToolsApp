@@ -1,10 +1,12 @@
 package com.soaic.toolsapp.ui.fragment
 
-import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.graphics.*
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.utils.*
 import com.soaic.toolsapp.R
@@ -13,9 +15,13 @@ import com.soaic.toolsapp.ui.activity.check.CheckActivity
 import com.soaic.toolsapp.ui.activity.location.LocationActivity
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 import java.util.*
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.ColorMatrix
+import android.graphics.Bitmap
 
-class MoreFragment: BasicFragment() {
 
+
+class MoreFragment: BasicFragment(), CameraUtils.CameraResult {
     lateinit var moreLocation: TextView
     lateinit var moreFm: TextView
     lateinit var moreNovel: TextView
@@ -25,6 +31,7 @@ class MoreFragment: BasicFragment() {
     lateinit var moreBorn: TextView
     lateinit var cameraUtils: CameraUtils
     lateinit var moreContentFragment: FrameLayout
+    lateinit var testImage: ImageView
 
     companion object {
         fun newInstance(): MoreFragment{
@@ -36,16 +43,7 @@ class MoreFragment: BasicFragment() {
         get() = R.layout.fragment_more
 
     override fun initVariables(savedInstanceState: Bundle?) {
-        cameraUtils = CameraUtils(object: CameraUtils.CameraResult{
-            override fun onCameraSuccess(filePath: String?) {
-                Logger.d(filePath)
-            }
-
-            override fun onCameraFail(message: String?) {
-                Logger.d(message)
-            }
-
-        },activity)
+        cameraUtils = CameraUtils(this, activity)
     }
 
     override fun initViews() {
@@ -57,7 +55,7 @@ class MoreFragment: BasicFragment() {
         moreCheck = findViewById(R.id.moreCheck)
         moreBorn = findViewById(R.id.moreBorn)
         moreContentFragment = findViewById(R.id.moreContentFragment)
-
+        testImage = findViewById(R.id.testImage)
     }
 
     override fun initEvents() {
@@ -74,7 +72,7 @@ class MoreFragment: BasicFragment() {
 
         }
         moreWeather.setOnClickListener {
-
+            scan()
         }
         moreCheck.setOnClickListener{
             startActivity(CheckActivity::class.java)
@@ -84,16 +82,33 @@ class MoreFragment: BasicFragment() {
         }
     }
 
+    override fun onCameraSuccess(filePath: String?) {
+        try {
+            var bitmap = BitmapUtils.getBitmapFromFile(filePath)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onCameraFail(message: String?) {
+
+    }
+
+    private fun scan(){
+        cameraUtils.getPhoto2AlbumCrop()
+    }
+
     private fun born() {
         val calendarSelect = Calendar.getInstance()
         calendarSelect.time = TimeUtils.string2Date("1990-01-01", "yyyy-MM-dd")
         val calendarEnd  = Calendar.getInstance()
         calendarEnd.time = Date()
-        PickerUtils.showTimeYMDPicker(activity, "请选择你的生日", calendarSelect,null, calendarEnd, { date ->
+        PickerUtils.showTimeYMDPicker(activity, "请选择你的生日", calendarSelect,null, calendarEnd) { date ->
             val bundle = Bundle()
             bundle.putString("date", TimeUtils.date2String(date, "yyyyMMdd"))
             startActivity(BornActivity::class.java, bundle)
-        })
+        }
     }
 
     override fun loadData() {
@@ -112,6 +127,7 @@ class MoreFragment: BasicFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         cameraUtils.onActivityResult(requestCode, resultCode, data)
+
     }
 
     fun goNextFragment(fragment: BasicFragment, tag: String){

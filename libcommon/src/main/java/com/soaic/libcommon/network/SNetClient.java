@@ -11,6 +11,7 @@ import com.soaic.libcommon.network.cookie.CookiesManager;
 import com.soaic.libcommon.network.https.OkHttpSSLSocketFactory;
 import com.soaic.libcommon.network.interceptor.HeaderInterceptor;
 import com.soaic.libcommon.network.interceptor.HttpLoggingInterceptor;
+import com.soaic.libcommon.network.interceptor.RetryInterceptor;
 import com.soaic.libcommon.network.interceptor.ServerErrorInterceptor;
 import com.soaic.libcommon.network.listener.OnResultListener;
 import com.soaic.libcommon.network.util.NetStatusUtil;
@@ -45,6 +46,7 @@ public class SNetClient {
     private OkHttpClient mClient;
     private CookiesManager cookiesManager;
     private HttpLoggingInterceptor interceptor;
+    private RetryInterceptor retryInterceptor;
     private OkHttpClient.Builder okHttpBuilder;
     private NetworkErrorException networkErrorException;
     private long maxCacheSize = 10 * 1024 * 1024;
@@ -63,13 +65,16 @@ public class SNetClient {
         //日志拦截配置
         interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        retryInterceptor = new RetryInterceptor();
         okHttpBuilder = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)       //设置连接超时10s
                 .readTimeout(10, TimeUnit.SECONDS)          //设置读取超时10s
                 .writeTimeout(10, TimeUnit.SECONDS)         //设置写入超时10s
                 .sslSocketFactory(OkHttpSSLSocketFactory.getSocketFactory(), OkHttpSSLSocketFactory.getTrustManager()) //设置SSL
                 .hostnameVerifier(OkHttpSSLSocketFactory.getHostnameVerifier())
+                .addInterceptor(retryInterceptor)
                 .addInterceptor(interceptor);    //添加日志拦截器（该方法也可以设置公共参数，头信息）
+
     }
 
     /**
@@ -94,6 +99,13 @@ public class SNetClient {
             throw new IllegalArgumentException("url can't be null");
         }
         this.mBuilder = builder;
+
+        if(mBuilder.retryCount > 0){
+            retryInterceptor.setMaxRetry(mBuilder.retryCount);
+        }else{
+            retryInterceptor.setMaxRetry(0);
+        }
+
         if (mRetrofit == null || mClient == null) {
             try {
                 //cookies管理
@@ -110,6 +122,8 @@ public class SNetClient {
             } catch (Exception ignored) {
             }
         }
+
+
     }
 
     public <T> SNetClient get(@NonNull Class<T> clazz, OnResultListener<T> onResultListener) {
@@ -245,6 +259,7 @@ public class SNetClient {
         private ServerErrorInterceptor serverErrorInterceptor;
         private String bodyJson = "";
         private Context context;
+        private int retryCount = 3;
 
         private Builder(Context bdContext) {
             this.context = bdContext;
@@ -311,6 +326,11 @@ public class SNetClient {
             if (key != null && file != null) {
                 bodyParams.put(key + "\"; filename=\"" + file.getName(), RequestBody.create(MediaType.parse("application/octet-stream"), file));
             }
+            return this;
+        }
+
+        public Builder retryCount(int count){
+            this.retryCount = count;
             return this;
         }
 

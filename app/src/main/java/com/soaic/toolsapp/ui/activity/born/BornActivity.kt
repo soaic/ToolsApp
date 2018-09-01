@@ -60,7 +60,7 @@ class BornActivity : BasicActivity() {
         bornYear.text = String.format(getString(R.string.born_year), TimeUtils.getDateBetweenYear(bornDate, nowDate).toString())
         bornMonth.text = String.format(getString(R.string.born_month), TimeUtils.getDateBetweenMonth(bornDate, nowDate).toString())
         bornWeek.text = String.format(getString(R.string.born_week), TimeUtils.getDateBetweenWeek(bornDate, nowDate).toString())
-        bornDay.text = String.format(getString(R.string.born_day), TimeUtils.getDateBetweenWeek(bornDate, nowDate).toString())
+        bornDay.text = String.format(getString(R.string.born_day), TimeUtils.getDateBetweenDay(bornDate, nowDate).toString())
         bornHour.text = String.format(getString(R.string.born_hour), TimeUtils.getDateBetweenHour(bornDate, nowDate).toString())
         bornMinute.text = String.format(getString(R.string.born_minute), TimeUtils.getDateBetweenMinute(bornDate, nowDate).toString())
     }
