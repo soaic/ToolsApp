@@ -40,7 +40,7 @@ class MusicFragment: BasicFragment() {
 
     override fun initViews() {
         musicRvl = findViewById(R.id.music_rvl)
-        musicRvl.layoutManager = LinearLayoutManager(activity!!.applicationContext)
+        musicRvl.layoutManager = LinearLayoutManager(context)
         musicAdapter = MusicAdapter(mData)
         musicRvl.adapter = musicAdapter
         musicRvl.addItemDecoration(ListDividerItemDecoration())

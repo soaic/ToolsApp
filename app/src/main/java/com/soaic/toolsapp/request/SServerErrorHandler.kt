@@ -14,10 +14,10 @@ class SServerErrorHandler : ServerErrorInterceptor{
     override fun <T : Any?> isServerError(t: T): Boolean {
         if(t is BaseResponse){
             if(t.code == 500){
-                serverError = NullPointerException()
+                serverError = Exception()
                 return true
             } else if (t.code == 404){
-                serverError = NullPointerException()
+                serverError = Exception()
                 return true
             }
         }

@@ -1,8 +1,6 @@
 package com.soaic.toolsapp.ui.fragment
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.*
 import android.os.Bundle
 import android.view.View
 import android.widget.FrameLayout
@@ -15,10 +13,6 @@ import com.soaic.toolsapp.ui.activity.check.CheckActivity
 import com.soaic.toolsapp.ui.activity.location.LocationActivity
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 import java.util.*
-import android.graphics.ColorMatrixColorFilter
-import android.graphics.ColorMatrix
-import android.graphics.Bitmap
-
 
 
 class MoreFragment: BasicFragment(), CameraUtils.CameraResult {
