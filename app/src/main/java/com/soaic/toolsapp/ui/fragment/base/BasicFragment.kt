@@ -76,7 +76,7 @@ abstract class BasicFragment : BackHandledFragment() {
     /** 显示加载对话框  */
     fun showProgressDialog() {
         if (loadingDialog == null && activity != null) {
-            loadingDialog = Dialog(activity, R.style.custom_dialog_style)
+            loadingDialog = Dialog(activity!!.applicationContext, R.style.custom_dialog_style)
             loadingDialog!!.setContentView(R.layout.dialog_custom_loading)
             loadingDialog!!.setCanceledOnTouchOutside(false)
             loadingDialog!!.setCancelable(true)

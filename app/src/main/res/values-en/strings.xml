@@ -31,4 +31,5 @@
     <string name="born_minute">%1$s\n分钟</string>
 
     <string name="location_tip">你的当前位置：</string>
+    <string name="test_resource">I am in the base apk</string>
 </resources>

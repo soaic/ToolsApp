@@ -29,7 +29,8 @@
         app:itemIconTint="@color/selector_item_icon_tint"
         app:itemTextColor="@color/selector_item_icon_tint"
         app:menu="@menu/my_navigation_items"
-        android:background="@color/white"/>
+        android:background="@color/white"
+        app:labelVisibilityMode="labeled"/>
 
 
 </android.support.constraint.ConstraintLayout>
