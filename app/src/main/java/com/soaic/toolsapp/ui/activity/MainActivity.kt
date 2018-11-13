@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import com.soaic.libcommon.fragment.BackHandlerHelper
-import com.soaic.libcommon.utils.BottomNavigationViewHelper
 import com.soaic.libcommon.weiget.NoScrollViewPager
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
@@ -34,7 +33,6 @@ class  MainActivity : BasicActivity() {
             override fun getCount() = pages.size
         }
         viewPager.offscreenPageLimit = 5
-        BottomNavigationViewHelper.disableShiftMode(navigation)
     }
 
     override fun initEvents() {

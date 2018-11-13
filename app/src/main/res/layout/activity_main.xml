@@ -23,13 +23,14 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="56dp"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:itemIconTint="@color/selector_item_icon_tint"
         app:itemTextColor="@color/selector_item_icon_tint"
         app:menu="@menu/my_navigation_items"
-        android:background="@color/white"
+        app:itemBackground="@null"
         app:labelVisibilityMode="labeled"/>
 
 

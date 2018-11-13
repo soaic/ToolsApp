@@ -53,4 +53,21 @@ public class StatusBarCompat {
         }
         return result;
     }
+
+    public static void setStatusGrayText(Activity activity, int bgRid){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            activity.getWindow().setBackgroundDrawableResource(bgRid);
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+        } else {
+            compat(activity, Color.BLACK);
+        }
+    }
+
+    public static void setStatusLightText(Activity activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        }
+    }
 }

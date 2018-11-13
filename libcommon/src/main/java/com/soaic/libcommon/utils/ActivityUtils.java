@@ -18,4 +18,16 @@ public class ActivityUtils {
             activity.getWindow().setAttributes(windowManager);
         }
     }
+
+    /**
+     * 设置背景透明度
+     * @param activity
+     * @param alpha
+     */
+    public static void setActivityBgAlpha(Activity activity, float alpha){
+        if(activity == null) return;
+        WindowManager.LayoutParams layoutParams = activity.getWindow().getAttributes();
+        layoutParams.alpha = alpha;
+        activity.getWindow().setAttributes(layoutParams);
+    }
 }

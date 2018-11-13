@@ -2,6 +2,7 @@ package com.soaic.libcommon.weiget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -25,20 +26,22 @@ public class SWebView extends WebView {
     private OnWebViewListener onWebViewListener;
 
     public SWebView(Context context) {
-        super(context, null);
+        this(context, null);
     }
 
     public SWebView(Context context, AttributeSet attrs) {
-        super(context, attrs, 0);
+        this(context, attrs, Resources.getSystem().getIdentifier("webViewStyle","attr","android"));
     }
 
     public SWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initWebView();
+        if (!isInEditMode()) {
+            initWebView();
+        }
     }
 
     @SuppressLint({"AddJavascriptInterface", "SetJavaScriptEnabled"})
-    private void initWebView() {
+    public void initWebView() {
         WebSettings webSettings = getSettings();
         // 支持JS
         webSettings.setJavaScriptEnabled(true);
@@ -67,7 +70,7 @@ public class SWebView extends WebView {
         // 设置不调用系统浏览器
         setWebViewClient(new SWebViewClient());
         // TestJavaScriptInterface类对象映射到js的test对象 js调用 test.callJS('title')
-        addJavascriptInterface(new TestJavaScriptInterface(), "test");
+        //addJavascriptInterface(new TestJavaScriptInterface(), "test");
     }
 
     /**
@@ -200,9 +203,10 @@ public class SWebView extends WebView {
     /**
      * 销毁，释放资源
      */
-    public void onDestory() {
+    public void onDestroy() {
         setConfigCallback();
         removeAllViews();
         destroy();
     }
 }
+

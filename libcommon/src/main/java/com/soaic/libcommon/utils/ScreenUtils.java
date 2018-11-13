@@ -17,10 +17,6 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 /**
  * 屏幕相关工具类
  */
