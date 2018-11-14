@@ -5,8 +5,8 @@ import com.soaic.toolsapp.model.MusicInfo
 
 class MusicInfoResponse {
 
-    lateinit var songinfo: MusicInfo
-    lateinit var bitrate: MusicBitrate
+    var songinfo: MusicInfo = MusicInfo()
+    var bitrate: MusicBitrate = MusicBitrate()
     var error_code: Int = 0
 
 }

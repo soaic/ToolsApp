@@ -1,16 +1,19 @@
 package com.soaic.toolsapp.ui.fragment
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
+import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
+import com.soaic.libcommon.utils.ListUtil
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.response.MusicResponse
 import com.soaic.toolsapp.model.Music
+import com.soaic.toolsapp.request.MusicRequest
 import com.soaic.toolsapp.request.SServerErrorHandler
+import com.soaic.toolsapp.response.MusicResponse
 import com.soaic.toolsapp.ui.activity.music.MusicDetailActivity
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
@@ -18,10 +21,10 @@ import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
 class MusicFragment: BasicFragment() {
 
-    private lateinit var musicRvl: RecyclerView
+    private lateinit var musicRvl: XRecycleView
+    private lateinit var musicSrl: SwipeRefreshLayout
     private var mData: MutableList<Music> = ArrayList()
     private lateinit var musicAdapter: MusicAdapter
-    private lateinit var refresh_layout: SmartRefreshLayout
     private var offset = 0
     private var size = 10
 
@@ -40,21 +43,12 @@ class MusicFragment: BasicFragment() {
 
     override fun initViews() {
         musicRvl = findViewById(R.id.music_rvl)
+        musicSrl = findViewById(R.id.music_srl)
+        musicSrl.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorAccent))
         musicRvl.layoutManager = LinearLayoutManager(context)
         musicAdapter = MusicAdapter(mData)
         musicRvl.adapter = musicAdapter
         musicRvl.addItemDecoration(ListDividerItemDecoration())
-        refresh_layout = findViewById(R.id.refresh_layout)
-        refresh_layout.setDragRate(0.5f)
-        refresh_layout.setHeaderMaxDragRate(5f)
-        refresh_layout.setReboundDuration(800)
-        refresh_layout.setOnRefreshListener {
-            offset = 0
-            requestMusicInfo()
-        }
-        refresh_layout.setOnLoadMoreListener {
-            requestMusicInfo()
-        }
     }
 
     override fun initEvents() {
@@ -63,7 +57,14 @@ class MusicFragment: BasicFragment() {
             bundle.putString("songId", mData[position].song_id)
             startActivity(MusicDetailActivity::class.java, bundle)
         }
-
+        musicRvl.setOnLoadMoreListener {
+            requestMusicInfo()
+        }
+        musicSrl.setOnRefreshListener {
+            offset = 0
+            musicRvl.setLoadMoreEnabled(true)
+            requestMusicInfo()
+        }
     }
 
     override fun loadData() {
@@ -71,31 +72,30 @@ class MusicFragment: BasicFragment() {
     }
 
     private fun requestMusicInfo(){
-        SNetClient.with(context)
-                .url("https://tingapi.ting.baidu.com/v1/restserver/ting/")
-                .param("method","baidu.ting.billboard.billList")
-                .param("type","1")
-                .param("size", size.toString())
-                .param("offset",offset.toString())
-                .retryCount(2)
-                .setServerErrorInterceptor(SServerErrorHandler())
-                .build().get(MusicResponse::class.java, object: OnResultListener<MusicResponse>{
-                    override fun onSuccess(t: MusicResponse) {
-                        if(offset == 0) {
-                            mData.clear()
-                            refresh_layout.finishRefresh(500)
-                        } else {
-                            refresh_layout.finishLoadMore(500)
-                        }
-                        mData.addAll(t.song_list)
-                        musicAdapter.notifyDataSetChanged()
+        MusicRequest.getMusicList(context!!, size, offset, object: OnResultListener<MusicResponse>{
+            override fun onSuccess(t: MusicResponse) {
+                if(offset == 0) {
+                    mData.clear()
+                    if(musicSrl.isRefreshing){
+                        musicSrl.isRefreshing = false
+                    }
+                }
+                if(ListUtil.isEmpty(t.song_list)){
+                    musicRvl.finishLoadMoreWithNoMoreData()
+                    return
+                } else {
+                    musicRvl.finishLoadMore()
+                }
+                mData.addAll(t.song_list)
+                musicAdapter.notifyDataSetChanged()
+                offset += size
+            }
+            override fun onFailure(err: Throwable) {
+                err.printStackTrace()
+                musicRvl.finishLoadMoreError()
+            }
+        })
 
-                        offset += size
-                    }
-                    override fun onFailure(err: Throwable) {
-                        err.printStackTrace()
-                    }
-                })
     }
 
 

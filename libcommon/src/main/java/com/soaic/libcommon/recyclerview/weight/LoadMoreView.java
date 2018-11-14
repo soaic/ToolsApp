@@ -12,7 +12,7 @@ import com.soaic.libcommon.R;
 
 public class LoadMoreView extends LinearLayout {
 
-    public final static int NORMAL = 0;     //禁用
+    public final static int NORMAL = 0;     //正常
     public final static int LOADING = 1;    //加载中
     public final static int NO_MORE = 2;    //没有更多
     public final static int NO_NETWORK = 3; //没有网络
@@ -44,7 +44,7 @@ public class LoadMoreView extends LinearLayout {
     public void switchState(int state){
         switch (state){
             case NORMAL:
-                loadMoreRefreshView.setVisibility(GONE);
+                loadMoreRefreshView.setVisibility(INVISIBLE);
                 loadMoreStateView.setVisibility(GONE);
                 break;
             case LOADING:
@@ -54,17 +54,17 @@ public class LoadMoreView extends LinearLayout {
             case NO_MORE:
                 loadMoreRefreshView.setVisibility(GONE);
                 loadMoreStateView.setVisibility(VISIBLE);
-                loadMoreStateView.setText("没有更多了");
+                loadMoreStateView.setText("没有更多了~");
                 break;
             case NO_NETWORK:
                 loadMoreRefreshView.setVisibility(GONE);
                 loadMoreStateView.setVisibility(VISIBLE);
-                loadMoreStateView.setText("没有网络");
+                loadMoreStateView.setText("网络异常");
                 break;
             case FAILURE:
                 loadMoreRefreshView.setVisibility(GONE);
                 loadMoreStateView.setVisibility(VISIBLE);
-                loadMoreStateView.setText("加载失败");
+                loadMoreStateView.setText("加载数据失败");
                 break;
         }
     }

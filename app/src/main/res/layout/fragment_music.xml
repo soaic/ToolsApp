@@ -3,23 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refresh_layout"
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/music_srl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background">
+        android:layout_height="match_parent" >
 
-        <com.soaic.libcommon.recyclerview.weight.PullRefreshHeaderView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <android.support.v7.widget.RecyclerView
+        <com.soaic.libcommon.recyclerview.XRecycleView
             android:id="@+id/music_rvl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <com.soaic.libcommon.recyclerview.weight.LoadMoreFooterView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent" />
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
