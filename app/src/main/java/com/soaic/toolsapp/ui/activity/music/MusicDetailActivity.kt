@@ -7,6 +7,7 @@ import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.toolsapp.R
+import com.soaic.toolsapp.request.MusicRequest
 import com.soaic.toolsapp.response.MusicInfoResponse
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.weight.MusicPlayerView
@@ -41,23 +42,18 @@ class MusicDetailActivity : BasicActivity(){
 
     private fun playMusic(songId: String){
         showProgressDialog()
-        SNetClient.with(applicationContext)
-                .url("https://tingapi.ting.baidu.com/v1/restserver/ting")
-                .param("method","baidu.ting.song.play")
-                .param("songid",songId)
-                .build()
-                .get(MusicInfoResponse::class.java, object: OnResultListener<MusicInfoResponse> {
-                    override fun onSuccess(t: MusicInfoResponse) {
-                        hideProgressDialog()
-                        musicDetailName.text = t.songinfo.title
-                        GlideUtil.display(musicDetailPic, t.songinfo.pic_premium)
-                        musicDetailPlay.setCoverURL(t.songinfo.pic_premium)
-                        musicDetailPlay.start()
-                    }
-                    override fun onFailure(err: Throwable) {
-                        hideProgressDialog()
-                        err.printStackTrace()
-                    }
-                })
+        MusicRequest.getMusicDetail(applicationContext, songId, object: OnResultListener<MusicInfoResponse> {
+            override fun onSuccess(t: MusicInfoResponse) {
+                hideProgressDialog()
+                musicDetailName.text = t.songinfo.title
+                GlideUtil.display(musicDetailPic, t.songinfo.pic_premium)
+                musicDetailPlay.setCoverURL(t.songinfo.pic_premium)
+
+            }
+            override fun onFailure(err: Throwable) {
+                hideProgressDialog()
+                err.printStackTrace()
+            }
+        })
     }
 }

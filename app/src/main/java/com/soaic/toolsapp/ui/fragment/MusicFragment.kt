@@ -82,13 +82,12 @@ class MusicFragment: BasicFragment() {
                 }
                 if(ListUtil.isEmpty(t.song_list)){
                     musicRvl.finishLoadMoreWithNoMoreData()
-                    return
                 } else {
                     musicRvl.finishLoadMore()
+                    mData.addAll(t.song_list)
+                    musicAdapter.notifyDataSetChanged()
+                    offset += size
                 }
-                mData.addAll(t.song_list)
-                musicAdapter.notifyDataSetChanged()
-                offset += size
             }
             override fun onFailure(err: Throwable) {
                 err.printStackTrace()
