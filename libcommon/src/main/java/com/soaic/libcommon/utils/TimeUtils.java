@@ -206,8 +206,7 @@ public class TimeUtils {
         long time1 = cal.getTimeInMillis();
         cal.setTime(date2);
         long time2 = cal.getTimeInMillis();
-        long between_seconds = Math.abs(time2 - time1) / SECOND;
-        return Long.parseLong(String.valueOf(between_seconds));
+        return Math.abs(time2 - time1) / SECOND;
     }
 
     /**

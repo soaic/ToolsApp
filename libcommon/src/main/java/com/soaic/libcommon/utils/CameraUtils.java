@@ -191,7 +191,7 @@ public class CameraUtils {
         intent.putExtra("outputY", height);
         intent.putExtra("scale", true);
         intent.putExtra("scaleUpIfNeeded", true);//黑边
-        photoURI = Uri.fromFile(new File(FileUtils.getTempFilePath(activity)));
+        photoURI = Uri.fromFile(new File(FileUtils.getTempImagePath(activity)));
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         intent.putExtra("return-data", false);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());

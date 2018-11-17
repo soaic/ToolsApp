@@ -22,7 +22,9 @@
         android:layout_marginTop="5dp"
         android:textColor="@color/color_2E2E2E"
         android:textSize="16sp"
-        android:layout_toEndOf="@+id/music_pic" />
+        android:layout_toEndOf="@+id/music_pic"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +54,9 @@
             android:layout_height="wrap_content"
             android:text="洛杉矶的十点半"
             android:textColor="@color/gray"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 </RelativeLayout>
 

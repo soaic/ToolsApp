@@ -211,15 +211,21 @@ public class SNetClient {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     T result;
-                    if (clazz.getName().equals("java.lang.String")) {
-                        result = (T) response.body().string();
+                    if(response.body() != null){
+                        if (clazz.getName().equals("java.lang.String")) {
+                            result = (T) response.body().string();
+                        } else if(clazz.getName().equals("java.io.InputStream")) {
+                            result = (T) response.body().byteStream();
+                        } else {
+                            result = mGson.fromJson(response.body().string(), clazz);
+                        }
+                        if (mBuilder.serverErrorInterceptor != null && mBuilder.serverErrorInterceptor.isServerError(result)) {
+                            handlerError(mBuilder.serverErrorInterceptor.getServerError(), onResultListener);
+                        } else {
+                            handlerSuccess(result, onResultListener);
+                        }
                     } else {
-                        result = mGson.fromJson(response.body().string(), clazz);
-                    }
-                    if (mBuilder.serverErrorInterceptor != null && mBuilder.serverErrorInterceptor.isServerError(result)) {
-                        handlerError(mBuilder.serverErrorInterceptor.getServerError(), onResultListener);
-                    } else {
-                        handlerSuccess(result, onResultListener);
+                        handlerError(new NullPointerException("response body is null"), onResultListener);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

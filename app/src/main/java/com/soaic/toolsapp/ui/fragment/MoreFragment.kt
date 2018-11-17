@@ -57,7 +57,7 @@ class MoreFragment: BasicFragment(), CameraUtils.CameraResult {
             startActivity(LocationActivity::class.java)
         }
         moreFm.setOnClickListener {
-            cameraUtils.getPhoto2CameraCrop(FileUtils.getTempFilePath(activity))
+            cameraUtils.getPhoto2CameraCrop(FileUtils.getTempImagePath(activity))
         }
         moreNovel.setOnClickListener {
 

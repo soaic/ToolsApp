@@ -6,14 +6,26 @@ import android.os.Build;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class FileUtils {
 
     /**
      * 获取临时存储的图片地址
      */
-    public static String getTempFilePath(Context context){
-        return context.getExternalCacheDir() + File.separator + "temp_" + System.currentTimeMillis() / 1000+".jpg";
+    public static String getTempImagePath(Context context){
+        return getTempFilePath(context, "jpg");
+    }
+
+    public static String getTempMusicPath(Context context){
+        return getTempFilePath(context, "mp3");
+    }
+
+    private static String getTempFilePath(Context context, String fileType){
+        return context.getExternalCacheDir() + File.separator + "temp_" + System.currentTimeMillis() / 1000 + "." +fileType;
     }
 
     public static Uri getFileUri(Context context, File file) {
@@ -78,5 +90,35 @@ public class FileUtils {
             return file.delete();
         }
         return false;
+    }
+
+    public static File saveFile(Context context, InputStream inputStream){
+        if(inputStream == null) return null;
+        FileOutputStream fos = null;
+        try {
+            String path = getTempMusicPath(context);
+            fos = new FileOutputStream(path);
+            byte[] buf = new byte[2048];
+            int len;
+            while((len = inputStream.read(buf)) != -1){
+                fos.write(buf, 0, len);
+            }
+            fos.flush();
+            return new File(path);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fos != null){
+                try {
+                    fos.close();
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }

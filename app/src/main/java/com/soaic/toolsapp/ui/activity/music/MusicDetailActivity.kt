@@ -6,24 +6,29 @@ import android.widget.TextView
 import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
+import com.soaic.libcommon.utils.FileUtils
+import com.soaic.libcommon.utils.Logger
+import com.soaic.libcommon.utils.MediaPlayerUtil
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.request.MusicRequest
 import com.soaic.toolsapp.response.MusicInfoResponse
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.weight.MusicPlayerView
+import java.io.InputStream
 
-class MusicDetailActivity : BasicActivity(){
+class MusicDetailActivity : BasicActivity() {
 
     private lateinit var musicDetailPic: ImageView
     private lateinit var musicDetailName: TextView
     private lateinit var musicDetailPlay: MusicPlayerView
+    private var isLoaded: Boolean = false
 
     override val contentView: Int
         get() = R.layout.activity_music_detail
 
     override fun initVariables(savedInstanceState: Bundle?) {
-        val songId= intent.getStringExtra("songId")
-        playMusic(songId)
+        val songId = intent.getStringExtra("songId")
+        getMusicInfo(songId)
     }
 
     override fun initViews() {
@@ -33,27 +38,78 @@ class MusicDetailActivity : BasicActivity(){
     }
 
     override fun initEvents() {
+        musicDetailPlay.setOnClickListener {
+            playMusic()
+        }
+    }
 
+    private fun playMusic() {
+        if(isLoaded) {
+            if(MediaPlayerUtil.getInstance().isPlaying){
+                MediaPlayerUtil.getInstance().pause()
+                musicDetailPlay.stop()
+            } else {
+                MediaPlayerUtil.getInstance().start()
+                musicDetailPlay.start()
+            }
+        }
     }
 
     override fun loadData() {
 
     }
 
-    private fun playMusic(songId: String){
+    private fun getMusicInfo(songId: String) {
         showProgressDialog()
-        MusicRequest.getMusicDetail(applicationContext, songId, object: OnResultListener<MusicInfoResponse> {
+        MusicRequest.getMusicDetail(applicationContext, songId, object : OnResultListener<MusicInfoResponse> {
             override fun onSuccess(t: MusicInfoResponse) {
-                hideProgressDialog()
                 musicDetailName.text = t.songinfo.title
                 GlideUtil.display(musicDetailPic, t.songinfo.pic_premium)
                 musicDetailPlay.setCoverURL(t.songinfo.pic_premium)
-
+                if(MediaPlayerUtil.getInstance().isCurrentMusic(t.bitrate.song_file_id)){
+                    hideProgressDialog()
+                    isLoaded = true
+                    musicDetailPlay.start()
+                    musicDetailPlay.setMax(MediaPlayerUtil.getInstance().duration / 1000)
+                    musicDetailPlay.progress = MediaPlayerUtil.getInstance().currentPosition / 1000
+                } else {
+                    initMusic(t.bitrate.file_link, t.bitrate.song_file_id)
+                }
             }
+
             override fun onFailure(err: Throwable) {
                 hideProgressDialog()
                 err.printStackTrace()
             }
         })
     }
+
+    private fun initMusic(url: String, singId: Int){
+        MediaPlayerUtil.getInstance().setData(url, singId) {
+            hideProgressDialog()
+            musicDetailPlay.setMax(MediaPlayerUtil.getInstance().duration / 1000)
+            isLoaded = true
+            playMusic()
+        }
+    }
+
+    private fun downloadMusic(url: String) {
+        showProgressDialog()
+        SNetClient.with(applicationContext).url(url).build().get(InputStream::class.java,
+                object: OnResultListener<InputStream>{
+                    override fun onSuccess(t: InputStream) {
+                        hideProgressDialog()
+                        val file = FileUtils.saveFile(applicationContext, t)
+                        Logger.d("file = "+file.absolutePath)
+                        if(file != null){
+
+                        }
+                    }
+
+                    override fun onFailure(err: Throwable) {
+                        err.printStackTrace()
+                    }
+                })
+    }
+
 }

@@ -16,7 +16,8 @@ public abstract class OnLoadMoreScrollListener extends RecyclerView.OnScrollList
             int visibleItemCount = recyclerView.getLayoutManager().getChildCount();
             //可见item数量大于0 并且 RecyclerView停止滚动 并且 最后一个item可见
             boolean triggerCondition = visibleItemCount > 0 &&
-                    newState == RecyclerView.SCROLL_STATE_IDLE && canTriggerLoadMore(recyclerView);
+                    //newState == RecyclerView.SCROLL_STATE_IDLE &&
+                    canTriggerLoadMore(recyclerView);
             if(triggerCondition){
                 onLoadMore(recyclerView);
             }
