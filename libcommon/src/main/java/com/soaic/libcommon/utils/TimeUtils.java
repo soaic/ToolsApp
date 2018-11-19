@@ -220,4 +220,19 @@ public class TimeUtils {
         cal.setTime(date);
         return cal.get(Calendar.HOUR_OF_DAY);
     }
+
+    /**
+     * 秒转为时间
+     * @param seconds
+     * @return
+     */
+    public static String secondsToTime(int seconds) {
+        String time = "";
+        String minutesText = String.valueOf(seconds / 60);
+        if (minutesText.length() == 1) minutesText = "0" + minutesText;
+        String secondsText = String.valueOf(seconds % 60);
+        if (secondsText.length() == 1) secondsText = "0" + secondsText;
+        time = minutesText + ":" + secondsText;
+        return time;
+    }
 }

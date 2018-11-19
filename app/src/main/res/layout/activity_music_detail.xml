@@ -5,40 +5,101 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+    <FrameLayout
+        android:id="@+id/musicDetailBgFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/musicDetailBgIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/imageTransparent50"/>
+    </FrameLayout>
+
     <TextView
         android:id="@+id/musicDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"
+        android:textSize="16sp"
+        tools:text="MusicName"
+        android:singleLine="true"
+        android:ellipsize="marquee" />
 
-    <com.soaic.libcommon.weiget.SImageView
-        android:id="@+id/musicDetailPic"
+    <ImageView
+        android:id="@+id/musicDetailPicIv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/musicDetailName" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        tools:ignore="ContentDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musicDetailName"
-        android:layout_marginTop="10dp"
-        app:viewAspectRatio="1"/>
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/musicDetailPlayLL"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/musicDetailTimeNowTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="12sp"
+            android:textColor="@color/white"/>
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/musicDetailTimeSeek"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/musicDetailTimeEndTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="12sp"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
-    <com.soaic.toolsapp.weight.MusicPlayerView
-        android:id="@+id/musicDetailPlay"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:buttonColor="#FF0028"
-        app:layout_constraintBottom_toBottomOf="@+id/musicDetailPic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/musicDetailPic"
-        app:progressEmptyColor="#20FFFFFF"
-        app:progressLoadedColor="#00815E"
-        app:textColor="#80FFFFFF"
-        app:textSize="14sp" />
+    <LinearLayout
+        android:id="@+id/musicDetailPlayLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/musicDetailPrevBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上一曲"/>
+        <Button
+            android:id="@+id/musicDetailPlayBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放"/>
+        <Button
+            android:id="@+id/musicDetailNextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下一曲"/>
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

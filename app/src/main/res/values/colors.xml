@@ -35,4 +35,5 @@
     <color name="textGreyColor">#999999</color>
     <color name="textHintColor">#9E9E9E</color>
     <color name="lineColor">#D8D8D8</color>
+    <color name="imageTransparent50">#7F000000</color>
 </resources>

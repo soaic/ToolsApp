@@ -17,6 +17,7 @@ import com.soaic.libcommon.network.listener.OnResultListener;
 import com.soaic.libcommon.network.util.NetStatusUtil;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -192,6 +193,18 @@ public class SNetClient {
         if (mRetrofit != null) {
             mCall = mRetrofit.create(Params.class).paramsDelete(mBuilder.url, mBuilder.headers, mBuilder.params);
             request(clazz, onResultListener);
+        }
+        return this;
+    }
+
+    public SNetClient download(OnResultListener<InputStream> onResultListener){
+        if (!NetStatusUtil.isAvailable(mBuilder.context)) {
+            handlerError(networkErrorException, onResultListener);
+            return this;
+        }
+        if (mRetrofit != null) {
+            mCall = mRetrofit.create(Params.class).paramsGet(mBuilder.url, mBuilder.headers, mBuilder.params);
+            request(InputStream.class, onResultListener);
         }
         return this;
     }

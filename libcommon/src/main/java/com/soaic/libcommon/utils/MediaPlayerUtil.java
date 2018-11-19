@@ -35,7 +35,6 @@ public class MediaPlayerUtil {
                     }
                 }
             });
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,27 +48,31 @@ public class MediaPlayerUtil {
     }
 
     public void start(){
-        mediaPlayer.start();
+        if(mediaPlayer != null) mediaPlayer.start();
     }
 
     public void stop(){
-        mediaPlayer.stop();
+        if(mediaPlayer != null) mediaPlayer.stop();
     }
 
     public void pause(){
-        mediaPlayer.pause();
+        if(mediaPlayer != null) mediaPlayer.pause();
     }
 
     public boolean isPlaying(){
-        return mediaPlayer.isPlaying();
+        return mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
     public int getDuration(){
-        return mediaPlayer.getDuration();
+        return mediaPlayer == null ? 0 : mediaPlayer.getDuration();
     }
 
     public int getCurrentPosition(){
-        return mediaPlayer.getCurrentPosition();
+        return mediaPlayer == null ? 0 : mediaPlayer.getCurrentPosition();
+    }
+
+    public void seekTo(int process){
+        if(mediaPlayer != null) mediaPlayer.seekTo(process * 1000);
     }
 
     public interface OnPreparedListener{

@@ -92,7 +92,13 @@ public class FileUtils {
         return false;
     }
 
-    public static File saveFile(Context context, InputStream inputStream){
+    /**
+     * 将inputStream保存文件
+     * @param context 上下文
+     * @param inputStream 文件流
+     * @return 文件地址
+     */
+    public static String saveFile(Context context, InputStream inputStream){
         if(inputStream == null) return null;
         FileOutputStream fos = null;
         try {
@@ -104,7 +110,7 @@ public class FileUtils {
                 fos.write(buf, 0, len);
             }
             fos.flush();
-            return new File(path);
+            return path;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -119,6 +125,6 @@ public class FileUtils {
                 }
             }
         }
-        return null;
+        return "";
     }
 }

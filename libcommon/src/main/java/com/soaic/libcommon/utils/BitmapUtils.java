@@ -188,4 +188,5 @@ public class BitmapUtils {
         }
         return file;
     }
+
 }
