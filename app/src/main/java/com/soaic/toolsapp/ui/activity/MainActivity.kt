@@ -10,17 +10,25 @@ import com.soaic.libcommon.weiget.NoScrollViewPager
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.ui.fragment.*
+import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper
+import com.soaic.toolsapp.util.GlideSimpleLoader
+
 
 class  MainActivity : BasicActivity() {
     lateinit var viewPager: NoScrollViewPager
     lateinit var navigation:BottomNavigationView
     lateinit var pages:MutableList<Fragment>
+    private lateinit var iwHelper: ImageWatcherHelper
+
+    fun getImageWatchHelper(): ImageWatcherHelper{
+        return iwHelper
+    }
 
     override val contentView: Int
         get() = R.layout.activity_main
 
     override fun initVariables(savedInstanceState: Bundle?) {
-
+        iwHelper = ImageWatcherHelper.with(this, GlideSimpleLoader())
     }
 
     override fun initViews() {
@@ -78,7 +86,7 @@ class  MainActivity : BasicActivity() {
     }
 
     override fun onBackPressed() {
-        if (!BackHandlerHelper.handleBackPress(this)) {
+        if (!iwHelper.handleBackPressed() && !BackHandlerHelper.handleBackPress(this)) {
             super.onBackPressed()
         }
     }

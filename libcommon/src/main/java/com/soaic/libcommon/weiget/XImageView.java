@@ -11,28 +11,28 @@ import com.soaic.libcommon.R;
 /**
  * 设置宽高比
  */
-public class SImageView extends AppCompatImageView {
+public class XImageView extends AppCompatImageView {
     //宽高比，以宽度为基准，高度乘上比率
     private float mAspectRatio = 0;
 
-    public SImageView(Context context) {
+    public XImageView(Context context) {
         this(context,null);
     }
 
-    public SImageView(Context context, @Nullable AttributeSet attrs) {
+    public XImageView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs,0);
     }
 
-    public SImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public XImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
-        final TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SImageView);
+        final TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.XImageView);
         if(typedArray != null) {
-            if (typedArray.hasValue(R.styleable.SImageView_viewAspectRatio)) {
-                mAspectRatio = typedArray.getFloat(R.styleable.SImageView_viewAspectRatio,0);
+            if (typedArray.hasValue(R.styleable.XImageView_viewAspectRatio)) {
+                mAspectRatio = typedArray.getFloat(R.styleable.XImageView_viewAspectRatio,0);
             }
             typedArray.recycle();
         }

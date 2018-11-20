@@ -8,20 +8,20 @@ import android.util.AttributeSet;
 /**
  * 1、DrawableImage上下居中显示控制
  */
-public class STextView extends AppCompatTextView {
+public class XTextView extends AppCompatTextView {
     //TextView Drawable Image 上下居中显示, 默认置顶显示
     private boolean isDrawableAlignCenter = false;
     private int mWidth, mHeight;
 
-    public STextView(Context context) {
+    public XTextView(Context context) {
         super(context);
     }
 
-    public STextView(Context context, AttributeSet attrs) {
+    public XTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public STextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public XTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

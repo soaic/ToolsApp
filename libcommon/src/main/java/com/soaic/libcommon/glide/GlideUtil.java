@@ -3,6 +3,7 @@ package com.soaic.libcommon.glide;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Looper;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -22,8 +23,11 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.EmptySignature;
+import com.soaic.libcommon.weiget.imagewatcher.ImageWatcher;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -38,7 +42,10 @@ public class GlideUtil {
 
     public static void display(ImageView imageView, String path) {
         if (imageView == null) return;
-        Glide.with(imageView.getContext()).load(path).into(imageView);
+        Glide.with(imageView.getContext())
+                .load(path)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(imageView);
     }
 
     public static void display(ImageView imageView, @DrawableRes int rid) {
@@ -51,6 +58,26 @@ public class GlideUtil {
         if (file == null || imageView == null) return;
         String path = "file://" + file.getAbsolutePath();
         Glide.with(imageView.getContext()).load(path).into(imageView);
+    }
+
+    public static void display(Context context, Uri uri, final ImageWatcher.LoadCallback lc){
+        Glide.with(context).load(uri)
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        lc.onResourceReady(resource);
+                    }
+
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        lc.onLoadFailed(errorDrawable);
+                    }
+
+                    @Override
+                    public void onLoadStarted(@Nullable Drawable placeholder) {
+                        lc.onLoadStarted(placeholder);
+                    }
+                });
     }
 
     /**

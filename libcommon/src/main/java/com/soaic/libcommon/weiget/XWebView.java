@@ -21,19 +21,19 @@ import java.lang.reflect.Field;
 /**
  * WebView不能与CoordinatorLayout和NestedScrollView使用否则会出现js失效
  */
-public class SWebView extends WebView {
+public class XWebView extends WebView {
 
     private OnWebViewListener onWebViewListener;
 
-    public SWebView(Context context) {
+    public XWebView(Context context) {
         this(context, null);
     }
 
-    public SWebView(Context context, AttributeSet attrs) {
+    public XWebView(Context context, AttributeSet attrs) {
         this(context, attrs, Resources.getSystem().getIdentifier("webViewStyle","attr","android"));
     }
 
-    public SWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public XWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         if (!isInEditMode()) {
             initWebView();

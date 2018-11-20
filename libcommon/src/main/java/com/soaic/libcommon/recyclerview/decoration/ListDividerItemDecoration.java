@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -40,12 +41,8 @@ public class ListDividerItemDecoration extends RecyclerView.ItemDecoration {
         this(Color.parseColor("#E5E6E6"), 2, 0, 0);
     }
 
-    public ListDividerItemDecoration(int marginLeft) {
-        this(Color.parseColor("#E5E6E6"), 2, marginLeft, 0);
-    }
-
-    public ListDividerItemDecoration(int marginLeft, int marginRight) {
-        this(Color.parseColor("#E5E6E6"), 2, marginLeft, marginRight);
+    public ListDividerItemDecoration(@ColorInt int mDividerColor, int mDividerHeight) {
+        this(mDividerColor, mDividerHeight, 0, 0);
     }
 
     public ListDividerItemDecoration(int dividerColor, int dividerHeight, int marginLeft, int marginRight) {
