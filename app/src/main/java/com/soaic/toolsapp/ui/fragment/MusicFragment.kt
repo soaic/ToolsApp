@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
 import com.soaic.libcommon.utils.ListUtil
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.model.Music
+import com.soaic.toolsapp.model.MusicModel
 import com.soaic.toolsapp.request.MusicRequest
-import com.soaic.toolsapp.request.SServerErrorHandler
 import com.soaic.toolsapp.response.MusicResponse
 import com.soaic.toolsapp.ui.activity.music.MusicDetailActivity
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
@@ -23,7 +21,7 @@ class MusicFragment: BasicFragment() {
 
     private lateinit var musicRvl: XRecycleView
     private lateinit var musicSrl: SwipeRefreshLayout
-    private var mData: MutableList<Music> = ArrayList()
+    private var mData: MutableList<MusicModel> = ArrayList()
     private lateinit var musicAdapter: MusicAdapter
     private var offset = 0
     private var size = 10

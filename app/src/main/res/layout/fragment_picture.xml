@@ -2,10 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent"
-        android:text="@string/menu_picture"/>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/pictureListSrl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.soaic.libcommon.recyclerview.XRecycleView
+            android:id="@+id/pictureListRlv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

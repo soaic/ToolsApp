@@ -55,15 +55,16 @@ class MusicDetailActivity : BasicActivity() {
         musicDetailTimeEndTv = findViewById(R.id.musicDetailTimeEndTv)
         musicDetailPlayBtn = findViewById(R.id.musicDetailPlayBtn)
 
+        initAnimation()
         timerTask = MusicTimerTask(musicDetailTimeSeek)
-        timer.schedule(timerTask,0,1000)
+    }
 
+    private fun initAnimation(){
         animator = ObjectAnimator.ofFloat(musicDetailPicIv, "rotation", 0f, 360.0f)
         animator.duration = 10000
         animator.interpolator = LinearInterpolator() //匀速
         animator.repeatCount = Animation.INFINITE //设置动画重复次数（-1代表一直转）
-        animator.repeatMode = ObjectAnimator.REVERSE //动画重复模式
-
+        animator.repeatMode = ObjectAnimator.RESTART //动画重复模式
     }
 
     class MusicTimerTask(private val musicDetailTimeSeek: AppCompatSeekBar): TimerTask(){
@@ -97,8 +98,10 @@ class MusicDetailActivity : BasicActivity() {
         if(isLoaded) {
             if(MediaPlayerUtil.getInstance().isPlaying){
                 MediaPlayerUtil.getInstance().pause()
+                musicDetailPlayBtn.text = "播放"
             } else {
                 MediaPlayerUtil.getInstance().start()
+                musicDetailPlayBtn.text = "暂停"
             }
 
             if(!animator.isStarted){
@@ -119,7 +122,7 @@ class MusicDetailActivity : BasicActivity() {
         MusicRequest.getMusicDetail(applicationContext, songId, object : OnResultListener<MusicInfoResponse> {
             override fun onSuccess(t: MusicInfoResponse) {
                 musicDetailName.text = t.songinfo.title
-                initMusicBg(t.songinfo.pic_premium)
+                loadMusicBg(t.songinfo.pic_premium)
                 GlideUtil.displayRound(musicDetailPicIv, t.songinfo.pic_premium, Utils.dip2px(applicationContext,90f))
                 if(MediaPlayerUtil.getInstance().isCurrentMusic(t.bitrate.song_file_id)){
                     initMusic()
@@ -141,6 +144,7 @@ class MusicDetailActivity : BasicActivity() {
     }
 
     private fun initMusic(){
+        timer.schedule(timerTask,0,1000)
         isLoaded = true
         musicDetailTimeEndTv.text = TimeUtils.secondsToTime(MediaPlayerUtil.getInstance().duration / 1000)
         musicDetailTimeSeek.max = MediaPlayerUtil.getInstance().duration / 1000
@@ -148,7 +152,7 @@ class MusicDetailActivity : BasicActivity() {
     }
 
     @SuppressLint("CheckResult")
-    private fun initMusicBg(url: String) {
+    private fun loadMusicBg(url: String) {
         GlideUtil.getBitmapByUrl(applicationContext, url).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread()).

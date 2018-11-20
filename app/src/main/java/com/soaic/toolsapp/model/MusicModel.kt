@@ -2,7 +2,7 @@ package com.soaic.toolsapp.model
 
 import java.io.Serializable
 
-class Music: Serializable{
+class MusicModel: Serializable{
     var artist_id: String = ""
     var language: String= ""
     var pic_big: String= ""

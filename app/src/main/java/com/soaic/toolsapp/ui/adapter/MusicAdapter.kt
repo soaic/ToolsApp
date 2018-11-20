@@ -6,13 +6,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.recyclerview.adapter.BasicAdapter
-import com.soaic.libcommon.recyclerview.adapter.BasicSlidingAdapter
 import com.soaic.libcommon.recyclerview.holder.BasicItemHolder
-import com.soaic.libcommon.recyclerview.weight.SlidingMenu
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.model.Music
+import com.soaic.toolsapp.model.MusicModel
 
-class MusicAdapter(var data: MutableList<Music>) : BasicAdapter() {
+class MusicAdapter(var data: MutableList<MusicModel>) : BasicAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicItemHolder {
         return BasicItemHolder(View.inflate(parent.context, R.layout.item_music, null))
