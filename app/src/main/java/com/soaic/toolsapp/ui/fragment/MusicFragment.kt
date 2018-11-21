@@ -90,6 +90,8 @@ class MusicFragment: BasicFragment() {
             override fun onFailure(err: Throwable) {
                 err.printStackTrace()
                 musicRvl.finishLoadMoreError()
+                if(musicSrl.isRefreshing)
+                    musicSrl.isRefreshing = false
             }
         })
 

@@ -12,7 +12,7 @@ import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.ui.fragment.*
 import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper
 import com.soaic.toolsapp.util.GlideSimpleLoader
-
+import cn.jzvd.Jzvd
 
 class  MainActivity : BasicActivity() {
     lateinit var viewPager: NoScrollViewPager
@@ -86,9 +86,17 @@ class  MainActivity : BasicActivity() {
     }
 
     override fun onBackPressed() {
-        if (!iwHelper.handleBackPressed() && !BackHandlerHelper.handleBackPress(this)) {
-            super.onBackPressed()
+        if (BackHandlerHelper.handleBackPress(this) ||     //处理Fragment返回
+                iwHelper.handleBackPressed() ||                         //处理ImageWatch返回
+                Jzvd.backPress()) {                                     //处理视频返回
+            return
         }
+        super.onBackPressed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Jzvd.releaseAllVideos()
     }
 
 }

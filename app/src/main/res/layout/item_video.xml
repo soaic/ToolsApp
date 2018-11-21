@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/itemVideoUserPhotoIv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/itemVideoUserNameTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/itemVideoUserPhotoIv"
+            android:layout_alignTop="@+id/itemVideoUserPhotoIv"
+            android:textSize="14sp"
+            android:textColor="@color/textColor"
+            tools:text="昵称"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/itemVideoUserSendTimeTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/itemVideoUserPhotoIv"
+            android:layout_below="@+id/itemVideoUserNameTv"
+            android:textSize="12sp"
+            android:textColor="@color/textGreyColor"
+            tools:text="2018-11-21"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp"/>
+
+    </RelativeLayout>
+
+    <cn.jzvd.JzvdStd
+        android:id="@+id/itemVideoPlayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

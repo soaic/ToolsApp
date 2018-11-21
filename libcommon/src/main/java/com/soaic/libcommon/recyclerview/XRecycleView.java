@@ -24,6 +24,7 @@ public class XRecycleView extends RecyclerView {
     private boolean mLoadMoreEnabled;
     private FrameLayout mLoadMoreContainer;
     private LoadMoreView mLoadMoreView;
+    private boolean isLoading = false;
 
     public XRecycleView(@NonNull Context context) {
         this(context, null);
@@ -89,9 +90,12 @@ public class XRecycleView extends RecyclerView {
                 mOnLoadMoreScrollListener = new OnLoadMoreScrollListener() {
                     @Override
                     public void onLoadMore(RecyclerView recyclerView) {
-                        mLoadMoreView.switchState(LoadMoreView.LOADING);
-                        if (mOnLoadMoreListener != null) {
-                            mOnLoadMoreListener.onLoadMore();
+                        if(!isLoading) {
+                            isLoading = true;
+                            mLoadMoreView.switchState(LoadMoreView.LOADING);
+                            if (mOnLoadMoreListener != null) {
+                                mOnLoadMoreListener.onLoadMore();
+                            }
                         }
                     }
                 };
@@ -105,6 +109,7 @@ public class XRecycleView extends RecyclerView {
     }
 
     public void finishLoadMore(){
+        isLoading = false;
         mLoadMoreView.switchState(LoadMoreView.NORMAL);
     }
     public void finishLoadMoreWithNoMoreData(){

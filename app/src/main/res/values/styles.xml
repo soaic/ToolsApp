@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="android:listDivider">@color/grey</item>
+        <item name="android:screenOrientation">portrait</item>
     </style>
 
     <!-- 自定义对话框样式 -->

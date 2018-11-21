@@ -31,12 +31,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/more_fm"
-            android:textColor="@color/color_2E2E2E" />
+            android:textColor="@color/color_2E2E2E"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/moreNovel"
@@ -46,12 +48,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/more_novel"
-            android:textColor="@color/color_2E2E2E" />
+            android:textColor="@color/color_2E2E2E"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/moreExpress"
@@ -61,12 +65,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/more_express"
-            android:textColor="@color/color_2E2E2E" />
+            android:textColor="@color/color_2E2E2E"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/moreWeather"
@@ -76,12 +82,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/more_weather"
-            android:textColor="@color/color_2E2E2E" />
+            android:textColor="@color/color_2E2E2E"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/moreCheck"
@@ -91,12 +99,14 @@
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="@string/check_company_button_txt"
-            android:textColor="@color/color_2E2E2E" />
+            android:textColor="@color/color_2E2E2E"
+            android:visibility="gone"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#cccccc" />
+            android:background="#cccccc"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/moreBorn"

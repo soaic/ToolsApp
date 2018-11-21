@@ -1,4 +1,4 @@
-package com.soaic.toolsapp.request
+package com.soaic.toolsapp.util
 
 import com.soaic.libcommon.network.interceptor.ServerErrorInterceptor
 import com.soaic.toolsapp.response.BaseResponse

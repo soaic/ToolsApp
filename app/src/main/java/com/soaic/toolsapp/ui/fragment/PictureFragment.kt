@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.StaggeredGridLayoutManager
-import android.widget.LinearLayout
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.GridSpacingItemDecoration
@@ -20,6 +18,7 @@ import com.soaic.toolsapp.ui.adapter.PictureAdapter
 import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 import android.util.SparseArray
 import android.widget.ImageView
+import com.soaic.libcommon.utils.Utils
 
 
 class PictureFragment: BasicFragment() {
@@ -27,6 +26,7 @@ class PictureFragment: BasicFragment() {
     private lateinit var pictureListRlv: XRecycleView
     private lateinit var pictureAdapter: PictureAdapter
     private var mData: MutableList<PictureModel> = mutableListOf()
+    private var mDataUri: MutableList<Uri> = mutableListOf()
     private var page: Int = 1
 
     companion object {
@@ -47,7 +47,8 @@ class PictureFragment: BasicFragment() {
         pictureListSrl.setColorSchemeColors(ContextCompat.getColor(context!!, R.color.colorAccent))
         pictureListRlv = findViewById(R.id.pictureListRlv)
         pictureListRlv.layoutManager = GridLayoutManager(context,2)
-        pictureListRlv.addItemDecoration(GridSpacingItemDecoration(2,10,false))
+        pictureListRlv.addItemDecoration(GridSpacingItemDecoration(2,
+                Utils.dip2px(context,3f),false))
         pictureAdapter = PictureAdapter(context!!, mData)
         pictureListRlv.adapter = pictureAdapter
     }
@@ -64,7 +65,7 @@ class PictureFragment: BasicFragment() {
         }
 
         pictureAdapter.setOnItemClickListener { view, holder, position ->
-            showImage(view.findViewById(R.id.itemPicturePicIv), mData[position].url)
+            showImage(position, view.findViewById(R.id.itemPicturePicIv))
         }
     }
 
@@ -81,6 +82,7 @@ class PictureFragment: BasicFragment() {
             override fun onSuccess(t: PictureResponse) {
                 if(page == 1){
                     mData.clear()
+                    mDataUri.clear()
                     if(pictureListSrl.isRefreshing)
                         pictureListSrl.isRefreshing = false
                 }
@@ -90,6 +92,7 @@ class PictureFragment: BasicFragment() {
                 }else{
                     page++
                     mData.addAll(t.data)
+                    for (d in t.data) mDataUri.add(Uri.parse(d.url))
                     pictureListRlv.finishLoadMore()
                     pictureAdapter.notifyDataSetChanged()
                 }
@@ -99,24 +102,19 @@ class PictureFragment: BasicFragment() {
             override fun onFailure(err: Throwable) {
                 err.printStackTrace()
                 pictureListRlv.finishLoadMoreError()
+                if(pictureListSrl.isRefreshing)
+                    pictureListSrl.isRefreshing = false
             }
         })
     }
 
-    private fun showImage(clickedImage: ImageView, path: String){
+    private fun showImage(position: Int, imageView: ImageView){
         if(activity is MainActivity){
             val iwHelper = (activity as MainActivity).getImageWatchHelper()
             val mapping = SparseArray<ImageView>()
-            mapping.put(0, clickedImage)
-            val dataList = mutableListOf<String>()
-            dataList.add(path)
-            iwHelper.show(clickedImage, mapping, convert(dataList))
+            mapping.put(position, imageView)
+            iwHelper.show(imageView, mapping, mDataUri)
         }
     }
 
-    private fun convert(data: List<String>): List<Uri> {
-        val list = mutableListOf<Uri>()
-        for (d in data) list.add(Uri.parse(d))
-        return list
-    }
 }

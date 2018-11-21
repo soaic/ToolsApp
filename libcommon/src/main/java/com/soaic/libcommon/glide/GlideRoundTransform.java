@@ -1,6 +1,5 @@
 package com.soaic.libcommon.glide;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -22,7 +21,7 @@ public class GlideRoundTransform extends BitmapTransformation {
     }
 
     public GlideRoundTransform(int dp) {
-        radius = Resources.getSystem().getDisplayMetrics().density * dp;
+        radius = dp;
     }
 
     @Override

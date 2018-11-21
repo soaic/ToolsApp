@@ -27,6 +27,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.bumptech.glide.signature.EmptySignature;
+import com.soaic.libcommon.utils.Utils;
 import com.soaic.libcommon.weiget.imagewatcher.ImageWatcher;
 
 import java.io.File;
@@ -90,7 +91,7 @@ public class GlideUtil {
     public static void displayRound(ImageView imageView, String path, int dp) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .transforms(new CenterCrop(), new GlideRoundTransform(dp));
+                .transforms(new CenterCrop(), new GlideRoundTransform(Utils.dip2px(imageView.getContext(), dp)));
 
         Glide.with(imageView.getContext()).load(path)
                 .listener(new SGlideRequestListener(imageView, ImageView.ScaleType.FIT_XY, ImageView.ScaleType.CENTER_CROP))
