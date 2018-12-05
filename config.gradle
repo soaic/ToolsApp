@@ -1,0 +1,17 @@
+
+ext {
+    //true 每个component可以单独运行
+    //false 每个component作为lib
+    //修改之后需要Sync方可生效
+    isRunComponent = true
+
+    version = [
+        compileSdkVersion : 28,
+        buildToolsVersion : '28.0.2',
+        minSdkVersion : 15,
+        targetSdkVersion : 28,
+        applicationId : 'com.soaic.hellocomponentstudy',
+        versionCode : 1,
+        versionName : '1.0'
+    ]
+}

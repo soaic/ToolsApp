@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
+import com.soaic.libcommon.base.BasicFragment
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
@@ -14,7 +15,6 @@ import com.soaic.toolsapp.request.MusicRequest
 import com.soaic.toolsapp.response.MusicResponse
 import com.soaic.toolsapp.ui.activity.music.MusicDetailActivity
 import com.soaic.toolsapp.ui.adapter.MusicAdapter
-import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
 
 class MusicFragment: BasicFragment() {
@@ -32,8 +32,9 @@ class MusicFragment: BasicFragment() {
         }
     }
 
-    override val contentView: Int
-        get() = R.layout.fragment_music
+    override fun getContentView(): Int {
+        return R.layout.fragment_music
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
 

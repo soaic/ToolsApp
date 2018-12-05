@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import com.soaic.libcommon.base.BasicActivity
 import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.utils.BlurUtil
@@ -19,7 +20,6 @@ import com.soaic.libcommon.utils.Utils
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.request.MusicRequest
 import com.soaic.toolsapp.response.MusicInfoResponse
-import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -38,8 +38,9 @@ class MusicDetailActivity : BasicActivity() {
     private lateinit var timerTask: MusicTimerTask
     private lateinit var animator: ObjectAnimator
 
-    override val contentView: Int
-        get() = R.layout.activity_music_detail
+    override fun getContentView(): Int {
+        return R.layout.activity_music_detail
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
         val songId = intent.getStringExtra("songId")
