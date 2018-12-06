@@ -1,4 +1,4 @@
-package com.soaic.toolsapp.ui.adapter
+package com.soaic.musiccomponent.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +7,8 @@ import android.widget.TextView
 import com.soaic.libcommon.glide.GlideUtil
 import com.soaic.libcommon.recyclerview.adapter.BasicAdapter
 import com.soaic.libcommon.recyclerview.holder.BasicItemHolder
-import com.soaic.toolsapp.R
-import com.soaic.toolsapp.model.MusicModel
+import com.soaic.musiccomponent.R
+import com.soaic.musiccomponent.model.MusicModel
 
 class MusicAdapter(var data: MutableList<MusicModel>) : BasicAdapter() {
 

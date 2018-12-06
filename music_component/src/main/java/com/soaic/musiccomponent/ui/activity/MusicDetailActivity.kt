@@ -1,4 +1,4 @@
-package com.soaic.toolsapp.ui.activity.music
+package com.soaic.musiccomponent.ui.activity
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
@@ -17,9 +17,9 @@ import com.soaic.libcommon.utils.BlurUtil
 import com.soaic.libcommon.utils.MediaPlayerUtil
 import com.soaic.libcommon.utils.TimeUtils
 import com.soaic.libcommon.utils.Utils
-import com.soaic.toolsapp.R
-import com.soaic.toolsapp.request.MusicRequest
-import com.soaic.toolsapp.response.MusicInfoResponse
+import com.soaic.musiccomponent.R
+import com.soaic.musiccomponent.request.MusicRequest
+import com.soaic.musiccomponent.response.MusicInfoResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*

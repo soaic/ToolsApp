@@ -1,7 +1,7 @@
 package com.soaic.toolsapp.util
 
+import com.soaic.libcommon.base.BaseResponse
 import com.soaic.libcommon.network.interceptor.ServerErrorInterceptor
-import com.soaic.toolsapp.response.BaseResponse
 
 class SServerErrorHandler : ServerErrorInterceptor{
 

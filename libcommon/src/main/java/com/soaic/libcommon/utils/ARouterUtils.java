@@ -1,16 +1,13 @@
-package com.wss.common.utils;
+package com.soaic.libcommon.utils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.wss.common.base.BaseActivity;
-import com.wss.common.base.BaseFragment;
+import com.soaic.libcommon.base.BasicActivity;
+import com.soaic.libcommon.base.BasicFragment;
 
 /**
- * Describe：ARouter帮助类
- * Created by 吴天强 on 2018/11/13.
+ * ARouter帮助类
  */
-
 public class ARouterUtils {
-
 
     /**
      * 根据path返回Fragment
@@ -18,8 +15,8 @@ public class ARouterUtils {
      * @param path path
      * @return fragment
      */
-    public static BaseFragment getFragment(String path) {
-        return (BaseFragment) ARouter.getInstance()
+    public static BasicFragment getFragment(String path) {
+        return (BasicFragment) ARouter.getInstance()
                 .build(path)
                 .navigation();
     }
@@ -30,8 +27,8 @@ public class ARouterUtils {
      * @param path path
      * @return Activity
      */
-    public static BaseActivity getActivity(String path) {
-        return (BaseActivity) ARouter.getInstance()
+    public static BasicActivity getActivity(String path) {
+        return (BasicActivity) ARouter.getInstance()
                 .build(path)
                 .navigation();
     }

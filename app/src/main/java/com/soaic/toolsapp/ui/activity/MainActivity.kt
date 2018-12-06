@@ -5,27 +5,33 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import com.soaic.libcommon.fragment.BackHandlerHelper
-import com.soaic.libcommon.weiget.NoScrollViewPager
-import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.activity.base.BasicActivity
-import com.soaic.toolsapp.ui.fragment.*
-import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper
-import com.soaic.toolsapp.util.GlideSimpleLoader
 import cn.jzvd.Jzvd
+import com.soaic.libcommon.base.BasicActivity
+import com.soaic.libcommon.base.BasicFragment
+import com.soaic.libcommon.constant.ARouterConfig
+import com.soaic.libcommon.fragment.BackHandlerHelper
+import com.soaic.libcommon.fragment.EmptyFragment
+import com.soaic.libcommon.utils.ARouterUtils
+import com.soaic.libcommon.weiget.NoScrollViewPager
+import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper
+import com.soaic.toolsapp.R
+import com.soaic.toolsapp.ui.fragment.*
+import com.soaic.toolsapp.util.GlideSimpleLoader
 
 class  MainActivity : BasicActivity() {
     lateinit var viewPager: NoScrollViewPager
     lateinit var navigation:BottomNavigationView
     lateinit var pages:MutableList<Fragment>
     private lateinit var iwHelper: ImageWatcherHelper
+    private var musicFragment = ARouterUtils.getFragment(ARouterConfig.MAIN_MUSIC_FRAGMENT)
 
     fun getImageWatchHelper(): ImageWatcherHelper{
         return iwHelper
     }
 
-    override val contentView: Int
-        get() = R.layout.activity_main
+    override fun getContentView(): Int {
+        return R.layout.activity_main
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
         iwHelper = ImageWatcherHelper.with(this, GlideSimpleLoader())
@@ -40,7 +46,7 @@ class  MainActivity : BasicActivity() {
             override fun getItem(position: Int) = pages[position]
             override fun getCount() = pages.size
         }
-        viewPager.offscreenPageLimit = 5
+        viewPager.offscreenPageLimit = pages.size
     }
 
     override fun initEvents() {
@@ -66,7 +72,10 @@ class  MainActivity : BasicActivity() {
 
     private fun initFragments(){
         pages = ArrayList()
-        pages.add(MusicFragment.newInstance())
+        if(musicFragment == null){
+            musicFragment = EmptyFragment()
+        }
+        pages.add(musicFragment)
         pages.add(VideoFragment.newInstance())
         pages.add(PictureFragment.newInstance())
         pages.add(NewsFragment.newInstance())

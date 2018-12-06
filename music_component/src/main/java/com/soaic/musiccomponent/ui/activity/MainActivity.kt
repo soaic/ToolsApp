@@ -1,12 +1,28 @@
-package com.soaic.musiccomponent
+package com.soaic.musiccomponent.ui.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.soaic.libcommon.base.BasicActivity
+import com.soaic.musiccomponent.R
 
-class MainActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BasicActivity() {
+    override fun getContentView(): Int {
+        return R.layout.activity_main
     }
+
+    override fun initVariables(savedInstanceState: Bundle?) {
+
+    }
+
+    override fun initViews() {
+
+    }
+
+    override fun initEvents() {
+
+    }
+
+    override fun loadData() {
+
+    }
+
 }

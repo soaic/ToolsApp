@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">LibCommont</string>
+    <string name="app_name">LibCommon</string>
 
+    <string name="loading">加载中&#8230;</string>
     <string name="picker_cancel">取消</string>
     <string name="picker_submit">完成</string>
 </resources>

@@ -1,7 +1,7 @@
-package com.soaic.toolsapp.response
+package com.soaic.musiccomponent.response
 
-import com.soaic.toolsapp.model.MusicBitrate
-import com.soaic.toolsapp.model.MusicInfo
+import com.soaic.musiccomponent.model.MusicBitrate
+import com.soaic.musiccomponent.model.MusicInfo
 
 class MusicInfoResponse {
 

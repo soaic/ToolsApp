@@ -1,4 +1,4 @@
-package com.soaic.toolsapp.model
+package com.soaic.musiccomponent.model
 
 import java.io.Serializable
 

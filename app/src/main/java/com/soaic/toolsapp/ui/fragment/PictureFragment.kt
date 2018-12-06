@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
+import android.util.SparseArray
+import android.widget.ImageView
+import com.soaic.libcommon.base.BasicFragment
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.GridSpacingItemDecoration
 import com.soaic.libcommon.utils.ListUtil
+import com.soaic.libcommon.utils.Utils
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.model.PictureModel
 import com.soaic.toolsapp.request.PictureRequest
 import com.soaic.toolsapp.response.PictureResponse
 import com.soaic.toolsapp.ui.activity.MainActivity
 import com.soaic.toolsapp.ui.adapter.PictureAdapter
-import com.soaic.toolsapp.ui.fragment.base.BasicFragment
-import android.util.SparseArray
-import android.widget.ImageView
-import com.soaic.libcommon.utils.Utils
 
 
 class PictureFragment: BasicFragment() {
@@ -35,9 +35,9 @@ class PictureFragment: BasicFragment() {
         }
     }
 
-    override val contentView: Int
-        get() = R.layout.fragment_picture
-
+    override fun getContentView(): Int {
+        return R.layout.fragment_picture
+    }
     override fun initVariables(savedInstanceState: Bundle?) {
 
     }

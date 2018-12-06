@@ -1,1 +1,1 @@
-include ':app', ':libcommon'
+include ':app', ':libcommon', ':music_component'

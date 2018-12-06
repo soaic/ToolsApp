@@ -1,4 +1,4 @@
-package com.soaic.toolsapp.model
+package com.soaic.musiccomponent.model
 
 class MusicInfo {
     var special_type: Int = 0

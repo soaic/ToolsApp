@@ -6,16 +6,18 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import com.soaic.libcommon.base.BasicFragment
 import com.soaic.libcommon.utils.*
 import com.soaic.toolsapp.R
 import com.soaic.toolsapp.ui.activity.born.BornActivity
 import com.soaic.toolsapp.ui.activity.check.CheckActivity
 import com.soaic.toolsapp.ui.activity.location.LocationActivity
-import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 import java.util.*
 
 
 class MoreFragment: BasicFragment(), CameraUtils.CameraResult {
+
+
     lateinit var moreLocation: TextView
     lateinit var moreFm: TextView
     lateinit var moreNovel: TextView
@@ -33,8 +35,9 @@ class MoreFragment: BasicFragment(), CameraUtils.CameraResult {
         }
     }
 
-    override val contentView: Int
-        get() = R.layout.fragment_more
+    override fun getContentView(): Int {
+        return R.layout.fragment_more
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
         cameraUtils = CameraUtils(this, activity)

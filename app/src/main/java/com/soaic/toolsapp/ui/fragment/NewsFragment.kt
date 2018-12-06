@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
+import com.soaic.libcommon.base.BasicFragment
 import com.soaic.libcommon.network.listener.OnResultListener
 import com.soaic.libcommon.recyclerview.XRecycleView
 import com.soaic.libcommon.recyclerview.decoration.ListDividerItemDecoration
@@ -16,7 +16,6 @@ import com.soaic.toolsapp.request.NewsRequest
 import com.soaic.toolsapp.response.NewsResponse
 import com.soaic.toolsapp.ui.activity.base.BasicWebActivity
 import com.soaic.toolsapp.ui.adapter.NewsAdapter
-import com.soaic.toolsapp.ui.fragment.base.BasicFragment
 
 class NewsFragment: BasicFragment() {
     private lateinit var newsListSrl: SwipeRefreshLayout
@@ -31,8 +30,9 @@ class NewsFragment: BasicFragment() {
         }
     }
 
-    override val contentView: Int
-        get() = R.layout.fragment_news
+    override fun getContentView(): Int {
+        return R.layout.fragment_news
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
 

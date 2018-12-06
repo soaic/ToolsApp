@@ -1,6 +1,6 @@
-package com.soaic.toolsapp.response
+package com.soaic.musiccomponent.response
 
-import com.soaic.toolsapp.model.MusicModel
+import com.soaic.musiccomponent.model.MusicModel
 
 class MusicResponse {
     var song_list: List<MusicModel> = mutableListOf()

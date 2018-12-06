@@ -3,9 +3,9 @@ package com.soaic.toolsapp.ui.activity.born
 import android.os.Bundle
 import android.os.Handler
 import android.widget.TextView
+import com.soaic.libcommon.base.BasicActivity
 import com.soaic.libcommon.utils.TimeUtils
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import java.util.*
 
 class BornActivity : BasicActivity() {
@@ -29,8 +29,9 @@ class BornActivity : BasicActivity() {
         }
     }
 
-    override val contentView: Int
-        get() = R.layout.activity_born
+    override fun getContentView(): Int {
+        return R.layout.activity_born
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
         bornDate = TimeUtils.string2Date(intent.getStringExtra("date"),"yyyyMMdd")

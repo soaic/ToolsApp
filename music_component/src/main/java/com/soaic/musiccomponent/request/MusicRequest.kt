@@ -1,11 +1,10 @@
-package com.soaic.toolsapp.request
+package com.soaic.musiccomponent.request
 
 import android.content.Context
 import com.soaic.libcommon.network.SNetClient
 import com.soaic.libcommon.network.listener.OnResultListener
-import com.soaic.toolsapp.response.MusicInfoResponse
-import com.soaic.toolsapp.response.MusicResponse
-import com.soaic.toolsapp.util.SServerErrorHandler
+import com.soaic.musiccomponent.response.MusicInfoResponse
+import com.soaic.musiccomponent.response.MusicResponse
 
 object MusicRequest {
 
@@ -17,7 +16,6 @@ object MusicRequest {
                 .param("size", size.toString())
                 .param("offset",offset.toString())
                 .retryCount(2)
-                .setServerErrorInterceptor(SServerErrorHandler())
                 .build().get(MusicResponse::class.java, onResultListener)
     }
 

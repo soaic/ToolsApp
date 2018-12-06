@@ -7,18 +7,18 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.TextView
 import com.afollestad.materialdialogs.MaterialDialog
+import com.soaic.libcommon.base.BasicActivity
 import com.soaic.libcommon.utils.LocationUtil
 import com.soaic.libcommon.utils.PermissionsUtils
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.activity.base.BasicActivity
 
 class LocationActivity : BasicActivity(){
     private lateinit var locationInfo: TextView
     private val REQUEST_PERMISSION_SETTING: Int = 1000
 
-    override val contentView: Int
-        get() = R.layout.activity_location
-
+    override fun getContentView(): Int {
+        return R.layout.activity_location
+    }
     override fun initVariables(savedInstanceState: Bundle?) {
 
     }

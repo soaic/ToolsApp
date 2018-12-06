@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import com.soaic.libcommon.base.BasicActivity
 import com.soaic.libcommon.utils.ToastUtils
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.activity.base.BasicActivity
 import com.soaic.toolsapp.util.CheckUtil
 
 class CheckActivity : BasicActivity() {
     private lateinit var checkBtn: Button
     private lateinit var checkCompany: EditText
-    override val contentView: Int
-        get() = R.layout.activity_check
-
+    override fun getContentView(): Int {
+        return R.layout.activity_check
+    }
     override fun initVariables(savedInstanceState: Bundle?) {
 
     }

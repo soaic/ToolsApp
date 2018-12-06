@@ -1,10 +1,12 @@
 package com.soaic.toolsapp.ui.activity.base
 
 import android.os.Bundle
+import com.soaic.libcommon.base.BasicActivity
 import com.soaic.libcommon.weiget.XWebView
 import com.soaic.toolsapp.R
 
 class BasicWebActivity : BasicActivity(){
+
 
     private lateinit var curUrl : String
     private lateinit var curTitle : String
@@ -15,8 +17,9 @@ class BasicWebActivity : BasicActivity(){
         const val KEY_TITLE = "keyTitle"
     }
 
-    override val contentView: Int
-        get() = R.layout.activity_web
+    override fun getContentView(): Int {
+        return R.layout.activity_web
+    }
 
     override fun initVariables(savedInstanceState: Bundle?) {
         curUrl = intent.getStringExtra(KEY_URL)
