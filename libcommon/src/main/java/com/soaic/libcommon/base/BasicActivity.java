@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.soaic.libcommon.R;
 import com.soaic.libcommon.utils.ToastUtils;
+import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper;
 
 public abstract class BasicActivity extends AppCompatActivity {
 
@@ -160,5 +161,9 @@ public abstract class BasicActivity extends AppCompatActivity {
 
     protected BasicActivity getActivity(){
         return this;
+    }
+
+    public ImageWatcherHelper getImageWatchHelper(){
+        return null;
     }
 }

@@ -26,7 +26,6 @@
         <activity android:name=".ui.activity.born.BornActivity" />
         <activity android:name=".ui.activity.location.LocationActivity" />
         <activity android:name=".tinker.app.TinkerActivity"/>
-        <activity android:name=".ui.activity.base.BasicWebActivity" />
 
         <service
             android:name="com.soaic.toolsapp.tinker.service.SampleResultService"

@@ -6,9 +6,13 @@ package com.soaic.libcommon.constant;
 
 public interface ARouterConfig {
 
-    /**
-     * 订单列表
-     */
+
     String MAIN_MUSIC_FRAGMENT = "/music/MusicFragment";
+
+    String MAIN_VIDEO_FRAGMENT = "/video/VideoFragment";
+
+    String MAIN_NEWS_FRAGMENT = "/news/NewsFragment";
+
+    String MAIN_PICTURE_FRAGMENT = "/picture/PictureFragment";
 
 }

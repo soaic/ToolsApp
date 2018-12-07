@@ -60,11 +60,13 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
     implementation project(':libcommon')
 
     if(!Boolean.valueOf(rootProject.ext.isRunComponent)){
         implementation project(':music_component')
+        implementation project(':video_component')
+        implementation project(':news_component')
+        implementation project(':picture_component')
     }
 }
 

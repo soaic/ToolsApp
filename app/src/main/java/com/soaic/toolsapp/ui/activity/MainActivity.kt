@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
-import cn.jzvd.Jzvd
 import com.soaic.libcommon.base.BasicActivity
-import com.soaic.libcommon.base.BasicFragment
 import com.soaic.libcommon.constant.ARouterConfig
 import com.soaic.libcommon.fragment.BackHandlerHelper
 import com.soaic.libcommon.fragment.EmptyFragment
+import com.soaic.libcommon.glide.GlideSimpleLoader
 import com.soaic.libcommon.utils.ARouterUtils
 import com.soaic.libcommon.weiget.NoScrollViewPager
 import com.soaic.libcommon.weiget.imagewatcher.ImageWatcherHelper
 import com.soaic.toolsapp.R
-import com.soaic.toolsapp.ui.fragment.*
-import com.soaic.toolsapp.util.GlideSimpleLoader
+import com.soaic.toolsapp.ui.fragment.MoreFragment
 
 class  MainActivity : BasicActivity() {
     lateinit var viewPager: NoScrollViewPager
@@ -24,8 +22,11 @@ class  MainActivity : BasicActivity() {
     lateinit var pages:MutableList<Fragment>
     private lateinit var iwHelper: ImageWatcherHelper
     private var musicFragment = ARouterUtils.getFragment(ARouterConfig.MAIN_MUSIC_FRAGMENT)
+    private var videoFragment = ARouterUtils.getFragment(ARouterConfig.MAIN_VIDEO_FRAGMENT)
+    private var newsFragment = ARouterUtils.getFragment(ARouterConfig.MAIN_NEWS_FRAGMENT)
+    private var pictureFragment = ARouterUtils.getFragment(ARouterConfig.MAIN_PICTURE_FRAGMENT)
 
-    fun getImageWatchHelper(): ImageWatcherHelper{
+    override fun getImageWatchHelper(): ImageWatcherHelper{
         return iwHelper
     }
 
@@ -75,10 +76,19 @@ class  MainActivity : BasicActivity() {
         if(musicFragment == null){
             musicFragment = EmptyFragment()
         }
+        if(videoFragment == null){
+            videoFragment = EmptyFragment()
+        }
+        if(newsFragment == null){
+            newsFragment = EmptyFragment()
+        }
+        if(pictureFragment == null){
+            pictureFragment = EmptyFragment()
+        }
         pages.add(musicFragment)
-        pages.add(VideoFragment.newInstance())
-        pages.add(PictureFragment.newInstance())
-        pages.add(NewsFragment.newInstance())
+        pages.add(videoFragment)
+        pages.add(pictureFragment)
+        pages.add(newsFragment)
         pages.add(MoreFragment.newInstance())
     }
 
@@ -96,8 +106,8 @@ class  MainActivity : BasicActivity() {
 
     override fun onBackPressed() {
         if (BackHandlerHelper.handleBackPress(this) ||     //处理Fragment返回
-                iwHelper.handleBackPressed() ||                         //处理ImageWatch返回
-                Jzvd.backPress()) {                                     //处理视频返回
+                iwHelper.handleBackPressed()) {                         //处理ImageWatch返回)
+
             return
         }
         super.onBackPressed()
@@ -105,7 +115,6 @@ class  MainActivity : BasicActivity() {
 
     override fun onPause() {
         super.onPause()
-        Jzvd.releaseAllVideos()
+        videoFragment.onPause()
     }
-
 }
