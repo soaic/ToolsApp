@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion rootProject.ext.version.compileSdkVersion
+    buildToolsVersion rootProject.ext.version.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.soaic.jetpackcomponent"
+        minSdkVersion rootProject.ext.version.minSdkVersion
+        targetSdkVersion rootProject.ext.version.targetSdkVersion
+        versionCode rootProject.ext.version.versionCode
+        versionName rootProject.ext.version.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    def nav_version = "1.0.0-alpha08"
+    def paging_version = "1.0.1"
+    def room_version = "1.1.1"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
+    implementation project(':libcommon')
+
+    implementation "android.arch.paging:runtime:$paging_version"
+    testImplementation "android.arch.paging:common:$paging_version"
+
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+}

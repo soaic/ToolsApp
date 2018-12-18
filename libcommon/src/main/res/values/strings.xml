@@ -4,4 +4,5 @@
     <string name="loading">加载中&#8230;</string>
     <string name="picker_cancel">取消</string>
     <string name="picker_submit">完成</string>
+    <string name="yingyongbao_tip">请安装应用宝!</string>
 </resources>

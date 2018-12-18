@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="user"
+            type="com.soaic.jetpackcomponent.model.User" />
+        <variable
+            name="userViewModel"
+            type="com.soaic.jetpackcomponent.viewmodel.UserViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.fragment.StartFragment">
+
+        <TextView
+            android:id="@+id/firstName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.firstName + user.lastName}"
+            tools:text="@tools:sample/first_names" />
+
+        <TextView
+            android:id="@+id/lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userViewModel.firstName + userViewModel.lastName}"
+            tools:text="@tools:sample/last_names" />
+
+        <Button
+            android:id="@+id/changeValueBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Change Value"/>
+
+    </LinearLayout>
+</layout>
+

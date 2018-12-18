@@ -2,12 +2,15 @@ package com.soaic.libcommon.weiget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
@@ -15,6 +18,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.soaic.libcommon.utils.DialogUtils;
+import com.soaic.libcommon.utils.InstallUtil;
 
 import java.lang.reflect.Field;
 
@@ -46,12 +54,13 @@ public class XWebView extends WebView {
         // 支持JS
         webSettings.setJavaScriptEnabled(true);
         // 调整到适合webView的大小
-        webSettings.setUseWideViewPort(false);
-        // 不缩放至屏幕的大小
-        webSettings.setLoadWithOverviewMode(false);
-        // 设置不支持屏幕缩放
+        webSettings.setUseWideViewPort(true);
+        // 缩放至屏幕的大小
+        webSettings.setLoadWithOverviewMode(true);
+        // 设置不出现缩放工具
         webSettings.setBuiltInZoomControls(false);
-        webSettings.setSupportZoom(false);
+        // 设置可以支持缩放
+        webSettings.setSupportZoom(true);
         // 关闭缓存
         webSettings.setAppCacheEnabled(false);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -63,6 +72,9 @@ public class XWebView extends WebView {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         // 取消滚动条
         setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        setHorizontalScrollBarEnabled(false);
+        setVerticalScrollBarEnabled(true);
+        setInitialScale(100);
         // 触摸焦点起作用
         requestFocus();
         // 设置监听进度
@@ -104,8 +116,63 @@ public class XWebView extends WebView {
      */
     class SWebChromeClient extends WebChromeClient {
 
-        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            //接受js弹框信息
+        @Override
+        public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
+            MaterialDialog dialog = DialogUtils.getMaterialDialog(view.getContext(), getTitle(), message, new DialogUtils.OnDialogButtonCallBack() {
+                @Override
+                public void onClick(MaterialDialog dialog) {
+                    result.confirm();
+                }
+            });
+            dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    result.cancel();
+                }
+            });
+            dialog.show();
+            return true;
+        }
+
+        @Override
+        public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result) {
+            final EditText et = new EditText(view.getContext());
+            et.setSingleLine();
+            et.setText(defaultValue);
+            MaterialDialog dialog = DialogUtils.getMaterialDialog(view.getContext(), et, getTitle(), message, new DialogUtils.OnDialogButtonCallBack() {
+                @Override
+                public void onClick(MaterialDialog dialog) {
+                    result.confirm(et.getText().toString());
+                }
+            });
+            dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    result.cancel();
+                }
+            });
+            dialog.show();
+            return true;
+        }
+
+        public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
+            MaterialDialog dialog = DialogUtils.getMaterialDialog(view.getContext(), getTitle(), message, new DialogUtils.OnDialogButtonCallBack() {
+                @Override
+                public void onClick(MaterialDialog dialog) {
+                    result.confirm();
+                }
+            });
+            dialog.setCancelable(true);
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    result.cancel();
+                }
+            });
+            dialog.show();
+            result.confirm();// 因为没有绑定事件，需要强行confirm,否则页面会变黑显示不了内容。
             return true;
         }
 
@@ -131,8 +198,9 @@ public class XWebView extends WebView {
      */
     class SWebViewClient extends WebViewClient {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            // 加载网页内链接
-            view.loadUrl(url);
+            if (!InstallUtil.handleWebUrl(getContext(), url)) {
+                view.loadUrl(url);
+            }
             if (onWebViewListener != null) {
                 onWebViewListener.onUrlChanged(url);
             }
