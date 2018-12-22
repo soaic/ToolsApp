@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.version.compileSdkVersion
     buildToolsVersion rootProject.ext.version.buildToolsVersion
@@ -32,6 +34,7 @@ dependencies {
     def nav_version = "1.0.0-alpha08"
     def paging_version = "1.0.1"
     def room_version = "1.1.1"
+    def work_version = "1.0.0-beta01"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -44,5 +47,7 @@ dependencies {
     testImplementation "android.arch.paging:common:$paging_version"
 
     implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+    kapt "android.arch.persistence.room:compiler:$room_version" // use kapt for Kotlin
+
+    implementation "android.arch.work:work-runtime:$work_version"
 }

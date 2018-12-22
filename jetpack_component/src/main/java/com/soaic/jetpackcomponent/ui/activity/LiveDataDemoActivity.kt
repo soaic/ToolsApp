@@ -18,10 +18,12 @@ class LiveDataDemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.live_data_activity)
 
+        //1.
         mModel = ViewModelProviders.of(this).get(NameViewModel::class.java)
         mNameTextView = findViewById(R.id.mNameTextView)
         mTestButton = findViewById(R.id.testButton)
 
+        //2.
         val nameObserver = Observer<String> { newName ->
             mNameTextView.text = newName
         }
@@ -29,6 +31,7 @@ class LiveDataDemoActivity: AppCompatActivity() {
 
 
         mTestButton.setOnClickListener {
+            //3.
             mModel.currentName.value = "test"
         }
     }

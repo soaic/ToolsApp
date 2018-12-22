@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.PagingDemoActivity">
+        <activity android:name=".ui.activity.WorkerDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,8 @@
         <activity android:name=".ui.activity.LifeCycleDemoActivity" />
         <activity android:name=".ui.activity.DataBindingDemoActivity" />
         <activity android:name=".ui.activity.LiveDataDemoActivity" />
+        <activity android:name=".ui.activity.PagingDemoActivity" />
+        <activity android:name=".ui.activity.RoomDemoActivity" />
     </application>
 
 </manifest>
