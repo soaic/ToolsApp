@@ -24,7 +24,7 @@ class VideoFragment: BasicFragment() {
     private lateinit var videoListRlv: XRecycleView
     private lateinit var videoAdapter: VideoAdapter
     private var mData: MutableList<VideoModel> = mutableListOf()
-    private var page: Int = 1
+    private var page: Int = 0
 
     companion object {
         fun newInstance(): VideoFragment{
@@ -51,7 +51,7 @@ class VideoFragment: BasicFragment() {
 
     override fun initEvents() {
         videoListSrl.setOnRefreshListener {
-            page = 1
+            page = 0
             requestVideoData()
             videoListRlv.setLoadMoreEnabled(true)
         }
@@ -73,7 +73,7 @@ class VideoFragment: BasicFragment() {
     private fun requestVideoData(){
         VideoRequest.getVideoList(context!!, page, object: OnResultListener<VideoResponse> {
             override fun onSuccess(t: VideoResponse) {
-                if(page == 1){
+                if(page == 0){
                     mData.clear()
                     if(videoListSrl.isRefreshing)
                         videoListSrl.isRefreshing = false

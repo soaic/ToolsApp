@@ -136,6 +136,28 @@
 
 #######################     常用第三方模块的混淆选项         ###################################
 
+#App自定义
+-keep class com.soaic.libcommon.proguard.** {*;}
+-keep interface com.soaic.libcommon.proguard.** {*;}
+-keepnames class * implements com.soaic.libcommon.proguard.IKeepClass
+-keepnames class * implements com.soaic.libcommon.proguard.IKeepMethodName
+-keepnames class * implements com.soaic.libcommon.proguard.IKeepFieldName
+-keepnames class * implements com.soaic.libcommon.proguard.IKeepPublicFieldName
+-keepnames class * implements com.soaic.libcommon.proguard.IKeepPublicMethodName
+
+-keepclassmembers class * implements com.soaic.libcommon.proguard.IKeepMethodName {
+    <methods>;
+}
+-keepclassmembers class * implements com.soaic.libcommon.proguard.IKeepPublicMethodName {
+    public <methods>;
+}
+-keepclassmembers class * implements com.soaic.libcommon.proguard.IKeepFieldName {
+    <fields>;
+}
+-keepclassmembers class * implements com.soaic.libcommon.proguard.IKeepPublicFieldName {
+    public <fields>;
+}
+
 #gson
 #如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
 -keepattributes Signature

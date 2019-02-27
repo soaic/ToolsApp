@@ -29,7 +29,7 @@ class PictureFragment: BasicFragment() {
     private lateinit var pictureAdapter: PictureAdapter
     private var mData: MutableList<PictureModel> = mutableListOf()
     private var mDataUri: MutableList<Uri> = mutableListOf()
-    private var page: Int = 1
+    private var page: Int = 0
 
     companion object {
         fun newInstance(): PictureFragment {
@@ -57,7 +57,7 @@ class PictureFragment: BasicFragment() {
 
     override fun initEvents() {
         pictureListSrl.setOnRefreshListener {
-            page = 1
+            page = 0
             requestPictureData()
             pictureListRlv.setLoadMoreEnabled(true)
         }
@@ -82,7 +82,7 @@ class PictureFragment: BasicFragment() {
     private fun requestPictureData(){
         PictureRequest.getPictureList(context!!, page, object: OnResultListener<PictureResponse>{
             override fun onSuccess(t: PictureResponse) {
-                if(page == 1){
+                if(page == 0){
                     mData.clear()
                     mDataUri.clear()
                     if(pictureListSrl.isRefreshing)

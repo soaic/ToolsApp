@@ -6,7 +6,7 @@ import org.json.JSONArray
 
 class CheckUtil {
 
-    fun checkCompany(context: Context, companyName: String): String{
+    fun checkCompany(context: Context, companyName: String): String {
         val fit = AppUtils.getAssetsToString(context, "FIT.json")
         val jsonArray = JSONArray(fit)
         var cmps = ""

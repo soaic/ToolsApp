@@ -24,6 +24,7 @@ class MathWorker(context : Context, params : WorkerParameters) : Worker(context,
         val result = myCrazyMathFunction(x, y, z)
         //...set the output, and we're done!
         val output: Data = Data.Builder().putInt(KEY_RESULT, result).build()
+
         return Result.success(output)
     }
 

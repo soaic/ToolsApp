@@ -30,8 +30,18 @@ class WorkerDemoActivity: BasicActivity() {
 
     override fun initViews() {
         testButton = findViewById(R.id.test)
+
+        //指定条件
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)  // 网络状态
+                .setRequiresBatteryNotLow(true)                 // 不在电量不足时执行
+                .setRequiresCharging(true)                      // 在充电时执行
+                .setRequiresStorageNotLow(true)                 // 不在存储容量不足时执行
+                //.setRequiresDeviceIdle(true)                    // 在待机状态下执行，需要 API 23
+                .build()
+
         //一次的任务
-        workA = OneTimeWorkRequest.Builder(CompressWorker::class.java).build()
+        workA = OneTimeWorkRequest.Builder(CompressWorker::class.java).setConstraints(constraints).build()
         workB = OneTimeWorkRequest.Builder(CompressWorker::class.java).build()
         workC = OneTimeWorkRequest.Builder(CompressWorker::class.java).build()
         workD = OneTimeWorkRequest.Builder(CompressWorker::class.java).build()
@@ -44,8 +54,9 @@ class WorkerDemoActivity: BasicActivity() {
                 .build()
 
 
-        //循环任务
-        periodicWorkRequest = PeriodicWorkRequest.Builder(CompressWorker::class.java,5, TimeUnit.SECONDS).build()
+        //循环任务 最小间隔为15分钟
+        //Periodic work has a minimum interval of 15 minutes and it cannot have an initial delay.
+        periodicWorkRequest = PeriodicWorkRequest.Builder(CompressWorker::class.java,15, TimeUnit.MINUTES).build()
 
     }
 
@@ -86,7 +97,7 @@ class WorkerDemoActivity: BasicActivity() {
                 .observe({ lifecycle }, { workInfo ->
                     // Do something with the status
                     if (workInfo != null && workInfo.state.isFinished) {
-                        Logger.d("14workInfo"+workInfo.outputData.keyValueMap)
+                        Logger.d("15workInfo="+workInfo.outputData.keyValueMap[MathWorker.KEY_RESULT])
                     }
                 })
 
@@ -101,26 +112,29 @@ class WorkerDemoActivity: BasicActivity() {
 
 
         testButton.setOnClickListener {
-            more()
+            math()
         }
     }
 
     override fun loadData() {
     }
 
-    private fun more(){
+    private fun more() {
         WorkManager.getInstance().enqueue(periodicWorkRequest)
     }
 
-    private fun enqueue(){
+    //执行workA
+    private fun enqueue() {
         WorkManager.getInstance().enqueue(workA)
     }
 
-    private fun chain(){
+    //先执行workA->workB->workC
+    private fun chain() {
         WorkManager.getInstance().beginWith(workA).then(workB).then(workC).enqueue()
     }
 
-    private fun chain2(){
+    //先同时执行workA和workB，再执行workC，再执行workD
+    private fun chain2() {
         WorkManager.getInstance()
                 .beginWith(Arrays.asList(workA,workB))
                 .then(workC)
@@ -128,17 +142,18 @@ class WorkerDemoActivity: BasicActivity() {
                 .enqueue()
     }
 
-    private fun chain3(){
+    //同时执行workA->workB 和 workC->workD
+    private fun chain3() {
         val chain1 = WorkManager.getInstance().beginWith(workA).then(workB)
         val chain2 = WorkManager.getInstance().beginWith(workC).then(workD)
         WorkContinuation.combine(Arrays.asList(chain1,chain2)).enqueue()
     }
 
-    private fun math(){
+    private fun math() {
         WorkManager.getInstance().enqueue(workE)
     }
 
-    private fun cancel(){
+    private fun cancel() {
         //取消任务
         WorkManager.getInstance().cancelWorkById(workA.id)
     }
