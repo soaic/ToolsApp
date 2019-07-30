@@ -10,6 +10,9 @@ import android.renderscript.RSRuntimeException;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 
+/**
+ * 图片虚化工具类
+ */
 public class BlurUtil {
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
@@ -48,6 +51,13 @@ public class BlurUtil {
         return bitmap;
     }
 
+    /**
+     * 图片虚化
+     * @param sentBitmap bitmap
+     * @param radius 50
+     * @param canReuseInBitmap false
+     * @return bitmap
+     */
     public static Bitmap stack(Bitmap sentBitmap, int radius, boolean canReuseInBitmap) {
 
         Bitmap bitmap;

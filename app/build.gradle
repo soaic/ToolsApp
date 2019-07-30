@@ -56,19 +56,27 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation project(':libcommon')
 
-    if(!Boolean.valueOf(rootProject.ext.isRunComponent)){
+    if (!Boolean.valueOf(rootProject.ext.isRunComponent)) {
         implementation project(':music_component')
         implementation project(':video_component')
         implementation project(':news_component')
         implementation project(':picture_component')
     }
+    //implementation 'com.google.android.gms:play-services-auth:16.0.1'
 }
 
 // 加入Tinker生成补丁包的gradle
