@@ -12,6 +12,6 @@ ext {
         targetSdkVersion : 28,
         applicationId : 'com.soaic.toolsapp',
         versionCode : 1,
-        versionName : '1.0'
+        versionName : '1.0',
     ]
 }

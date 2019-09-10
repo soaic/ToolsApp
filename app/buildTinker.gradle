@@ -31,7 +31,7 @@ android {
 
 dependencies {
     //支持multidex
-    implementation "com.android.support:multidex:1.0.1"
+    implementation "com.android.support:multidex:1.0.3"
     //tinker的核心库
     implementation("com.tencent.tinker:tinker-android-lib:1.9.1") { changing = true }
     //可选，用于生成application类

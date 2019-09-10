@@ -1,1 +1,1 @@
-include ':app', ':libcommon', ':music_component', ':video_component', ':news_component', ':picture_component', ':jetpack_component'
+include ':app', ':libcommon', ':music_component', ':video_component', ':news_component', ':picture_component', ':jetpack_component', ':basecomponent'
