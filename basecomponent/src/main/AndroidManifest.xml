@@ -22,7 +22,14 @@
         </activity>
         <activity android:name=".MainActivity" />
 
-        <service android:name=".service.ServiceDemo" />
+        <service android:name=".service.ServiceDemo"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.soaic.demoservice" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

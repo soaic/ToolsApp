@@ -1,5 +1,6 @@
 package com.soaic.libcommon.utils;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
@@ -15,7 +16,7 @@ public class MD5Utils {
             // 此 MessageDigest 类为应用程序提供信息摘要算法的功能，必须用try,catch捕获
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             byte[] data;
-            data = md5.digest(str.getBytes("utf-8"));// 转换为MD5码
+            data = md5.digest(str.getBytes(StandardCharsets.UTF_8));// 转换为MD5码
             strDigest = bytesToHexString(data);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -24,7 +25,7 @@ public class MD5Utils {
     }
 
     public static String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder("");
+        StringBuilder stringBuilder = new StringBuilder();
         if (src == null || src.length <= 0) {
             return null;
         }

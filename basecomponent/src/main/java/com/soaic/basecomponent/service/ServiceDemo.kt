@@ -19,8 +19,10 @@ class ServiceDemo : Service() {
 
     lateinit var mNotificationManager: NotificationManager
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBind(intent: Intent): IBinder? {
         Logger.d(TAG, "onBind")
+        createNotificationChannel()
         return Binder()
     }
 
@@ -28,17 +30,17 @@ class ServiceDemo : Service() {
         super.onCreate()
         Logger.d(TAG, "onCreate")
 
-        Thread {
-            run {
-                var i = 0
-                while (true) {
-                    Thread.sleep(5000)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        sendNotification(i++)
-                    }
-                }
-            }
-        }.start()
+//        Thread {
+//            run {
+//                var i = 0
+//                while (true) {
+//                    Thread.sleep(5000)
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                        sendNotification(i++)
+//                    }
+//                }
+//            }
+//        }.start()
 
     }
 
