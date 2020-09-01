@@ -29,7 +29,7 @@ class RoomDemoActivity : BasicActivity() {
     override fun initEvents() {
         find.setOnClickListener{
             var users = AppDatabase.getAppDatabase(applicationContext).userDao().getAll()
-            Logger.d("==="+users.toString())
+            Logger.d("===$users")
         }
 
         add.setOnClickListener{

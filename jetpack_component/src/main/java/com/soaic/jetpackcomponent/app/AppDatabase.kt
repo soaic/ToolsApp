@@ -9,10 +9,10 @@ import android.content.Context
 
 
 @Database(entities = [XUser::class], version = 1, exportSchema = false)
-public abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        private val DATABASE_NAME = "database-name"
+        private const val DATABASE_NAME = "database-name"
         private var INSTANCE: AppDatabase? = null
         fun getAppDatabase(context: Context): AppDatabase {
             if (INSTANCE == null) {
